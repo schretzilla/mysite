@@ -1,7 +1,4 @@
 branch-defaults:
-  default:
-    environment: mysite-dev
-    group_suffix: null
   master:
     environment: mysite-dev
 global:
