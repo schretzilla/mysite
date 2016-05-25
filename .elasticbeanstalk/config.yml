@@ -2,10 +2,12 @@ branch-defaults:
   default:
     environment: mysite-dev
     group_suffix: null
+  master:
+    environment: mysite-dev
 global:
   application_name: mysite
   default_ec2_keyname: aws-eb
   default_platform: Python 2.7
   default_region: us-east-1
   profile: eb-cli
-  sc: null
+  sc: git
