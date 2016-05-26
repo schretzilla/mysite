@@ -1,0 +1,65 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+
+
+
+    <header class="intro-header" style="background-image:url({% static 'blog/img/zilla-bg.png' %}");>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div id="header" class="site-heading">
+                        <h1>Schretzilla's Blog</h1>
+                        <hr class="small">
+                        <span class="subheading">Bring Life to Data</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+ <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-preview">
+                    <a href="posts/diving_into_django.html">
+                        <h2 class="post-title">
+                            Diving into Django
+                        </h2>
+                        <h3 class="post-subtitle">
+                            Django looks intersting
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted on December 16, 2015</p>
+                </div>
+                <div class="post-preview">
+                    <a href="posts/helloworld.html">
+                        <h2 class="post-title">
+                            Hello Blogging World
+                        </h2>
+                        <h3 class="post-subtitle">
+                            A first step into the blogging world
+                        </h3>
+                    </a>
+                    <p class="post-meta">Posted on November 7, 2015</p>
+                </div>
+                <hr>
+
+                <!-- Pager -->
+              <!--  <ul class="pager">
+                    <li class="next">
+                        <a href="#">Older Posts &rarr;</a>
+                    </li>
+                </ul>-->
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+</div>
+{% endblock %}
