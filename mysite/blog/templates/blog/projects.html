@@ -1,0 +1,45 @@
+
+{% extends "blog/base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image:url({% static 'blog/img/space-sloth-bg.jpg' %});">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="page-heading">
+                        <h1>Projects</h1>
+                        <hr class="small">
+                        <span class="subheading">Some stuff I dabble with</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 class="section-heading">Well this needs some work...</h2>
+
+                <div class="post-preview">
+                     <a href="">
+                        <h2 class="post-title">
+                            Dynamic Quiz Project
+                        </h2>
+                        <h3 class="post-subtitle">
+                            A Django quiz design app for dynamically building/sharing/taking quizzes.
+                        </h3>
+                    </a>
+                    <p class="post-meta">{{ post.pub_date }}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
