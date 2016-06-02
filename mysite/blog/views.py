@@ -18,3 +18,4 @@ def projects(request):
 
 def about(request):
     return render(request, 'blog/about.html')
+
