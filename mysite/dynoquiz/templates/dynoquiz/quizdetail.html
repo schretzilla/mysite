@@ -10,9 +10,6 @@
         <div class="col-lg-6">
             <h1>{{quiz.quiz_name}}</h1>
             <h4>Quiz Number: {{quiz.id}}</h4>
-            <p>{{quiz.quiz_detail}}
-                <a href="{% url 'dynoquiz:new_question' quiz.id %}" class="btn btn-primary">Add Question</a>
-            </p>
 
             <form>
             <ol>
@@ -38,6 +35,7 @@
             <div id="create-new-question" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-12">
+                        <h2>Add/Edit Question</h2>
                         <label for="question">Question:</label>
                         <input ng-model="questionText" type="text" class="form-control" id="question" placeholder="Question">
                         <label>Choices:</label>

@@ -6,6 +6,9 @@ from django.utils import timezone
 from .models import Quiz, Question, Choice
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
+def login(request):
+    return render(request, 'dynoquiz/login.html')
+
 def index(request):
     quiz_list = Quiz.objects.all()
     context = {'quiz_list': quiz_list}
