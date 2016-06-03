@@ -1,0 +1,16 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+<h1>Add Question</h1>
+
+<form action="{% url 'dynoquiz:create_question' quiz.id %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="question-text">Question:</label>
+        <input type="text" class="form-control" id="question-text" name="question-text" placeholder="Question">
+    </div>
+
+    <input type="submit" value="Vote" class="btn btn-primary">
+</form>
+
+{% endblock %}

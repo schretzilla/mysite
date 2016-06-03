@@ -22,6 +22,7 @@ urlpatterns = [
 
     #redirect to blog app
     url(r'^', include('blog.urls', namespace="blog")),
+    url(r'^dynoquiz/', include('dynoquiz.urls', namespace="dynoquiz")),
     #redirect to admin site
     url(r'^admin/', admin.site.urls),
 ]

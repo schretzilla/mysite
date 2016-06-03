@@ -1,0 +1,22 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1>{{quiz.quiz_name}}</h1>
+        <p>{{quiz.quiz_detail}}</p>
+
+        <ol>
+            {% for question in quiz.question_set.all %}
+                <li>{{question.question_text}}</li>
+                <ol>
+                    {% for choice in question.choice_set.all %}
+                        <li>{{choice.choice_text}} -- {{choice.votes}} Votes</li>
+                    {% endfor %}
+                </ol>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
+{% endblock %}

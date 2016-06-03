@@ -1,0 +1,48 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DynoQuiz Creator</title>
+
+    <!-- Twitter Bootstrap3 Style Sheet -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+    <!-- AngularJS Import -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <!-- Load Angular JS page -->
+    <!-- TODO Delete THIS ----------------->
+    <script src="{% static 'dynoquiz/js/index.js' %}"></script>
+
+</head>
+<body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="{% url 'dynoquiz:index' %}">Home</a></li>
+            <li role="presentation"><a href="#">Admin</a></li>
+            <li role="presentation"><a href="#">About</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">DynoQuiz</h3>
+      </div> <!-- End Nav List -->
+
+        <hr>
+
+        {% block content %}
+
+        {% endblock %}
+
+        <footer class="footer">
+        <p></p>
+        </footer>
+
+    </div> <!-- End Container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+</body>
+</html>

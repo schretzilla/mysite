@@ -1,0 +1,89 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+<script src="{% static 'dynoquiz/js/quizdetail.js' %}"></script>
+
+<div ng-app="quizDetail">
+    <div ng-controller="QuizDetailCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
+        <div class="col-lg-6">
+            <h1>{{quiz.quiz_name}}</h1>
+            <h4>Quiz Number: {{quiz.id}}</h4>
+            <p>{{quiz.quiz_detail}}
+                <a href="{% url 'dynoquiz:new_question' quiz.id %}" class="btn btn-primary">Add Question</a>
+            </p>
+
+            <form>
+            <ol>
+                <li ng-repeat="question in questions">
+                    {[{question.question_text }]}
+                    <button ng-click="deleteQuestion(question.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
+                    <button ng-click="formsetEditQuestion(question)" type="button" class="btn btn-info btn-sm">Edit</button>
+
+
+                     <!--<show-choices question="{[{question}]}"></show-choices> -->
+                    <div ng-repeat="choice in question.choices" class="radio">
+                        <label><input type="radio" name="question{[{question.id}]}" id="choice{[{choice.id}]}" value="{[{choice.id}]}">
+                            {[{choice.choice_text}]}
+                        </label>
+                    </div>
+                </li>
+            </ol>
+
+            </form>
+        </div> <!-- end left col -->
+
+        <div class="col-lg-6">
+            <div id="create-new-question" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label for="question">Question:</label>
+                        <input ng-model="questionText" type="text" class="form-control" id="question" placeholder="Question">
+                        <label>Choices:</label>
+                        <button ng-click="addChoice()" ng-hide="addNewChoiceBtn" type="button" class="btn btn-primary btn-xs">+</button>
+                        <button ng-click="addChoice()" ng-show="addNewChoiceBtn" type="button" class="btn btn-primary btn-xs">-</button>
+
+                        <!-- TODO: Replace ordered list with custom ordered list so item number hide on edit -->
+                        <ol>
+                            <li ng-repeat="choice in choices">
+                                <div ng-hide="editChoice{[{choice.id}]}">
+                                    {[{choice.choice_text}]}
+                                    <button ng-click="formsetEditChoice(choice)" type="button" class="btn btn-info btn-xs">Edit</button>
+                                    <button ng-click="deleteChoice(choice.id)" type="button" class="btn btn-info btn-xs">Delete</button>
+                                </div>
+                                <div ng-show="editChoice{[{choice.id}]}" class="input-group">
+                                    <input type="text" class="form-control" value="{[{choice.choice_text}]}">
+                                    <span class="input-group-btn">
+                                        <button ng-click="saveChoice(choice)" type="button" class="btn btn-info btn">Save</button>
+                                    </span>
+                                </div>
+                            </li>
+                            <div ng-show="addNewChoice" class="input-group">
+                                <input ng-model="newChoiceText" type="text" class="form-control">
+                                <span class="input-group-btn">
+                                      <button ng-click="postNewChoice()" type="button" class="btn btn-info">Save</button>
+                                </span>
+                            </div>
+                        </ol>
+                        <div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button ng-click="addQuestion()" type="button" class="btn btn-primary">Create</button>
+                        <button ng-click="updateQuestion()" type="button" class="btn btn-info">Update</button>
+                        <button ng-click="cancelQuestion()" type="button" class="btn btn-info">Cancel</button>
+                    </div>
+                </div>
+            </div> <!-- end form-horizontal -->
+
+        </div> <!-- end right col -->
+
+    </div> <!-- end quizdetailctrl -->
+</div>
+
+{% endblock %}
+
