@@ -9,8 +9,10 @@ from dynoquiz import api
 #added patterns here for api json
 urlpatterns = [
     #Login Page
-    url(r'^login/$', views.login, name='login'),
-    url(r'^$', views.login, name='login'),
+    url(r'^signin/$', views.signin, name='signin'),
+    url(r'^loginuser/$', views.loginuser, name='login_user'),
+    #url(r'^$', views.login, name='login'),
+
     #url(arg1 = just for visual url, ar2=method to use, arg3= alias to ref this )
     url(r'^quiz/$', views.index, name='index'),
     #Quiz Question Details

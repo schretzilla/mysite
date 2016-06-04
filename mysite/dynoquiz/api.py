@@ -8,6 +8,7 @@ from rest_framework import generics
 #import pdb; pdb.set_trace()             #FOR TESTING
 
 
+
 class QuizList(APIView):
 	def get(self, request, fromat=None):
 		quizes = Quiz.objects.all()

@@ -2,12 +2,28 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
 
 from .models import Quiz, Question, Choice
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
-def login(request):
-    return render(request, 'dynoquiz/login.html')
+def signin(request):
+    return render(request, 'dynoquiz/signin.html')
+
+def loginuser(request):
+    #test user login
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponseRedirect(reverse('dynoquiz:index'))
+        else:
+            #TODO: handle inactive user accounts
+            return render(request, 'dynoquiz/signin.html')
+    else:
+        return render(request, 'dynoquiz/signin.html')
 
 def index(request):
     quiz_list = Quiz.objects.all()
