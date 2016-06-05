@@ -1,3 +1,4 @@
+//Another day edit this and make login async
 var login = angular.module('login',[]);
 
 login.config(function($interpolateProvider){

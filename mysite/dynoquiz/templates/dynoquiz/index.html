@@ -1,6 +1,12 @@
 {% extends "dynoquiz/base.html" %}
 
 {% block content %}
+
+{% if perms.dynoquizs %}
+<h1>Perms Exist </h1>
+{% else %}
+<h1>Perms Dont Exist</h1>
+{% endif %}
     <div class="row">
         <div class="col-lg-12">
             <h1>Available Quizes</h1>

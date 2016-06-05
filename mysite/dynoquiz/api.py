@@ -52,7 +52,6 @@ class QuestionList(APIView):
     def get(self, request, pk, format=None):
         questions = Quiz.objects.get(pk=pk).question_set.all()
         serialized_questions = QuestionSerializer(questions, many=True)
-        #import pdb; pdb.set_trace()
         return Response(serialized_questions.data)
 
     def post(self, request, pk, format=None):
@@ -72,7 +71,6 @@ class QuestionDetail(APIView):
     def get(self, request, pk, question_id, format=None):
         question = self.get_question(question_id)
         serialized_question = QuestionSerializer(question)
-        #import pdb; pdb.set_trace()
         return Response(serialized_question.data)
 
     def delete(self, request, pk, question_id, format=None):
@@ -93,7 +91,6 @@ class QuestionDetail(APIView):
 
 class ChoiceList(APIView):
     def get(self, request, question_id, format=None):
-        #import pdb; pdb.set_trace()
         choices = Question.objects.get(pk=question_id).choices
         serialized_choices = ChoiceSerializer(choices, many=True)
         return Response(serialized_choices.data)

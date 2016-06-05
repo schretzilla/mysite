@@ -6,6 +6,13 @@ index.config(function($interpolateProvider){
 	$interpolateProvider.endSymbol('}]}');
 });
 
+//Set CSRF token
+index.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
+
 index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 	
 	$scope.loadItems = function() {
@@ -38,7 +45,7 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 	    };
         //focusedQuiz.quiz_name = $scope.quizName;
         //focusedQuiz.quizDetails = $scope.quizDetails;
-        $http.put('/dynoquiz/api/quiz/'+quiz.id, quiz).then(function(){
+        $http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz).then(function(){
             $scope.loadItems();
         }, function(response) {
             alert("error: " + response.data);

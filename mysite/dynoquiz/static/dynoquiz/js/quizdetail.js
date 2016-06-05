@@ -6,6 +6,12 @@ quizDetail.config(function($interpolateProvider){
 	$interpolateProvider.endSymbol('}]}');
 });
 
+//Set CSRF token
+quizDetail.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
+
 //TODO: Either Implement or remove
 quizDetail.directive('showChoices', function() {
     return {
@@ -69,8 +75,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             'question_text':$scope.questionText,
             'date_created':focusedQuestion.date_created,
         };
-
-        $http.put('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+focusedQuestion.id, question).then(function(){
+        $http.put('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+focusedQuestion.id+'/', question).then(function(){
             $scope.loadQuestions();
         }, function(response) {
             alert("error: " + response.data);
@@ -82,14 +87,14 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     */
     $scope.deleteQuestion = function(questionId) {
         //alert("Deleting question: " + questionId);
-        $http.delete('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId).then(function(){
+        $http.delete('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId + '/').then(function(){
             $scope.loadQuestions();
         });
     };
 
     //TODO: This needs work, not updating the left hand side and something is wrong with the return (google return with async fns)
     $scope.deleteChoice = function(choiceId) {
-        $http.delete('/dynoquiz/api/question/'+focusedQuestion.id+'/choice/'+choiceId).then(function(){
+        $http.delete('/dynoquiz/api/question/'+focusedQuestion.id+'/choice/'+choiceId + '/').then(function(){
             //ReLoad Focused Questions Choices
             $scope.getChoices(focusedQuestion.id);
         });

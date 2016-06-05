@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils import timezone
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .models import Quiz, Question, Choice
 
@@ -21,9 +22,13 @@ def loginuser(request):
             return HttpResponseRedirect(reverse('dynoquiz:index'))
         else:
             #TODO: handle inactive user accounts
-            return render(request, 'dynoquiz/signin.html')
+            return HttpResponseRedirect(reverse('dynoquiz:signin'))
     else:
-        return render(request, 'dynoquiz/signin.html')
+        return HttpResponseRedirect(reverse('dynoquiz:signin'))
+
+def logoutuser(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('dynoquiz:signin'))
 
 def index(request):
     quiz_list = Quiz.objects.all()
