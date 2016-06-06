@@ -45,10 +45,10 @@
                                         <form id="login-form" name="loginForm" action="{% url 'dynoquiz:login_user' %}" method="post" role="form" style="display: block;">
                                             {% csrf_token %}
                                             <div class="form-group">
-                                                <input ng-model="loginUsername" type="text" name="login-username" id="login-username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                                                <input ng-model="loginUsername" type="text" name="loginUsername" id="login-username" tabindex="1" class="form-control" placeholder="Username" value="" required>
                                             </div>
                                             <div class="form-group">
-                                                <input ng-model="loginPassword" type="password" name="login-password" id="login-password" tabindex="2" class="form-control" placeholder="Password" required>
+                                                <input ng-model="loginPassword" type="password" name="loginPassword" id="login-password" tabindex="2" class="form-control" placeholder="Password" required>
                                             </div>
                                             <!-- TODO: Cache User information in browser when selected
                                             <div class="form-group text-center">
@@ -59,7 +59,7 @@
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-sm-6 col-sm-offset-3">
-                                                        <input ng-disabled="!loginForm.$valid" type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
+                                                        <input ng-disabled="!loginForm.$valid" type="submit" name="loginSubmit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Log In">
                                                     </div>
                                                 </div>
                                             </div>
@@ -76,7 +76,7 @@
                                             </div>
                                             -->
                                         </form>
-                                        <form ng-submit="registerForm.$valid && registerValidate() && submitted" id="register-form" name="registerForm" method="post" role="form" style="display: none;" novalidate>
+                                        <form id="register-form" name="registerForm" action="{% url 'dynoquiz:register_user' %}" method="post" role="form" style="display: none;" novalidate>
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label ng-show="!registerUsernameValid() && registerForm.registerUsername.$touched" class="control-label" for="register-username">Username Required</label>

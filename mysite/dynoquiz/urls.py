@@ -11,7 +11,8 @@ urlpatterns = [
     #Login Page
     url(r'^signin/$', views.signin, name='signin'),
     url(r'^loginuser/$', views.loginuser, name='login_user'),
-    #url(r'^$', views.login, name='login'),
+    url(r'^registeruser/$', views.registeruser, name='register_user'),
+    url(r'^$', views.signin, name='signin'),
 
 
     url(r'^signout/$', views.logoutuser, name='logout_user'),

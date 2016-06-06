@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import Quiz, Question, Choice
 
@@ -14,8 +15,26 @@ def signin(request):
 
 #Login Action
 def loginuser(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.POST['loginUsername']
+    password = request.POST['loginPassword']
+    return (authenticateUser(request, username, password))
+
+def registeruser(request):
+    username = request.POST['registerUsername']
+    password = request.POST['registerPassword']
+    email = request.POST['registerEmail']
+
+    #TODO: do this client side
+    #check if user exists
+    if User.objects.get(username=username) is not None:
+        return HttpResponseRedirect(reverse('dynoquiz:signin'))
+
+    newUser = User.objects.create_user(username, email, password)
+    newUser.save()
+    return(authenticateUser(request, username, password))
+
+#authenticate users from login and register forms
+def authenticateUser(request, username, password):
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
@@ -31,6 +50,18 @@ def logoutuser(request):
     logout(request)
     return HttpResponseRedirect(reverse('dynoquiz:signin'))
 
+#authenticate user on login and register Redirect as needed
+def authenticateUser(request, username, password):
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return HttpResponseRedirect(reverse('dynoquiz:index'))
+        else:
+            #TODO: handle inactive user accounts
+            return HttpResponseRedirect(reverse('dynoquiz:signin'))
+    else:
+        return HttpResponseRedirect(reverse('dynoquiz:signin'))
 @login_required
 def index(request):
     quiz_list = Quiz.objects.all()
