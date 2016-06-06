@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic.base import RedirectView
+from dynoquiz import views
 
 
 urlpatterns = [
@@ -25,5 +26,8 @@ urlpatterns = [
     url(r'^dynoquiz/', include('dynoquiz.urls', namespace="dynoquiz")),
     #redirect to admin site
     url(r'^admin/', admin.site.urls),
+
+    #login required redirect
+    url(r'^accounts/login/$', views.signin),
 ]
 

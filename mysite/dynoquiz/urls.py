@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^loginuser/$', views.loginuser, name='login_user'),
     #url(r'^$', views.login, name='login'),
 
+
     url(r'^signout/$', views.logoutuser, name='logout_user'),
 
     #url(arg1 = just for visual url, ar2=method to use, arg3= alias to ref this )

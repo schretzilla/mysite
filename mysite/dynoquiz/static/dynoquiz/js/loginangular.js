@@ -9,9 +9,27 @@ login.config(function($interpolateProvider){
 
 login.controller('LoginCtrl', function LoginCtrl($scope, $log, $http){
 
-$scope.submit = function(){
-    alert("anguler in business " + $scope.username + " " + $scope.password);
+$scope.login = function() {
+
 };
 
+$scope.registerFormValid = function() {
+    var t = this.registerEmailValid()
+    var s = this.registerPasswordValid()
+    var v = this.registerPasswordValid()
+   return(this.registerEmailValid() && this.registerUsernameValid() && this.registerPasswordValid())
+};
 
-});
+$scope.registerEmailValid = function(){
+    return($scope.registerForm.registerEmail.$valid);
+};
+
+$scope.registerUsernameValid = function(){
+  return($scope.registerForm.registerUsername.$valid );
+};
+
+$scope.registerPasswordValid = function(){
+    return($scope.registerForm.registerPassword.$valid && $scope.registerPassword == $scope.registerConfirmPassword);
+};
+
+}); //End controller
