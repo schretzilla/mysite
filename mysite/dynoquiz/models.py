@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import datetime
 
 #A quiz contains many questions
 class Quiz(models.Model):
+    owner = models.ForeignKey(User, null=True)
     quiz_name = models.CharField(max_length=100)
     quiz_details = models.CharField(max_length=200, null=True)
     date_created = models.DateTimeField('date created')
