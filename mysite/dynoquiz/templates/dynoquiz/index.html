@@ -9,7 +9,7 @@
     </div>
 
     <div ng-app="index">
-        <div ng-controller="QuizCtrl" class="row">
+        <div ng-controller="QuizCtrl" class="row" ng-init="loadPage()">
             <div class="col-lg-6">
                 <!-- List Current Quizes reverse order -->
                 <div ng-repeat="quiz in quizes"  class="row">

@@ -10,17 +10,22 @@ from rest_framework import generics
 
 
 class QuizList(APIView):
-	def get(self, request, fromat=None):
-		quizes = Quiz.objects.all()
-		serialized_quiz = QuizSerializer(quizes, many=True)
-		return Response(serialized_quiz.data)
+    #return loggedin user's list of quizses
+    def get(self, request, fromat=None):
+        quizzes = Quiz.objects.filter(owner=request.user)
+        serialized_quiz = QuizSerializer(quizzes, many=True)
+        return Response(serialized_quiz.data)
 
-	def post(self, request, format=None):
-		serializer = QuizSerializer(data=request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #create new quiz for logged in user
+    def post(self, request, format=None):
+        serializer = QuizSerializer(data=request.data)
+        if serializer.is_valid():
+            newQuiz = serializer.save()
+            #There's probably a better way to do this w/o two saves
+            newQuiz.owner = request.user
+            newQuiz.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class QuizDetail(APIView):
     def get_quiz(self, pk):

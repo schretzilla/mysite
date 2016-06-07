@@ -10,7 +10,8 @@ class QuizSerializer(serializers.ModelSerializer):
 			'id',
 			'quiz_name',
 			'quiz_details',
-			'date_created'
+			'date_created',
+            'owner'
 		)
 
 class ChoiceSerializer(serializers.ModelSerializer):

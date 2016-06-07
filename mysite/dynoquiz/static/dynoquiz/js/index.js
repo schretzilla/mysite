@@ -24,6 +24,7 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 	$scope.addQuiz = function(){
 		$scope.date = new Date();
 		quiz = {
+		    'user':$scope.userId,
 			'quiz_name':$scope.quizName,
 			'quiz_details':$scope.quizDetails,
 			'date_created':$scope.date
@@ -100,9 +101,12 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
     //On page load
-	$scope.loadItems();
-	var focusedQuiz = "";
-	$scope.formsetCreateQuiz();
+    $scope.loadPage = function() {
+        $scope.loadItems();
+        var focusedQuiz = "";
+        $scope.formsetCreateQuiz();
+    };
+
 
 
 
