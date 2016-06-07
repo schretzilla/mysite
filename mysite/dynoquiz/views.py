@@ -25,8 +25,9 @@ def registeruser(request):
     email = request.POST['registerEmail']
 
     #TODO: do this client side
+    #import pdb; pdb.set_trace()             #FOR TESTING
     #check if user exists
-    if User.objects.get(username=username) is not None:
+    if User.objects.filter(username=username).exists() is True:
         return HttpResponseRedirect(reverse('dynoquiz:signin'))
 
     newUser = User.objects.create_user(username, email, password)
