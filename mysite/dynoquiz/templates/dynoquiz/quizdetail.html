@@ -35,12 +35,13 @@
             <div id="create-new-question" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-12">
+                        <button ng-click="addQuestionDiv=!addQuestionDiv" type="button" class="btn btn-primary btn-lg">Add Question</button>
+                    </div>
+                    <div ng-show="addQuestionDiv" class="col-sm-12">
                         <h2>Add/Edit Question</h2>
                         <label for="question">Question:</label>
-                        <input ng-model="questionText" type="text" class="form-control" id="question" placeholder="Question">
+                        <input ng-model="questionText" ng-change="addChoice()" type="text" class="form-control" id="question" placeholder="Question">
                         <label>Choices:</label>
-                        <button ng-click="addChoice()" ng-hide="addNewChoiceBtn" type="button" class="btn btn-primary btn-xs">+</button>
-                        <button ng-click="addChoice()" ng-show="addNewChoiceBtn" type="button" class="btn btn-primary btn-xs">-</button>
 
                         <!-- TODO: Replace ordered list with custom ordered list so item number hide on edit -->
                         <ol>

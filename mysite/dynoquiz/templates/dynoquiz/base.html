@@ -7,10 +7,13 @@
     <title>DynoQuiz Creator</title>
 
     <!-- Twitter Bootstrap3 Style Sheet -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"> -->
+    <link href="{% static 'blog/css/bootstrap.min.css' %}" rel="stylesheet">
+
 
     <!-- AngularJS Import -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+    <script src="{% static 'dynoquiz/js/angular.min.js' %}"></script>
 
     <!-- Load Angular JS page -->
     <!-- TODO Delete THIS ----------------->

@@ -137,16 +137,20 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     };
 
     $scope.addChoice = function() {
-        var newChoice = {
-            'choice_text':"",
-            'question':focusedQuestion.id,
-            'votes':0,
-            'date_created':new Date()
 
-        };
+        if ( $scope.questionText != null ){
+            var newChoice = {
+                'choice_text':"",
+                'question':focusedQuestion.id,
+                'votes':0,
+                'date_created':new Date()
 
-        $scope.addNewChoiceBtn = !$scope.addNewChoiceBtn;
-        $scope.addNewChoice = !$scope.addNewChoice;
+            };
+
+            $scope.addNewChoice = !$scope.addNewChoice;
+
+        }
+
     };
 
 
