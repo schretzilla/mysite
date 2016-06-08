@@ -3,13 +3,30 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
 
 from .models import Quiz, Question, Choice
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
+
+#Redirect logged in users from /siginin to their home
+def userloggedin(user):
+    return not user.is_authenticated()
+
+#Decorator for confriming user owns the quiz in question
+def user_owns_quiz(func):
+    def check_ownership(request, *args, **kwargs):
+        quizId = kwargs["quiz_id"]
+        quiz = Quiz.objects.get(pk=quizId)
+        if not (quiz.owner == request.user):
+            return HttpResponseRedirect(reverse('dynoquiz:index'))
+        return func(request, *args, **kwargs)
+    return check_ownership
+
+
 #Redirect to sign in page
+@user_passes_test(userloggedin, login_url='quiz/')
 def signin(request):
     return render(request, 'dynoquiz/signin.html')
 
@@ -62,6 +79,7 @@ def authenticateUser(request, username, password):
             return HttpResponseRedirect(reverse('dynoquiz:signin'))
     else:
         return HttpResponseRedirect(reverse('dynoquiz:signin'))
+
 @login_required
 def index(request):
     quiz_list = Quiz.objects.all()
@@ -69,6 +87,7 @@ def index(request):
     return render(request, 'dynoquiz/index.html', context)
 
 @login_required
+@user_owns_quiz
 def quizdetail(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
     context = {'quiz': quiz}

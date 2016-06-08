@@ -21,7 +21,8 @@ class QuizList(APIView):
         serializer = QuizSerializer(data=request.data)
         if serializer.is_valid():
             newQuiz = serializer.save()
-            #There's probably a better way to do this w/o two saves
+            #TODO: There's probably a better way to do this w/o two saves
+            #add user to quiz
             newQuiz.owner = request.user
             newQuiz.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
