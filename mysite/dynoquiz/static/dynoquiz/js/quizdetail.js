@@ -12,16 +12,6 @@ quizDetail.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
 
-//TODO: Either Implement or remove
-quizDetail.directive('showChoices', function() {
-    return {
-        restrict: 'E',
-        link: function(scope, element, attrs){
-            scope.choices = attrs.question.choice_set.all();
-        },
-        template: '<p ng-repeat="choice in choices">{{choice.id}}</p> <p>test</p>'
-    };
-});
 
 quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $http){
 
@@ -136,39 +126,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         };
     };
 
-    $scope.addChoice = function() {
-
-        if ( $scope.questionText != null ){
-            var newChoice = {
-                'choice_text':"",
-                'question':focusedQuestion.id,
-                'votes':0,
-                'date_created':new Date()
-
-            };
-
-            $scope.addNewChoice = !$scope.addNewChoice;
-
-        }
-
-    };
-
-
-    //TODO: Save only one choice at a time
-    $scope.saveChoice = function(choice) {
-        var curChoice = "editChoice"+choice.id;
-        $scope[curChoice] = !$scope[curChoice];
-
-        var choice = {
-            'quiz':$scope.quizId,
-            'question_text':$scope.questionText,
-            'date_created':new Date()
-        };
-
-
-    };
-
-
 
     loadQuestionFields = function(question) {
         $scope.questionText = question.question_text;
@@ -200,9 +157,49 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         $scope.quizId = curQuizId;
         $scope.loadQuestions();
         //$scope.getFullQuestion(1);
+        $scope.choiceList = [];
+        newChoice = {
+                'choice_text':"",
+                'question':focusedQuestion.id,
+                'votes':0,
+                'date_created':new Date()
+            };
+        $scope.choiceList.push(newChoice);
+    };
+
+    //Validates that the question form is complete
+    $scope.questionValid = function() {
+        return ($scope.choiceList.length > 1 && $scope.questionText != null )
+    }
+
+    $scope.addChoice = function() {
+
+        if ( $scope.choiceList[choiceList.length-1] != null ){
+
+            $scope.addNewChoice = true;
+            $scope.choiceList.push(newChoice);
+        }
+        else{
+            $scope.addNewChoice = false;
+        }
+
+    };
+
+    //TODO: Save only one choice at a time
+    $scope.saveChoice = function(choice) {
+        var curChoice = "editChoice"+choice.id;
+        $scope[curChoice] = !$scope[curChoice];
+
+        //TODO: Why is this question_text???
+        var choice = {
+            'quiz':$scope.quizId,
+            'question_text':$scope.questionText,
+            'date_created':new Date()
+        };
     };
 
     var focusedQuestion = "";
     $scope.choices=[];
+
 
 });

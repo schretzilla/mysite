@@ -1,59 +1,54 @@
-var shopping = angular.module('shopping',[]);
+var quizDetail = angular.module('quizDetail',[]);
 
-shopping.config(function($interpolateProvider){
-	//allow django templates and angular to co-exist
+quizDetail.config(function($interpolateProvider){
+    //allow django templates and angular to co-exist
 	$interpolateProvider.startSymbol('{[{');
 	$interpolateProvider.endSymbol('}]}');
 });
 
-shopping.controller('ListCtrl', function ListCtrl($scope, $log, $http){
+//Set CSRF token
+quizDetail.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+}]);
 
-	//dummy init fun
-	$scope.initialize = function(data){
-		$log.log('initialize',data);
-		$scope.initData=data;
-	};
 
-	$scope.loadItems = function() {
-		$http.get('/dynoquiz/api/quiz/').then(function(response){
-			$scope.items = response.data;
-		});
-	};
+quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $http){
 
-	/*
-	Angular Doc says to run it like this
-	$scope.loadItems2 = function() {
-		$http({
-			method: 'GET',
-			ulr: '/dynoquiz/api/quiz/'
-			}).then(function success(response) {
-				$scope.item2 = response.data;
-			});
-	};*/
 
-	$scope.postQuiz = function(quiz) {
-		alert("Inside post quiz: " + quiz);
-		$http.post('/dynoquiz/api/quiz/', quiz).then(function(){
-			alert("success post");
-		});
-	};
 
-	$scope.showNewFields = function() {
-		$scope.newFields = !$scope.newFields;
-	};
+        $scope.loadPage = function(curQuizId) {
+            $scope.quizId = curQuizId;
+            $scope.choiceList = [];
+            choice = {
+                id:$scope.choiceList.length,
+                text:""
+            };
+            $scope.choiceList.push(choice);
 
-	$scope.loadItems();
-	$scope.newFields = false;
+        };
 
-	$scope.addQuiz = function() {
-		$scope.date = new Date();
-		$scope.newQuizObj = {
-			'quiz_name':$scope.quizName,
-			'quiz_details':$scope.quizDetails,
-			'date_created':$scope.date
-		};
-		$scope.postQuiz($scope.newQuizObj);
-	};
+        /**
+        * dynamicList: Appends to objectList if specified attribute of last element is not null
+        * Args:
+        *   objectList: list of objects you are building
+        *   attr: Attribute used to determine if list should be appended
+        */
+        $scope.dynamicList = function(objectList, attr) {
+            //Add new input if input above has been used
+            listLength = objectList.length;
+            attribute = objectList[(listLength-1)][attr];
+            if ( attribute != ""){
+                newObject = {
+                    id:objectList.length,
+                };
+                newObject[attr] = "";
+                objectList.push(newObject);
+            } else if (objectList[(listLength-2)][attr] == ""){
+                //Drop last object if 2nd to last object attr is ""
+                objectList.pop();
+            }
+        };
+
+
 });
-
-

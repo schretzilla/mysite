@@ -40,7 +40,7 @@
                     <div ng-show="addQuestionDiv" class="col-sm-12">
                         <h2>Add/Edit Question</h2>
                         <label for="question">Question:</label>
-                        <input ng-model="questionText" ng-change="addChoice()" type="text" class="form-control" id="question" placeholder="Question">
+                        <input ng-model="questionText" type="text" class="form-control" id="question" placeholder="Question">
                         <label>Choices:</label>
 
                         <!-- TODO: Replace ordered list with custom ordered list so item number hide on edit -->
@@ -58,6 +58,15 @@
                                     </span>
                                 </div>
                             </li>
+
+                            <!-- Angular Choice list -->
+                            <ol>
+                                <li ng-repeat="choice in choiceList">
+                                    <input ng-change="addChoice()"  type="text" class="form-control" placeholder="New Choice">
+                                </li>
+                            </ol>
+
+
                             <div ng-show="addNewChoice" class="input-group">
                                 <input ng-model="newChoiceText" type="text" class="form-control">
                                 <span class="input-group-btn">
@@ -72,7 +81,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <button ng-click="addQuestion()" type="button" class="btn btn-primary">Create</button>
+                        <button ng-click="addQuestion()" ng-disabled="!questionValid()" type="button" class="btn btn-primary">Create</button>
                         <button ng-click="updateQuestion()" type="button" class="btn btn-info">Update</button>
                         <button ng-click="cancelQuestion()" type="button" class="btn btn-info">Cancel</button>
                     </div>

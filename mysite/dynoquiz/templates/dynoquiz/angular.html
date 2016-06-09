@@ -1,37 +1,25 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+
 {% load staticfiles %}
+<script src="{% static 'dynoquiz/js/demo.js' %}"></script>
 
-<!DOCTYPE html>
-<head>
-	<title>Angular Testing</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-	<script src="{% static 'dynoquiz/js/demo.js' %}"></script>
-</head>
-<body ng-app="shopping">
-    <div class="row">
-    	<div ng-controller="ListCtrl" ng-init="initialize('Ready for Action')" class="col-lg-12">
-    		<h1>Angular Test Area</h1>
-    		<h3>{[{ initData }]}</h3>
-    		<p> items list {[{items}]}</p>
-    		<ul>
-    			<li ng-repeat="quiz in items">{[{quiz.quiz_name}]} -  {[{quiz.quiz_details}]}</li>
-    		</ul>
+<div ng-app="quizDetail" ng-controller="QuizDetailCtrl">
 
 
-            <button ng-click="showNewFields()">Add New</button>
+    <div  ng-init="loadPage('1')">
 
-            <div ng-show="newFields">
-                <h3>Quiz Name</h3>
-                <input type="text" ng-model="quizName">
-                <h3>Details </h3>
-                <input type="text" ng-model="quizDetails">
-            </br>
-                <button ng-click="addQuiz()"> Save </button>
+    <!-- Angular Choice list -->
+                            <ol>
+                                <p>{[{ choiceList.length }]} </p>
+                                <li ng-repeat="choice in choiceList">
+                                    <input ng-model="choice.text" ng-change="dynamicList(choiceList, 'text')" name="choice{[{choice.id}]}"  type="text" class="form-control" placeholder="New Choice">
+                                </li>
+                            </ol>
 
-                <h3> Preview</h3>
-                <p> {[{newQuizObj}]}
-            </div>
-    	</div>
+
     </div>
-</body>
-
+</div>
+{% endblock %}
 
