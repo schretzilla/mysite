@@ -15,14 +15,6 @@ quizDetail.config(['$httpProvider', function($httpProvider) {
 
 quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $http){
 
-    //On page load
-    $scope.loadQuestions = function() {
-       //save cur quiz id
-       $http.get('/dynoquiz/api/quiz/'+$scope.quizId+'/question').then(function(response){
-            $scope.questions = response.data;
-       });
-    };
-
     /*
     * LOAD
     */
@@ -45,18 +37,105 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             });
     };
 
+    /*
+    * Add new question and its choices to the DB
+    */
     $scope.addQuestion = function(){
         question = {
             'quiz':$scope.quizId,
             'question_text':$scope.questionText,
+            'choices':[],
             'date_created':new Date()
         };
-        $http.post('/dynoquiz/api/quiz/'+$scope.quizId+'/question/', question).then(function(){
-            $scope.loadQuestions();
-            $scope.question=null;
 
-        });
+        postQuestion(question)
+            .then(function (response) {
+                //Append to question list
+                question = response.data;
+                //TODO: Change this to questionList or change choiceList to choices
+                $scope.questions.push(question);
+
+                //Post Choices
+                angular.forEach($scope.choiceList, function(choice, key){
+                    postNewChoice(question, choice.text);
+                });
+
+                //clean form
+                $scope.questionText = "";
+                //$scope.loadQuestions();
+                $scope.choiceList=[choiceObj(1,"")];
+            }, function(error) {
+                alert ("Unable to post question" + error.message);
+            });
+
     };
+
+    postNewChoice = function(question, choiceText) {
+        //Only post non empty choices
+        if (choiceText != ""){
+            var choice = {
+                'question':question.id,
+                'choice_text':choiceText,
+                'votes':0,
+            };
+
+            postChoice(choice)
+                .then(function (response) {
+                    //Append choice to questions list
+                    choice = response.data;
+                    question.choices.push(choice);
+                }, function(error) {
+                    alert("Unable to post choice " + error.message);
+                });
+        }
+
+    };
+
+    //Load Question List
+    //TODOD this doesnt need to be scope
+    $scope.loadQuestions = function() {
+        getQuestions($scope.quizId)
+            .then(function (response) {
+                $scope.questions=response.data;
+            }, function(error) {
+                alert("Unable to load questions " + error.message);
+            });
+    };
+
+    /*
+    * Service Layer
+    */
+    // Question Post
+    postQuestion = function(question) {
+        return ( $http.post('/dynoquiz/api/quiz/'+question.quiz+'/question/', question) );
+    };
+
+    // Choice Post
+    postChoice = function(choice) {
+        return ( $http.post('/dynoquiz/api/question/'+choice.question+'/choice/', choice) );
+    };
+
+    // Get Questions List
+    getQuestions = function(quizId) {
+        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/question') );
+    };
+
+    /*
+    *End Service Layer
+    */
+
+    /*
+    * Model Layer
+    */
+    choiceObj = function(id, text) {
+        return{
+           'id':id,
+           'choice_text':text,
+        };
+    };
+    /*
+    *End Model Layer
+    */
 
     $scope.updateQuestion = function(){
         question = {
@@ -90,25 +169,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         });
     };
 
-
-    $scope.postNewChoice = function() {
-        var choice = {
-            'question':focusedQuestion.id,
-            'choice_text':$scope.newChoiceText,
-            'votes':0,
-            'date_created':new Date()
-        };
-
-        $http.post('/dynoquiz/api/question/'+focusedQuestion.id+'/choice/', choice).then(function(response){
-            //Add newly created choice to the focused questions choices
-            choice.id = response.data.id;
-            focusedQuestion.choices.push(choice);
-            loadQuestionFields(focusedQuestion);
-            //clear choice box and hide it
-            $scope.newChoiceText=null;
-            $scope.addChoice();
-        });
-    };
 
     //Erase input fields when a question has been cancled
     cancelQuestion = function() {
@@ -160,9 +220,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         $scope.choiceList = [];
         newChoice = {
                 'choice_text':"",
-                'question':focusedQuestion.id,
-                'votes':0,
-                'date_created':new Date()
             };
         $scope.choiceList.push(newChoice);
     };
@@ -172,19 +229,29 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         return ($scope.choiceList.length > 1 && $scope.questionText != null )
     }
 
-    $scope.addChoice = function() {
-
-        if ( $scope.choiceList[choiceList.length-1] != null ){
-
-            $scope.addNewChoice = true;
-            $scope.choiceList.push(newChoice);
+    /**
+    * dynamicList: Appends to objectList if specified attribute of last element is not null
+    * Args:
+    *   objectList: list of objects you are building
+    *   attr: Attribute used to determine if list should be appended
+    */
+    $scope.dynamicList = function(objectList, attr) {
+        //Add new input if input above has been used
+        listLength = objectList.length;
+        attribute = objectList[(listLength-1)][attr];
+        if ( attribute != ""){
+           newObject = {
+                 id:objectList.length,
+           };
+           newObject[attr] = "";
+           objectList.push(newObject);
+        } else if (objectList[(listLength-2)][attr] == ""){
+            //Drop last object if 2nd to last object attr is ""
+            objectList.pop();
         }
-        else{
-            $scope.addNewChoice = false;
-        }
-
     };
 
+    /* DEPRECIATED DELETE
     //TODO: Save only one choice at a time
     $scope.saveChoice = function(choice) {
         var curChoice = "editChoice"+choice.id;
@@ -197,6 +264,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             'date_created':new Date()
         };
     };
+    */
 
     var focusedQuestion = "";
     $scope.choices=[];
