@@ -88,7 +88,22 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
                     alert("Unable to post choice " + error.message);
                 });
         }
+    };
 
+    //Save focused text's value
+    $scope.persistCurText = function(curText) {
+        $scope.curText = curText;
+    };
+
+    /*
+    * Update Choice on deselect
+    */
+    $scope.updateChoice = function(question, choiceText) {
+        //Detect if choice has been edited
+        if (choiceText != "" && $scope.curText != choiceText )
+        {
+            alert("in if");
+        }
     };
 
     /**
@@ -186,9 +201,10 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     };
 
 
-    //Erase input fields when a question has been cancled
-    cancelQuestion = function() {
-
+    //Erase input fields when a question has been canceled
+    $scope.cancelQuestion = function() {
+        $scope.choiceList=[choiceObj(1,"")];
+        $scope.questionText = "";
     };
 
     //Set Focused Question when Edit is selected
@@ -233,11 +249,8 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         $scope.quizId = curQuizId;
         $scope.loadQuestions();
         //$scope.getFullQuestion(1);
-        $scope.choiceList = [];
-        newChoice = {
-                'choice_text':"",
-            };
-        $scope.choiceList.push(newChoice);
+        $scope.choiceList=[choiceObj(1,"")];
+
     };
 
     //Validates that the question form is complete
@@ -284,10 +297,5 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     var focusedQuestion = "";
     $scope.choices=[];
-
-    //Testing
-    $scope.test = function() {
-        $scope.questions;
-    };
 
 });
