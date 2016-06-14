@@ -91,6 +91,21 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     };
 
+    /**
+    DELETE
+    */
+    $scope.removeQuestion = function(questionIndex) {
+        //TODO add confirm
+        question = $scope.questions[questionIndex];
+        deleteQuestion(question.id)
+            .then(function (response) {
+                //reload question list... might not be needed
+                $scope.questions.splice(questionIndex,1);
+            }, function(error) {
+                alert("Unable to delete question "  + error.message);
+            });
+    };
+
     //Load Question List
     //TODOD this doesnt need to be scope
     $scope.loadQuestions = function() {
@@ -120,6 +135,15 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/question') );
     };
 
+    // Delete Question
+    deleteQuestion = function(questionId) {
+        return ( $http.delete('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId + '/') );
+    };
+
+    // Update Question
+    updateQuestion = function(question) {
+        $http.put('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+question.id+'/', question)
+    };
     /*
     *End Service Layer
     */
@@ -151,15 +175,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         });
     };
 
-    /**
-    DELETE
-    */
-    $scope.deleteQuestion = function(questionId) {
-        //alert("Deleting question: " + questionId);
-        $http.delete('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId + '/').then(function(){
-            $scope.loadQuestions();
-        });
-    };
+
 
     //TODO: This needs work, not updating the left hand side and something is wrong with the return (google return with async fns)
     $scope.deleteChoice = function(choiceId) {
@@ -269,5 +285,9 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     var focusedQuestion = "";
     $scope.choices=[];
 
+    //Testing
+    $scope.test = function() {
+        $scope.questions;
+    };
 
 });
