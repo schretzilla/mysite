@@ -9,7 +9,7 @@
     <div ng-controller="QuizDetailCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
         <div class="col-lg-6">
             <h1>{{quiz.quiz_name}}</h1>
-            <h4>Quiz Number: {{quiz.id}}</h4>
+            <h4>Quiz Number: {{quiz.id}} <em>{[{ formStatus }]}</em> </h4>
 
             <form>
 
@@ -21,7 +21,7 @@
                             {[{ $index + 1 }]}
                         </div>
                         <div class="col-lg-9">
-                            <input ng-model="question.question_text" id="question.id" type="text" class="form-control input-md">
+                            <input ng-model="question.question_text" ng-change="updateStatus()" ng-blur="updateQuestion(question)" ng-focus="persistCurText(question.question_text)" id="question.id" type="text" class="form-control input-md">
                         </div>
                         <div class="col-lg-2">
                             <button ng-click="removeQuestion($index)" type="button" class="btn btn-danger btn-sm">Delete</button>
@@ -33,7 +33,7 @@
                                     <div ng-repeat="choice in question.choices" class="radio">
 
                                             <input type="radio" name="question{[{question.id}]}" id="choice{[{choice.id}]}" value="{[{choice.id}]}">
-                                            <input ng-model="choice.choice_text" ng-blur="updateChoice(choice)" ng-focus="persistCurText(choice.choice_text)" name="choice{[{choice.id}]}" type="text" class="form-control input-sm">
+                                            <input ng-model="choice.choice_text" ng-change="updateStatus()" ng-blur="updateChoice(choice)" ng-focus="persistCurText(choice.choice_text)" name="choice{[{choice.id}]}" type="text" class="form-control input-sm">
 
                                     </div>
                                 </div>

@@ -90,8 +90,9 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         }
     };
 
-    //Save focused text's value
+    //Save focused text's value before it changes
     $scope.persistCurText = function(curText) {
+        //TODO: rename curText if it doesn't make sense
         $scope.curText = curText;
     };
 
@@ -100,10 +101,24 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     */
     $scope.updateChoice = function(choice) {
         //Detect if choice has been edited
-        if (choice.choice_text != "" && $scope.curText != choice.choice_text )
+        if (choice.choice_text != "" && choice.choice_text != $scope.curText)
         {
             updateChoice(choice);
         }
+        $scope.formStatus = "Saved"
+    };
+
+    /*
+    * Update Question on deselect
+    */
+    //TODO: Can probably consolidate this function with update choice fn
+    $scope.updateQuestion = function(question){
+        //Detect if question has been edited
+        if (question.question_text != "" && question.question_text != $scope.curText)
+        {
+            updateQuestion(question);
+        }
+        $scope.formStatus = "Saved"
     };
 
     /**
@@ -121,6 +136,11 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             });
     };
 
+    //Update Status Variable on input change
+    $scope.updateStatus = function() {
+        $scope.formStatus = "Saving";
+    };
+
     //Load Question List
     //TODO this doesnt need to be scope
     $scope.loadQuestions = function() {
@@ -131,6 +151,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
                 alert("Unable to load questions " + error.message);
             });
     };
+
 
     /*
     * Service Layer
@@ -162,7 +183,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     // Update Question
     updateQuestion = function(question) {
-        $http.put('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+question.id+'/', question)
+        $http.put('/dynoquiz/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question)
     };
     /*
     *End Service Layer
@@ -181,19 +202,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     *End Model Layer
     */
 
-    $scope.updateQuestion = function(){
-        question = {
-            'id':focusedQuestion.id,
-            'quiz':focusedQuestion.quiz,
-            'question_text':$scope.questionText,
-            'date_created':focusedQuestion.date_created,
-        };
-        $http.put('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+focusedQuestion.id+'/', question).then(function(){
-            $scope.loadQuestions();
-        }, function(response) {
-            alert("error: " + response.data);
-        });
-    };
+
 
 
 
