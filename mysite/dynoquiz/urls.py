@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^api/quiz/(?P<pk>[0-9]+)/question/$', api.QuestionList.as_view()),
     url(r'^api/quiz/(?P<pk>[0-9]+)/question/(?P<question_id>[0-9]+)/$', api.QuestionDetail.as_view()),
 
+    #TODO: Clean up no need for question id in choice updates and creates
     #Choice API
     url(r'^api/question/(?P<question_id>[0-9]+)/choice/$', api.ChoiceList.as_view()),
     url(r'^api/question/(?P<question_id>[0-9]+)/choice/(?P<choice_id>[0-9]+)/$', api.ChoiceDetail.as_view())

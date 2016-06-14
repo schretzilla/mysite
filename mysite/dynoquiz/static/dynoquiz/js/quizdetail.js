@@ -98,11 +98,11 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     /*
     * Update Choice on deselect
     */
-    $scope.updateChoice = function(question, choiceText) {
+    $scope.updateChoice = function(choice) {
         //Detect if choice has been edited
-        if (choiceText != "" && $scope.curText != choiceText )
+        if (choice.choice_text != "" && $scope.curText != choice.choice_text )
         {
-            alert("in if");
+            updateChoice(choice);
         }
     };
 
@@ -122,7 +122,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     };
 
     //Load Question List
-    //TODOD this doesnt need to be scope
+    //TODO this doesnt need to be scope
     $scope.loadQuestions = function() {
         getQuestions($scope.quizId)
             .then(function (response) {
@@ -143,6 +143,11 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     // Choice Post
     postChoice = function(choice) {
         return ( $http.post('/dynoquiz/api/question/'+choice.question+'/choice/', choice) );
+    };
+
+    // Update Choice
+    updateChoice = function(choice) {
+        $http.put('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id+'/', choice)
     };
 
     // Get Questions List

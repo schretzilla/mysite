@@ -115,6 +115,7 @@ class ChoiceDetail(APIView):
         except Choice.DoesNotExist:
             raise Http404
 
+    #TODO: Clean up, no need for question_id in any of these
     def get(self, request, question_id, choice_id, format=None):
         choice = self.get_choice(choice_id)
         serialized_choice = ChoiceSerializer(choice)
@@ -125,7 +126,8 @@ class ChoiceDetail(APIView):
         choice.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-    def put(self, request, choice_id, format=None):
+    def put(self, request, question_id, choice_id, format=None):
+
         choice = self.get_choice(choice_id)
         serializer = ChoiceSerializer(choice, data=request.data)
         if serializer.is_valid():
