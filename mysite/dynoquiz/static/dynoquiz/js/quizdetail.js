@@ -18,23 +18,13 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     /*
     * LOAD
     */
+    //TODO: THIS ISNT NEEDED
     //TODO: Get choices should return a value
     $scope.getChoices = function(questionId) {
         $http.get('/dynoquiz/api/question/'+questionId+'/choice').then(function(response) {
              $scope.choices = response.data;
              focusedQuestion.choices=$scope.choices;
         });
-    };
-
-    //TODO: Load question on edit click
-    $scope.getFullQuestion = function(questionId) {
-       $http.get('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId).then(function(response){
-            $scope.questions = response.data;
-       },
-            function(data) {
-                //Error
-                alert("error: on get full question: " +data );
-            });
     };
 
     /*
@@ -70,6 +60,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     };
 
+    //TODO: ONLY NEEDS CHOICE, NOT choice text and question inputs
     postNewChoice = function(question, choiceText) {
         //Only post non empty choices
         if (choiceText != ""){
@@ -88,6 +79,17 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
                     alert("Unable to post choice " + error.message);
                 });
         }
+    };
+
+    //Delete choice and update choice list
+    $scope.removeChoice = function(choiceIndex, choice, choices) {
+        deleteChoice(choice)
+            .then(function (response) {
+                //remove choice from choice list
+                choices.splice(choiceIndex,1);
+            }, function(error) {
+                alert("Unable to delete choice " + error.message);
+            });
     };
 
     //Save focused text's value before it changes
@@ -124,6 +126,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     /**
     DELETE
     */
+    //TODO: can just pass in the question as well with the funciton instead of searching for it
     $scope.removeQuestion = function(questionIndex) {
         //TODO add confirm
         question = $scope.questions[questionIndex];
@@ -168,7 +171,12 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     // Update Choice
     updateChoice = function(choice) {
-        $http.put('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id+'/', choice)
+        return ( $http.put('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id+'/', choice) );
+    };
+
+    // Delete Choice
+    deleteChoice = function(choice) {
+        return ( $http.delete('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id + '/') );
     };
 
     // Get Questions List
@@ -183,7 +191,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     // Update Question
     updateQuestion = function(question) {
-        $http.put('/dynoquiz/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question)
+        return ( $http.put('/dynoquiz/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question) );
     };
     /*
     *End Service Layer
@@ -204,65 +212,16 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
 
 
-
-
-    //TODO: This needs work, not updating the left hand side and something is wrong with the return (google return with async fns)
-    $scope.deleteChoice = function(choiceId) {
-        $http.delete('/dynoquiz/api/question/'+focusedQuestion.id+'/choice/'+choiceId + '/').then(function(){
-            //ReLoad Focused Questions Choices
-            $scope.getChoices(focusedQuestion.id);
-        });
-    };
-
-
     //Erase input fields when a question has been canceled
     $scope.cancelQuestion = function() {
         $scope.choiceList=[choiceObj(1,"")];
         $scope.questionText = "";
     };
 
-    //Set Focused Question when Edit is selected
-    setFocusedQuestion = function(question) {
-        focusedQuestion = {
-            'id':question.id,
-            'question_text':question.question_text,
-            'quiz':question.quiz,
-            'date_created':question.date_created,
-            'choices':question.choices
-        };
-    };
-
-
-    loadQuestionFields = function(question) {
-        $scope.questionText = question.question_text;
-        $scope.choices = question.choices;
-    };
-
-    $scope.formsetEditChoice = function(choice) {
-        setFocusedChoice(choice);
-        var curChoice = "editChoice"+choice.id;
-        $scope[curChoice] = !$scope[curChoice];
-    };
-
-
-    setFocusedChoice = function(choice) {
-        focusedChoice = {
-            'id':choice.id,
-            'choice_text':choice.choice_text,
-            'votes':choice.votes
-        };
-    };
-
-    $scope.formsetEditQuestion = function(question) {
-        setFocusedQuestion(question);
-        loadQuestionFields(focusedQuestion);
-    };
-
     $scope.loadPage = function(curQuizId) {
         //save persistant variables
         $scope.quizId = curQuizId;
         $scope.loadQuestions();
-        //$scope.getFullQuestion(1);
         $scope.choiceList=[choiceObj(1,"")];
 
     };
@@ -294,22 +253,5 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         }
     };
 
-    /* DEPRECIATED DELETE
-    //TODO: Save only one choice at a time
-    $scope.saveChoice = function(choice) {
-        var curChoice = "editChoice"+choice.id;
-        $scope[curChoice] = !$scope[curChoice];
-
-        //TODO: Why is this question_text???
-        var choice = {
-            'quiz':$scope.quizId,
-            'question_text':$scope.questionText,
-            'date_created':new Date()
-        };
-    };
-    */
-
-    var focusedQuestion = "";
-    $scope.choices=[];
 
 });
