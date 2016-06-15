@@ -20,12 +20,12 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     */
     //TODO: THIS ISNT NEEDED
     //TODO: Get choices should return a value
-    $scope.getChoices = function(questionId) {
+   /* $scope.getChoices = function(questionId) {
         $http.get('/dynoquiz/api/question/'+questionId+'/choice').then(function(response) {
              $scope.choices = response.data;
              focusedQuestion.choices=$scope.choices;
         });
-    };
+    };*/
 
     /*
     * Add new question and its choices to the DB
@@ -52,7 +52,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
                 //clean form
                 $scope.questionText = "";
-                //$scope.loadQuestions();
                 $scope.choiceList=[choiceObj(1,"")];
             }, function(error) {
                 alert ("Unable to post question" + error.message);
@@ -60,7 +59,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     };
 
-    //TODO: ONLY NEEDS CHOICE, NOT choice text and question inputs
     postNewChoice = function(question, choiceText) {
         //Only post non empty choices
         if (choiceText != ""){
@@ -81,6 +79,13 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         }
     };
 
+    // Add new choice btn
+    $scope.addChoice = function(question, choiceText) {
+        postNewChoice(question, choiceText);
+        //clear new choice input
+        question.newChoice = "";
+    };
+
     //Delete choice and update choice list
     $scope.removeChoice = function(choiceIndex, choice, choices) {
         deleteChoice(choice)
@@ -92,6 +97,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             });
     };
 
+
     //Save focused text's value before it changes
     $scope.persistCurText = function(curText) {
         //TODO: rename curText if it doesn't make sense
@@ -102,7 +108,20 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     * Update Choice on deselect
     */
     $scope.updateChoice = function(choice) {
-        //Detect if choice has been edited
+        //Check if the choice is new for the question
+        /*if(choice.hasOwnProperty('new'))
+        {
+            alert("This is new");
+            postChoice(choice)
+                .then(function (response) {
+
+                });
+            //Add choice
+            //add new choice list
+
+
+        }*/
+        //For existing choices detect if choice has been edited
         if (choice.choice_text != "" && choice.choice_text != $scope.curText)
         {
             updateChoice(choice);
@@ -200,10 +219,23 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     /*
     * Model Layer
     */
+    //New Choice for new question
     choiceObj = function(id, text) {
         return{
            'id':id,
            'choice_text':text,
+           'new':true,
+           'votes':0,
+        };
+    };
+
+    //New Choice for existing question
+    choiceObj = function(text, questionId) {
+        return{
+           'choice_text':text,
+           'question':questionId,
+           'new':true,
+           'votes':0,
         };
     };
     /*
@@ -244,6 +276,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         if ( attribute != ""){
            newObject = {
                  id:objectList.length,
+                 new:true,
            };
            newObject[attr] = "";
            objectList.push(newObject);
