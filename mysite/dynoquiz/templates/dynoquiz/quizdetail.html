@@ -20,11 +20,13 @@
                         <div class="col-lg-1">
                             {[{ $index + 1 }]}
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-11">
+                            <div class="input-group">
                             <input ng-model="question.question_text" ng-change="updateStatus()" ng-blur="updateQuestion(question)" ng-focus="persistCurText(question.question_text)" id="question.id" type="text" class="form-control input-md">
-                        </div>
-                        <div class="col-lg-2">
-                            <button ng-click="removeQuestion($index)" type="button" class="btn btn-danger btn-sm">Delete</button>
+                                <span class="input-group-btn">
+                                    <button ng-click="removeQuestion($index)" type="button" class="btn btn-danger btn-md">Delete</button>
+                                </span>
+                            </div>
                         </div>
 
                             <div class="row">

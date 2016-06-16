@@ -13,6 +13,7 @@ class Quiz(models.Model):
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz)
+    answer = models.OneToOneField('Choice', related_name='answer', null=True)
     question_text = models.CharField(max_length=200)
     date_created = models.DateTimeField('date created')
     def __str__(self):
