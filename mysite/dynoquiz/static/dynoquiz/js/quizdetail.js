@@ -31,12 +31,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     * Add new question and its choices to the DB
     */
     $scope.addQuestion = function(){
-        question = {
-            'quiz':$scope.quizId,
-            'question_text':$scope.questionText,
-            'choices':[],
-            'date_created':new Date()
-        };
+        question = questionObj($scope.quizId, $scope.questionText);
 
         postQuestion(question)
             .then(function (response) {
@@ -238,11 +233,39 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
            'votes':0,
         };
     };
+
+    //New Question Model
+     questionObj = function(id, text){
+        return {
+            'quiz':id,
+            'question_text':text,
+            'choices':[],
+            'date_created':new Date(),
+        };
+     };
+
+        //TODO: Can we consolidate model functions with diff arg numbers
+     //New Question Model
+     questionObj = function(id, text, choice){
+        return {
+            'quiz':id,
+            'question_text':text,
+            'choices':[],
+            'answer':choice,
+            'date_created':new Date(),
+        };
+
+     };
+
     /*
     *End Model Layer
     */
 
-
+    //Set answer to existing question choice
+    $scope.setAnswer = function(question, choice) {
+        question.answer = choice.id;
+        updateQuestion(question);
+    };
 
     //Erase input fields when a question has been canceled
     $scope.cancelQuestion = function() {
@@ -261,7 +284,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     //Validates that the question form is complete
     $scope.questionValid = function() {
         return ($scope.choiceList.length > 1 && $scope.questionText != null )
-    }
+    };
 
     /**
     * dynamicList: Appends to objectList if specified attribute of last element is not null

@@ -35,5 +35,6 @@ class QuestionSerializer(serializers.ModelSerializer):
             'question_text',
             'quiz',
             'date_created',
-            'choices'
+            'choices',
+            'answer'
         )
