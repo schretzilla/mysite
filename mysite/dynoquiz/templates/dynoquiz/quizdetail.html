@@ -33,7 +33,7 @@
                                 <div class="col-lg-9 col-md-offset-2">
                                     <div ng-repeat="choice in question.choices" class="radio">
 
-                                            <input ng-click="setAnswer(question, choice)" ng-checked="question.answer == choice.id" type="radio" name="question{[{question.id}]}" id="choice{[{choice.id}]}" value="{[{choice.id}]}">
+                                            <input ng-click="setAnswer(question, choice.id)" ng-checked="question.answer == choice.id" type="radio" name="question{[{question.id}]}" id="choice{[{choice.id}]}" value="{[{choice.id}]}">
                                             <input ng-model="choice.choice_text" ng-change="updateStatus()" ng-blur="updateChoice(choice)" ng-focus="persistCurText(choice.choice_text)" name="choice{[{choice.id}]}" type="text" class="form-control input-sm">
                                             <button ng-show="choice.choice_text == ''" ng-click="removeChoice($index, choice, question.choices)" type="button" class="btn btn-danger btn-sm">Delete</button>
 
@@ -75,8 +75,8 @@
 
                         <div ng-repeat="choice in choiceList" class="radio">
                                 <label >
-                                    <input type="radio" name="quesiton{[{question.id}]}" disabled="disabled">
-                                    <input ng-model="choice.text" ng-change="dynamicList(choiceList, 'text')" name="choice{[{choice.id}]}"  type="text" class="form-control input-default" placeholder="New Choice">
+                                    <input ng-click="chooseAnswer(choice)" type="radio" name="question{[{question.id}]}">
+                                    <input ng-model="choice.choice_text" ng-change="dynamicList(choiceList, 'choice_text')" name="choice{[{choice.id}]}"  type="text" class="form-control input-default" placeholder="New Choice">
                                 </label>
                         </div>
                     </div> <!-- End addQuestionDiv() -->

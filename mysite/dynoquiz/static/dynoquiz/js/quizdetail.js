@@ -36,38 +36,49 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         postQuestion(question)
             .then(function (response) {
                 //Append to question list
-                question = response.data;
+                newQuestion = response.data;
                 //TODO: Change this to questionList or change choiceList to choices
-                $scope.questions.push(question);
+                $scope.questions.push(newQuestion);
 
                 //Post Choices
                 angular.forEach($scope.choiceList, function(choice, key){
-                    postNewChoice(question, choice.text);
+                    postNewChoice(newQuestion, choice);
                 });
 
                 //clean form
                 $scope.questionText = "";
-                $scope.choiceList=[choiceObj(1,"")];
+                $scope.choiceList=[nullChoice()];
+                $scope.selectedAnswer="";
             }, function(error) {
                 alert ("Unable to post question" + error.message);
             });
 
     };
 
-    postNewChoice = function(question, choiceText) {
-        //Only post non empty choices
-        if (choiceText != ""){
-            var choice = {
-                'question':question.id,
-                'choice_text':choiceText,
-                'votes':0,
-            };
+    //Returns a blank choice object
+    nullChoice = function() {
+        return(choiceObj(1,"",0))
+    };
 
+    /*
+    * Post new choice if text is not null
+    */
+    postNewChoice = function(question, choice) {
+
+        //Only post non empty choices
+        if (choice.choice_text != ""){
+
+            //Set choice question
+            choice.question = question.id;
             postChoice(choice)
                 .then(function (response) {
                     //Append choice to questions list
-                    choice = response.data;
-                    question.choices.push(choice);
+                    newChoice = response.data;
+                    question.choices.push(newChoice);
+                    //Update question if choice is selected answer
+                    if (choice.correct == true){
+                        $scope.setAnswer(question, newChoice.id);
+                    }
                 }, function(error) {
                     alert("Unable to post choice " + error.message);
                 });
@@ -76,7 +87,8 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     // Add new choice btn
     $scope.addChoice = function(question, choiceText) {
-        postNewChoice(question, choiceText);
+        choice = choiceObj(0, choiceText, question.id)
+        postNewChoice(question, choice);
         //clear new choice input
         question.newChoice = "";
     };
@@ -214,7 +226,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     /*
     * Model Layer
     */
-    //New Choice for new question
+/*    //New Choice for new question
     choiceObj = function(id, text) {
         return{
            'id':id,
@@ -222,15 +234,18 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
            'new':true,
            'votes':0,
         };
-    };
+    };*/
 
+    //TODO: Edit to remove question id also id isnt necessary other than to make it unique
     //New Choice for existing question
-    choiceObj = function(text, questionId) {
+    choiceObj = function(id, text, questionId) {
         return{
+           'id':id,
            'choice_text':text,
            'question':questionId,
            'new':true,
            'votes':0,
+           'correct':false,
         };
     };
 
@@ -262,14 +277,20 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     */
 
     //Set answer to existing question choice
-    $scope.setAnswer = function(question, choice) {
-        question.answer = choice.id;
+    $scope.setAnswer = function(question, choiceId) {
+        question.answer = choiceId;
         updateQuestion(question);
+    };
+
+    //TODO: Can just be on html
+    //Chose answer for new Question
+    $scope.chooseAnswer = function(choice) {
+        choice.correct = true;
     };
 
     //Erase input fields when a question has been canceled
     $scope.cancelQuestion = function() {
-        $scope.choiceList=[choiceObj(1,"")];
+        $scope.choiceList=[nullChoice()];
         $scope.questionText = "";
     };
 
@@ -277,7 +298,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         //save persistant variables
         $scope.quizId = curQuizId;
         $scope.loadQuestions();
-        $scope.choiceList=[choiceObj(1,"")];
+        $scope.choiceList=[nullChoice()];
 
     };
 
