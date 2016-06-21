@@ -75,7 +75,7 @@
 
                         <div ng-repeat="choice in choiceList" class="radio">
                                 <label >
-                                    <input ng-click="chooseAnswer(choice)" type="radio" name="question{[{question.id}]}">
+                                    <input ng-click="choice.correct=true" type="radio" name="question{[{question.id}]}">
                                     <input ng-model="choice.choice_text" ng-change="dynamicList(choiceList, 'choice_text')" name="choice{[{choice.id}]}"  type="text" class="form-control input-default" placeholder="New Choice">
                                 </label>
                         </div>

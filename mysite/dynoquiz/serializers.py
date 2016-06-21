@@ -1,5 +1,5 @@
 from .models import Quiz, Question, Choice
-
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 #TODO: Fix Ordering issues
@@ -37,4 +37,11 @@ class QuestionSerializer(serializers.ModelSerializer):
             'date_created',
             'choices',
             'answer'
+        )
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'id','username'
         )

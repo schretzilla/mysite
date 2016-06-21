@@ -282,12 +282,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
         updateQuestion(question);
     };
 
-    //TODO: Can just be on html
-    //Chose answer for new Question
-    $scope.chooseAnswer = function(choice) {
-        choice.correct = true;
-    };
-
     //Erase input fields when a question has been canceled
     $scope.cancelQuestion = function() {
         $scope.choiceList=[nullChoice()];

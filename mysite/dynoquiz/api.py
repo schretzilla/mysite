@@ -1,9 +1,10 @@
 from .models import Quiz, Question, Choice
-from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer
+from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer, UserSerializer
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from django.contrib.auth.models import User
 from rest_framework import generics
 #import pdb; pdb.set_trace()             #FOR TESTING
 
@@ -135,6 +136,16 @@ class ChoiceDetail(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#TODO:This class should be a user list class with different methods for different uses
+class NonUserList(APIView):
+    def get(self, request, quiz_id, format=None):
+        nonUsers = User.objects.exclude(quizzes=quiz_id)
+
+        #import pdb; pdb.set_trace()             #FOR TESTING
+        #nonUsers = User.objects.filter(pk=2)
+        serialized_nonUsers = UserSerializer(nonUsers, many=True)
+        return Response(serialized_nonUsers.data)
 
 
 

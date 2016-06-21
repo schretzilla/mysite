@@ -18,9 +18,24 @@
                             <h3 class="list-group-item-heading"> {[{quiz.quiz_name}]}</h3>
                             <p class="list-group-item-text">{[{quiz.quiz_details}]}</p>
                         </a>
+                        <button data-toggle="modal" data-target="#myModal" ng-click="shareQuiz(quiz)" type="button" class="btn btn-primary btn-md">Share</button>
                         <button ng-click="formsetEditQuiz(quiz)" type="button" class="btn btn-info btn-md">Edit</button>
                         <button ng-click="deleteQuiz(quiz.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
-
+                        <!-- Add dropdown
+                        <div class="dropdown">
+                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropup
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a data-toggle="modal" data-target="#myModal">Open Modal</a>
+</li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                          </ul>
+                        </div>-->
                     </div> <!--End List Group -->
                 </div> <!-- End Row -->
 
@@ -44,7 +59,7 @@
                     <div class="form-group">
                         <div class="col-sm-12">
                             <label for="quiz-description">Quiz Description</label>
-                            <textarea ng-model="quizDetails" class="form-control" placeholder="Quiz Description" rows="3"></textarea>
+                            <textarea ng-model="quizDetails" class="form-control" id="quiz-description" placeholder="Quiz Description" rows="3"></textarea>
                         </div>
                     </div>
 
@@ -57,6 +72,29 @@
                 </div>
 
             </div><!-- end right col -->
-        </div>
+
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Share Quiz: {[{curQuiz.quiz_name}]}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Select users to share with: </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+        </div> <!-- end div angular controller row -->
     </div> <!-- end index div -->
+
 {% endblock %}

@@ -50,7 +50,10 @@ urlpatterns = [
     #TODO: Clean up no need for question id in choice updates and creates
     #Choice API
     url(r'^api/question/(?P<question_id>[0-9]+)/choice/$', api.ChoiceList.as_view()),
-    url(r'^api/question/(?P<question_id>[0-9]+)/choice/(?P<choice_id>[0-9]+)/$', api.ChoiceDetail.as_view())
+    url(r'^api/question/(?P<question_id>[0-9]+)/choice/(?P<choice_id>[0-9]+)/$', api.ChoiceDetail.as_view()),
+
+    #Get Users that the quiz is not shared with
+    url(r'^api/quiz/(?P<quiz_id>[0-9]+)/nonuser/$', api.NonUserList.as_view())
 ]
 
 #allows API end points to provide json or html, Currently not doing much

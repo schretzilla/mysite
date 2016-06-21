@@ -96,8 +96,19 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
         };
     };
 
+    //ToDO: Remove
     quizToString = function(quiz) {
         return ('id:' + quiz.id + ' quiz_name:' + quiz.quiz_name + ' quiz_details:' + quiz.quiz_details + ' date_created:' + quiz.date_created)
+    };
+
+    $scope.shareQuiz = function(quiz) {
+        $scope.curQuiz=quiz;
+        $http.get('/dynoquiz/api/quiz/'+quiz.id+'/nonuser')
+            .then(function (response) {
+                $scope.nonUsers=response.data;
+            }, function(error) {
+                alert("Unable to load users " + error.message);
+            });
     };
 
     //On page load
