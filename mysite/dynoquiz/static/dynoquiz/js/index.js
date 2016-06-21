@@ -112,10 +112,11 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
     //On page load
-    $scope.loadPage = function() {
+    $scope.loadPage = function(userId) {
         $scope.loadItems();
         var focusedQuiz = "";
         $scope.formsetCreateQuiz();
+        $scope.curUserId=userId;
     };
 
 

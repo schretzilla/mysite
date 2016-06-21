@@ -9,7 +9,7 @@
     </div>
 
     <div ng-app="index">
-        <div ng-controller="QuizCtrl" class="row" ng-init="loadPage()">
+        <div ng-controller="QuizCtrl" class="row" ng-init="loadPage('{{ request.user.id }}')">
             <div class="col-lg-6">
                 <!-- List Current Quizes reverse order -->
                 <div ng-repeat="quiz in quizes"  class="row">
@@ -85,6 +85,9 @@
                   </div>
                   <div class="modal-body">
                     <p>Select users to share with: </p>
+                      <ol>
+                          <li ng-repeat="user in nonUsers | filter:{ id: '!'+curUserId}">{[{user.username}]}</li>
+                      </ol>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

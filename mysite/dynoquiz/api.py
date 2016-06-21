@@ -142,8 +142,6 @@ class NonUserList(APIView):
     def get(self, request, quiz_id, format=None):
         nonUsers = User.objects.exclude(quizzes=quiz_id)
 
-        #import pdb; pdb.set_trace()             #FOR TESTING
-        #nonUsers = User.objects.filter(pk=2)
         serialized_nonUsers = UserSerializer(nonUsers, many=True)
         return Response(serialized_nonUsers.data)
 
