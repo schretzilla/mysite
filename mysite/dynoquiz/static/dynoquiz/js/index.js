@@ -111,6 +111,17 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
             });
     };
 
+    $scope.shareWithUser = function(user) {
+        $scope.curQuiz.users.push(user);
+        updateQuiz($scope.curQuiz)
+            .then(function (response) {
+                user.saved=true;
+            }, function(error) {
+                alert("Unable to load users " + error.message);
+            });
+    };
+
+
     //On page load
     $scope.loadPage = function(userId) {
         $scope.loadItems();
@@ -119,7 +130,10 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
         $scope.curUserId=userId;
     };
 
-
+//TODO: Create Service Layer
+    updateQuiz = function(quiz){
+        return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
+    };
 
 
 }); //End Index controller 

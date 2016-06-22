@@ -77,7 +77,7 @@
             <div id="myModal" class="modal fade" role="dialog">
               <div class="modal-dialog">
 
-                <!-- Modal content-->
+                <!-- Share Quiz Modal content-->
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -85,9 +85,11 @@
                   </div>
                   <div class="modal-body">
                     <p>Select users to share with: </p>
-                      <ol>
-                          <li ng-repeat="user in nonUsers | filter:{ id: '!'+curUserId}">{[{user.username}]}</li>
-                      </ol>
+                      <div ng-repeat="user in nonUsers | filter:{ id: '!'+curUserId}">
+                          <button ng-click="shareWithUser(user)" type="button" class="btn btn-link">{[{user.username}]}</button>
+                          <label ng-show="user.saved==true">shared!</label>
+                      </div>
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
