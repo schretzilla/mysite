@@ -6,22 +6,23 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            'id','username'
+            'id',
+            'username',
+            'quizzes'
         )
 
 #TODO: Fix Ordering issues
 class QuizSerializer(serializers.ModelSerializer):
-    users = UserSerializer(many=True, read_only=True)
     class Meta:
         model = Quiz
         fields = (
             'id',
-			'quiz_name',
-			'quiz_details',
-			'date_created',
+            'quiz_name',
+            'quiz_details',
+            'date_created',
             'owner',
             'users'
-		)
+        )
 
 class ChoiceSerializer(serializers.ModelSerializer):
     class Meta:

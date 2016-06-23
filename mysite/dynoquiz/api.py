@@ -138,6 +138,32 @@ class ChoiceDetail(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UserDetail(APIView):
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id, format=None):
+        #import pdb; pdb.set_trace()             #FOR TESTING
+        user = self.get_user(user_id)
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
+
+    def put(self, request, user_id, format=None):
+        user = self.get_user(user_id)
+        #import pdb; pdb.set_trace()             #FOR TESTING
+
+        serializer = UserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 #TODO:This class should be a user list class with different methods for different uses
 class NonUserList(APIView):
     def get(self, request, quiz_id, format=None):
@@ -145,6 +171,34 @@ class NonUserList(APIView):
 
         serialized_nonUsers = UserSerializer(nonUsers, many=True)
         return Response(serialized_nonUsers.data)
+
+#TODO: Should updates be handled in serializer?
+#add user to quiz
+class QuizUser(APIView):
+    def get_quiz(self, quiz_id):
+        try:
+            return Quiz.objects.get(pk=quiz_id)
+        except Quiz.DoesNotExist:
+            raise Http404
+
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
+    def put(self, request, quiz_id, user_id, format=None):
+        #import pdb; pdb.set_trace()             #FOR TESTING
+
+        quizSerialized =  QuizSerializer(self.get_quiz(quiz_id), data=request.data)
+        if quizSerialized.is_valid():
+            quizSerialized.update(self.get_quiz(quiz_id), request.data)
+
+            #quizSerialized.users.add(user_id)
+            quizSerialized.save()
+            return Response(quizSerialized.data)
+        else:
+            return Response(quizSerialized.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

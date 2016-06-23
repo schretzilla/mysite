@@ -112,8 +112,8 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
     $scope.shareWithUser = function(user) {
-        $scope.curQuiz.users.push(user);
-        updateQuiz($scope.curQuiz)
+        $scope.curQuiz.users.push(user.id);
+        updateQuizUser($scope.curQuiz)
             .then(function (response) {
                 user.saved=true;
             }, function(error) {
@@ -131,9 +131,32 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
 //TODO: Create Service Layer
-    updateQuiz = function(quiz){
+    updateQuizUser = function(quiz){
         return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
     };
 
+    //TODO: Delete this was for testing
+    getUser = function(userId){
+        return ($http.get('/dynoquiz/api/user/'+userId+'/'));
+    };
+
+    updateUser = function(user){
+        return ($http.put('/dynoquiz/api/user/'+user.id+'/', user));
+    };
+
+    //TODO: DELETE was for testing
+    $scope.getUserById = function(userId){
+        getUser(userId)
+            .then(function (response) {
+                user=response.data;
+                user.quizzes.push('3');
+                updateUser(user)
+                    .then(function (response){
+                        test = response.data;
+                    }, function(error){
+                        alert("unable to update User " + error.message);
+                    });
+            });
+    };
 
 }); //End Index controller 
