@@ -56,7 +56,7 @@ urlpatterns = [
     url(r'^api/quiz/(?P<quiz_id>[0-9]+)/nonuser/$', api.NonUserList.as_view()),
 
     #Append user to quiz share
-    url(r'^api/quiz/(?P<quiz_id>[0-9]+)/adduser/(?P<user_id>[0-9]+)/$', api.QuizUser.as_view()),
+    #url(r'^api/quiz/(?P<quiz_id>[0-9]+)/adduser/(?P<user_id>[0-9]+)/$', api.QuizUser.as_view()),
 
     #Get User
     url(r'^api/user/(?P<user_id>[0-9]+)/$', api.UserDetail.as_view())

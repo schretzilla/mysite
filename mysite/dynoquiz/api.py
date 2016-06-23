@@ -20,6 +20,8 @@ class QuizList(APIView):
     #create new quiz for logged in user
     def post(self, request, format=None):
         serializer = QuizSerializer(data=request.data)
+        import pdb; pdb.set_trace()             #FOR TESTING
+        userS = UserSerializer(request.user)
         if serializer.is_valid():
             newQuiz = serializer.save()
             #TODO: There's probably a better way to do this w/o two saves
@@ -153,8 +155,6 @@ class UserDetail(APIView):
 
     def put(self, request, user_id, format=None):
         user = self.get_user(user_id)
-        #import pdb; pdb.set_trace()             #FOR TESTING
-
         serializer = UserSerializer(user, data=request.data)
 
         if serializer.is_valid():
@@ -174,33 +174,33 @@ class NonUserList(APIView):
 
 #TODO: Should updates be handled in serializer?
 #add user to quiz
-class QuizUser(APIView):
-    def get_quiz(self, quiz_id):
-        try:
-            return Quiz.objects.get(pk=quiz_id)
-        except Quiz.DoesNotExist:
-            raise Http404
-
-    def get_user(self, user_id):
-        try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
-            raise Http404
-
-    def put(self, request, quiz_id, user_id, format=None):
-        #import pdb; pdb.set_trace()             #FOR TESTING
-
-        quizSerialized =  QuizSerializer(self.get_quiz(quiz_id), data=request.data)
-        if quizSerialized.is_valid():
-            quizSerialized.update(self.get_quiz(quiz_id), request.data)
-
-            #quizSerialized.users.add(user_id)
-            quizSerialized.save()
-            return Response(quizSerialized.data)
-        else:
-            return Response(quizSerialized.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+# class QuizUser(APIView):
+#     def get_quiz(self, quiz_id):
+#         try:
+#             return Quiz.objects.get(pk=quiz_id)
+#         except Quiz.DoesNotExist:
+#             raise Http404
+#
+#     def get_user(self, user_id):
+#         try:
+#             return User.objects.get(pk=user_id)
+#         except User.DoesNotExist:
+#             raise Http404
+#
+#     def put(self, request, quiz_id, user_id, format=None):
+#         #import pdb; pdb.set_trace()             #FOR TESTING
+#
+#         quizSerialized =  QuizSerializer(self.get_quiz(quiz_id), data=request.data)
+#         if quizSerialized.is_valid():
+#             quizSerialized.update(self.get_quiz(quiz_id), request.data)
+#
+#             #quizSerialized.users.add(user_id)
+#             quizSerialized.save()
+#             return Response(quizSerialized.data)
+#         else:
+#             return Response(quizSerialized.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#
 
 
 

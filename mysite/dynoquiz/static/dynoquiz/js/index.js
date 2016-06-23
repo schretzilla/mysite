@@ -27,7 +27,7 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 		    'user':$scope.userId,
 			'quiz_name':$scope.quizName,
 			'quiz_details':$scope.quizDetails,
-			'date_created':$scope.date
+			'date_created':$scope.date,
 		};
 		$scope.quizName=null;
 		$scope.quizDetails=null;
@@ -42,7 +42,8 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 	      'id':focusedQuiz.id,
           'quiz_name': $scope.quizName,
           'quiz_details':$scope.quizDetails,
-          'date_created':focusedQuiz.date_created
+          'date_created':focusedQuiz.date_created,
+          'users':focusedQuiz.users
 	    };
         //focusedQuiz.quiz_name = $scope.quizName;
         //focusedQuiz.quizDetails = $scope.quizDetails;

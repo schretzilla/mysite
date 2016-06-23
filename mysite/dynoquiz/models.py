@@ -8,7 +8,7 @@ class Quiz(models.Model):
     owner = models.ForeignKey(User, related_name='owned_quizzes', null=True)
     quiz_name = models.CharField(max_length=100)
     quiz_details = models.CharField(max_length=200, null=True)
-    users = models.ManyToManyField(User,  related_name='quizzes', help_text="Users the quiz is shared with.")
+    users = models.ManyToManyField(User,  related_name='quizzes', blank=True, help_text="Users the quiz is shared with.")
     date_created = models.DateTimeField('date created')
     def __str__(self):
         return self.quiz_name
