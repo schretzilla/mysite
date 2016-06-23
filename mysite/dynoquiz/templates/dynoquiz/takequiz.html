@@ -1,0 +1,41 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+<script src="{% static 'dynoquiz/js/quizdetail.js' %}"></script>
+
+<div ng-app="quizDetail">
+    <div ng-controller="QuizDetailCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
+        <div class="col-lg-6">
+            <h1>{{quiz.quiz_name}}</h1>
+            <h4>Quiz Number: {{quiz.id}} <em>{[{ formStatus }]}</em> </h4>
+
+            <form>
+
+                <div ng-repeat="question in questions" class="form-group">
+                    <label>Question text: {[{question.question_text}]}</label>
+                    <div ng-repeat="choice in question.choices" class="radio">
+                        <label>
+                            <input type="radio" value="choice.id">
+                            {[{choice.choice_text}]}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+
+
+            </form>
+
+        </div> <!-- End Left Col -->
+
+    </div> <!-- End Row and controller -->
+
+</div>
+
+{% endblock %}
+

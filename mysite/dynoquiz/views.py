@@ -20,6 +20,7 @@ def user_owns_quiz(func):
         quizId = kwargs["quiz_id"]
         quiz = Quiz.objects.get(pk=quizId)
         if not (quiz.owner == request.user):
+            #TODO: Make forbidden page
             return HttpResponseRedirect(reverse('dynoquiz:index'))
         return func(request, *args, **kwargs)
     return check_ownership
@@ -87,11 +88,17 @@ def index(request):
     return render(request, 'dynoquiz/index.html', context)
 
 @login_required
-@user_owns_quiz
 def quizdetail(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
     context = {'quiz': quiz}
-    return render(request, 'dynoquiz/quizdetail.html', context)
+    return render(request, 'dynoquiz/takequiz.html', context)
+
+@login_required
+@user_owns_quiz
+def quizedit(request, quiz_id):
+    quiz = Quiz.objects.get(pk=quiz_id)
+    context = {'quiz': quiz}
+    return render(request, 'dynoquiz/editquiz.html', context)
 
 #This should probably be depreciated
 @login_required
@@ -105,7 +112,7 @@ def vote(request, quiz_id):
                 request.POST['question'+ str(question.id)]
     except(KeyError, Choice.DoesNotExist):
         #redisplay the quiz if a question hasn't been answered
-        return render(request, 'dynoquiz/quizdetail.html', {
+        return render(request, 'dynoquiz/takequiz.html', {
             'quiz': quiz,
             'error_message': "You didn't answer all questions."
         })
