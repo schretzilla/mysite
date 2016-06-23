@@ -163,6 +163,20 @@ class UserDetail(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class AvailableQuizzes(APIView):
+    #TODO: Consolidate this with other get user id
+    #TODO: Find way to consolidate this entire function with the class UserDetail
+    def get_user(self, user_id):
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, user_id, format=None):
+        user = self.get_user(user_id)
+        quizzes = user.quizzes.all()
+        serialized_quizzes = QuizSerializer(quizzes, many=True)
+        return Response(serialized_quizzes.data)
 
 #TODO:This class should be a user list class with different methods for different uses
 class NonUserList(APIView):

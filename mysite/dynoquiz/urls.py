@@ -55,6 +55,9 @@ urlpatterns = [
     #Get Users that the quiz is not shared with
     url(r'^api/quiz/(?P<quiz_id>[0-9]+)/nonuser/$', api.NonUserList.as_view()),
 
+    #Get quizzes available to user
+    url(r'^api/user/(?P<user_id>[0-9]+)/availablequiz/', api.AvailableQuizzes.as_view()),
+
     #Append user to quiz share
     #url(r'^api/quiz/(?P<quiz_id>[0-9]+)/adduser/(?P<user_id>[0-9]+)/$', api.QuizUser.as_view()),
 

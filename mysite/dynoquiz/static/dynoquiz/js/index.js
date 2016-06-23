@@ -126,9 +126,22 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     //On page load
     $scope.loadPage = function(userId) {
         $scope.loadItems();
+        $scope.myView = 'ownedQuizzes';
         var focusedQuiz = "";
         $scope.formsetCreateQuiz();
         $scope.curUserId=userId;
+
+        //TODO clean this up so it only loads on click
+        getUserQuizzes();
+    };
+
+    getUserQuizzes = function(){
+        availableQuizzes($scope.curUserId)
+            .then(function (response) {
+                $scope.availableQuizzes = response.data;
+            }, function(error){
+                alert("Unable to get user's quizzes " + error.message);
+            });
     };
 
 //TODO: Create Service Layer
@@ -136,11 +149,16 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
         return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
     };
 
+    //Get available quizzes for the user
+    availableQuizzes = function(userId){
+        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'))
+    };
+
     //TODO: Delete this was for testing
     getUser = function(userId){
         return ($http.get('/dynoquiz/api/user/'+userId+'/'));
     };
-
+    //TODO: Delete this was for testing
     updateUser = function(user){
         return ($http.put('/dynoquiz/api/user/'+user.id+'/', user));
     };

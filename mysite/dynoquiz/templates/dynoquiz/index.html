@@ -1,15 +1,17 @@
 {% extends "dynoquiz/base.html" %}
 
 {% block content %}
+    <div ng-app="index" ng-controller="QuizCtrl" ng-init="loadPage('{{ request.user.id }}')">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h1>{{ request.user.username }}'s Quizzes</h1>
+        <div class="row">
+            <div class="col-lg-12">
+                <button ng-click="myView='ownedQuizzes'" type="button" class="btn btn-primary btn-lg">{{ request.user.username }}'s Quizzes</button>
+                <button ng-click="myView='availableQuizzes'" type="button" class="btn btn-primary btn-lg">Available Quizzes</button>
+
+            </div>
         </div>
-    </div>
 
-    <div ng-app="index">
-        <div ng-controller="QuizCtrl" class="row" ng-init="loadPage('{{ request.user.id }}')">
+        <div ng-if="myView=='ownedQuizzes'" class="row" >
             <div class="col-lg-6">
                 <!-- List Current Quizes reverse order -->
                 <div ng-repeat="quiz in quizes"  class="row">
@@ -101,7 +103,25 @@
               </div>
             </div>
 
-        </div> <!-- end div angular controller row -->
-    </div> <!-- end index div -->
+        </div> <!-- end div row -->
+
+
+
+        <!-- Available Quizzes -->
+        <div ng-if="myView=='availableQuizzes'" class="row" >
+            <div class="col-lg-6">
+                <div ng-repeat="quiz in availableQuizzes"  class="row">
+                    <div class="list-group">
+                        <a href="{[{quiz.id}]}" class="list-group-item">
+                            <h3 class="list-group-item-heading"> {[{quiz.quiz_name}]}</h3>
+                            <p class="list-group-item-text">{[{quiz.quiz_details}]}</p>
+                        </a>
+                    </div> <!-- End list-group ->
+                </div> <!-- End row -->
+            </div>
+        </div>
+
+
+    </div> <!-- end index and angular controller div -->
 
 {% endblock %}
