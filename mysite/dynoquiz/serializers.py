@@ -1,4 +1,4 @@
-from .models import Quiz, Question, Choice
+from .models import Quiz, Question, Choice, QuizUser
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -49,3 +49,12 @@ class QuestionSerializer(serializers.ModelSerializer):
             'answer'
         )
 
+class QuizUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuizUser
+        fields = (
+            'id',
+            'quiz',
+            'user'
+        )

@@ -1,5 +1,5 @@
 from .models import Quiz, Question, Choice
-from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer, UserSerializer
+from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer, UserSerializer, QuizUserSerializer
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -185,6 +185,16 @@ class NonUserList(APIView):
 
         serialized_nonUsers = UserSerializer(nonUsers, many=True)
         return Response(serialized_nonUsers.data)
+
+#Handle Quiz User Relationships
+class QuizUserDetailList(APIView):
+    def post(self, request, quiz_id, user_id, format=None):
+        serializer = QuizUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 #TODO: Should updates be handled in serializer?
 #add user to quiz

@@ -113,8 +113,12 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
     $scope.shareWithUser = function(user) {
-        $scope.curQuiz.users.push(user.id);
-        updateQuizUser($scope.curQuiz)
+        //$scope.curQuiz.users.push(user.id);
+        quizUser = {
+            'user':user.id,
+            'quiz':$scope.curQuiz.id
+        };
+        postQuizUser(quizUser)
             .then(function (response) {
                 user.saved=true;
             }, function(error) {
@@ -151,7 +155,12 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 
     //Get available quizzes for the user
     availableQuizzes = function(userId){
-        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'))
+        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));
+    };
+
+    //Post new quiz, user relation
+    postQuizUser = function(quizUser){
+        return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };
 
     //TODO: Delete this was for testing
@@ -162,6 +171,7 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     updateUser = function(user){
         return ($http.put('/dynoquiz/api/user/'+user.id+'/', user));
     };
+
 
     //TODO: DELETE was for testing
     $scope.getUserById = function(userId){
