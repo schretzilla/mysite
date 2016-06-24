@@ -37,3 +37,8 @@ class Choice(models.Model):
 class QuizUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+
+class QuizScore(models.Model):
+    quiz_user = models.ForeignKey(QuizUser, related_name='scores', null=True)
+    correct = models.IntegerField(default=0)
+    incorrect = models.IntegerField(default=0)
