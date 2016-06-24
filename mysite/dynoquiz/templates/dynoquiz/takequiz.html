@@ -11,25 +11,31 @@
             <h1>{{quiz.quiz_name}}</h1>
             <h4>Quiz Number: {{quiz.id}} <em>{[{ formStatus }]}</em> </h4>
 
-            <form>
-
-                <div ng-repeat="question in questions" class="form-group">
-                    <label>Question text: {[{question.question_text}]}</label>
-                    <div ng-repeat="choice in question.choices" class="radio">
-                        <label>
-                            <input type="radio" value="choice.id">
-                            {[{choice.choice_text}]}
-                        </label>
-                    </div>
-                </div>
+            <form action="{% url 'dynoquiz:submit_quiz' quiz.id %}" method="post">
+                {% csrf_token %}
+                {% for question in questions %}
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <label>Question text: {{question.question_text}} </label>
+
+                    {% for choice in question.choices.all %}
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="question{{question.id}}" id="choice{{choice.id}}" value="{{choice.id}}">
+                            {{choice.choice_text}}
+                        </label>
+                    </div>
+                    {% endfor %}
                 </div>
 
+                {% endfor %}
 
+                <div class="form-group">
+                    <input type="submit" value="submit" class="btn btn-primary"/>
+                </div>
 
             </form>
+
 
         </div> <!-- End Left Col -->
 

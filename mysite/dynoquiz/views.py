@@ -1,12 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-
-from .models import Quiz, Question, Choice
+from .models import Quiz, Question, Choice, QuizUser, QuizScore
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
 
@@ -90,8 +89,35 @@ def index(request):
 @login_required
 def quizdetail(request, quiz_id):
     quiz = Quiz.objects.get(pk=quiz_id)
-    context = {'quiz': quiz}
+    questions = quiz.question_set.all()
+    context = {'quiz': quiz, 'questions':questions}
     return render(request, 'dynoquiz/takequiz.html', context)
+
+@login_required
+def submitquiz(request, quiz_id):
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    correct = 0
+    incorrect = 0
+    for question in quiz.question_set.all():
+        try:
+            selected_choice = question.choices.get(pk=request.POST['question'+str(question.id)])
+        except (KeyError, Choice.DoesNotExist):
+            #TODO: Error handling here, use JS to confrim form is filled out
+            return render(request, 'dynoquiz/takequiz.html')
+        else:
+            selected_choice.votes += 1
+            #selected_choice.save()
+            #Give credit for correct choice
+            if question.answer == selected_choice:
+                correct += 1
+            else:
+                incorrect += 1
+    import pdb; pdb.set_trace()
+    quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
+    quizscore = QuizScore(quiz_user=quiz_user, correct=correct, incorrect=incorrect)
+    #quizscore.save()
+
+    return HttpResponseRedirect(reverse('dynoquiz:index'))
 
 @login_required
 @user_owns_quiz

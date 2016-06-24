@@ -172,7 +172,9 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
         return ($http.put('/dynoquiz/api/user/'+user.id+'/', user));
     };
 
-
+    $scope.test = function(){
+        alert($scope.testObj);
+    };
     //TODO: DELETE was for testing
     $scope.getUserById = function(userId){
         getUser(userId)

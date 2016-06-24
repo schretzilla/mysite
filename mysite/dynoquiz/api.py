@@ -21,7 +21,7 @@ class QuizList(APIView):
     def post(self, request, format=None):
         serializer = QuizSerializer(data=request.data)
         import pdb; pdb.set_trace()             #FOR TESTING
-        userS = UserSerializer(request.user)
+        #userS = UserSerializer(request.user)
         if serializer.is_valid():
             newQuiz = serializer.save()
             #TODO: There's probably a better way to do this w/o two saves

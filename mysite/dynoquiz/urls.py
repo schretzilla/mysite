@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^quiz/(?P<quiz_id>[0-9]+)/edit/$', views.quizedit, name='edit_quiz'),
     #Vote on Quiz
     url(r'^quiz/(?P<quiz_id>[0-9]+)/vote/$', views.vote, name ='vote'),
+    #Take Quiz
+    url(r'^quiz/(?P<quiz_id>[0-9]+)/submit/$', views.submitquiz, name='submit_quiz'),
     #Results of Quiz
     url(r'^quiz/(?P<quiz_id>[0-9]+)/results/$', views.results, name='results'),
     #New Quiz Form
