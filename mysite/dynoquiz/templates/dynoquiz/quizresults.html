@@ -7,21 +7,21 @@
         <p>{{quiz.quiz_detail}}</p>
 
         <h3>Attempts</h3>
-        {% for score in scores %}
         <ol>
+        {% for score in scores %}
             <li>
                 {{ score.correct }}/{{ score.correct|add:score.incorrect }}
+                <ol>
+                    {% for attempt in score.question_attempts.all %}
+                    <li>
+                        {{ attempt.choice.choice_text }}
+                    </li>
+                     {% endfor %}
+                </ol>
             </li>
+        {% endfor %}
         </ol>
-        {% endfor %}
 
-        <h3>Your Answers</h3>
-        {% for score in scores %}
-            <p>Score 1</p>
-            {% for attempt in score.question_attempts.all %}
-                {{ attempt.choice.choice_text }}
-            {% endfor %}
-        {% endfor %}
 
         <h3>Quiz Answers</h3>
         <ol>
@@ -29,7 +29,12 @@
                 <li>{{question.question_text}}</li>
                 <ol>
                     {% for choice in question.choices.all %}
-                        <li><span style="{% if question.answer == choice %}background:#4dff88{% endif %}">{{choice.choice_text}} -- {{choice.votes}} Votes</span></li>
+                        <li>
+                            <span style="{% if question.answer == choice %}background:#4dff88{% endif %}">
+                                {{choice.choice_text}} -- {{choice.votes}} Votes
+                            </span>
+                        </li>
+
                     {% endfor %}
                 </ol>
             {% endfor %}
