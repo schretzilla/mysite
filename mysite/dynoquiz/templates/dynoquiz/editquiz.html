@@ -4,16 +4,16 @@
 
 {% load staticfiles %}
 <script src="{% static 'dynoquiz/js/quizdetail.js' %}"></script>
+<link href="{% static 'dynoquiz/css/editquiz.css' %}" rel="stylesheet">
 
-<div ng-app="quizDetail">
-    <div ng-controller="QuizDetailCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
+<div ng-app="quizDetail" ng-controller="QuizDetailCtrl">
+    <div class="row" ng-init="loadPage('{{ quiz.id }}')">
         <div class="col-lg-6">
-            <h1>{{quiz.quiz_name}}</h1>
-            <h4>Quiz Number: {{quiz.id}} <em>{[{ formStatus }]}</em> </h4>
+            <h1>{[{curQuiz.quiz_name}]}</h1>
+            <h4>Quiz Number: {[{curQuiz.id}]} </h4>
+            <p>Description: {[{curQuiz.quiz_details}]}</p>
 
             <form>
-
-                <div class="row"></div>
 
                 <div ng-repeat="question in questions">
                     <div class="row">
@@ -22,7 +22,9 @@
                         </div>
                         <div class="col-lg-11">
                             <div class="input-group">
-                            <input ng-model="question.question_text" ng-change="updateStatus()" ng-blur="updateQuestion(question)" ng-focus="persistCurText(question.question_text)" id="question.id" type="text" class="form-control input-md">
+                            <!-- <input ng-model="question.question_text" ng-change="updateStatus()" ng-blur="updateQuestion(question)" ng-focus="persistCurText(question.question_text)" id="question.id" type="text" class="form-control input-md"> -->
+                            <input ng-model="question.question_text" ng-change="updateQuestion(question)" ng-focus="persistCurText(question.question_text)" ng-model-options="{ debounce: 1000 }" id="question.id" type="text" class="form-control input-md">
+
                                 <span class="input-group-btn">
                                     <button ng-click="removeQuestion($index)" type="button" class="btn btn-danger btn-md">Delete</button>
                                 </span>
@@ -34,7 +36,7 @@
                                     <div ng-repeat="choice in question.choices" class="radio">
 
                                             <input ng-click="setAnswer(question, choice.id)" ng-checked="question.answer == choice.id" type="radio" name="question{[{question.id}]}" id="choice{[{choice.id}]}" value="{[{choice.id}]}">
-                                            <input ng-model="choice.choice_text" ng-change="updateStatus()" ng-blur="updateChoice(choice)" ng-focus="persistCurText(choice.choice_text)" name="choice{[{choice.id}]}" type="text" class="form-control input-sm">
+                                            <input ng-model="choice.choice_text" ng-change="updateChoice(choice)" ng-focus="persistCurText(choice.choice_text)" ng-model-options="{ debounce: 1000 }" name="choice{[{choice.id}]}" type="text" class="form-control input-sm">
                                             <button ng-show="choice.choice_text == ''" ng-click="removeChoice($index, choice, question.choices)" type="button" class="btn btn-danger btn-sm">Delete</button>
 
                                     </div>
@@ -92,8 +94,15 @@
 
         </div> <!-- end right col -->
 
-    </div> <!-- end quizdetailctrl -->
-</div>
+    </div> <!-- end row -->
+
+    <footer class="navbar navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text navbar-right"><em ng-hide="hideStatus" ng-class="{fade:startFade}">{[{ formStatus }]}</em></p>
+      </div>
+    </footer>
+</div> <!-- end quizdetail controller -->
+
 
 {% endblock %}
 

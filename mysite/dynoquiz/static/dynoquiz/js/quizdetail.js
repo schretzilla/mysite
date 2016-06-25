@@ -13,20 +13,9 @@ quizDetail.config(['$httpProvider', function($httpProvider) {
 }]);
 
 
-quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $http){
+quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $timeout, $log, $http){
 
-    /*
-    * LOAD
-    */
-    //TODO: THIS ISNT NEEDED
-    //TODO: Get choices should return a value
-   /* $scope.getChoices = function(questionId) {
-        $http.get('/dynoquiz/api/question/'+questionId+'/choice').then(function(response) {
-             $scope.choices = response.data;
-             focusedQuestion.choices=$scope.choices;
-        });
-    };*/
-
+//TODO: separate angular code with custom directives
     /*
     * Add new question and its choices to the DB
     */
@@ -115,25 +104,16 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     * Update Choice on deselect
     */
     $scope.updateChoice = function(choice) {
-        //Check if the choice is new for the question
-        /*if(choice.hasOwnProperty('new'))
-        {
-            alert("This is new");
-            postChoice(choice)
-                .then(function (response) {
-
-                });
-            //Add choice
-            //add new choice list
-
-
-        }*/
+        statusSaving()
         //For existing choices detect if choice has been edited
         if (choice.choice_text != "" && choice.choice_text != $scope.curText)
         {
-            updateChoice(choice);
+            updateChoice(choice)
+                .then( function (response) {
+                    $scope.curText=choice.choice_text;
+                    statusSaved()
+                });
         }
-        $scope.formStatus = "Saved"
     };
 
     /*
@@ -142,11 +122,35 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     //TODO: Can probably consolidate this function with update choice fn
     $scope.updateQuestion = function(question){
         //Detect if question has been edited
+        statusSaving();
+
         if (question.question_text != "" && question.question_text != $scope.curText)
         {
-            updateQuestion(question);
+            updateQuestion(question)
+                .then( function (response) {
+                    $scope.curText=question.question_text;
+                    statusSaved();
+                }, function(error) {
+                    alert("Unable to update question " + error.message);
+                });
         }
-        $scope.formStatus = "Saved"
+    };
+
+    //Set status to saving and display
+    statusSaving = function() {
+        $scope.formStatus = "Saving"
+        $scope.startFade = false;
+        $scope.hideStatus = false;
+    };
+
+    //Set status to saved and fade
+    statusSaved = function () {
+        $scope.formStatus = "Saved!";
+
+        $scope.startFade = true;
+        $timeout(function(){
+            $scope.hideStatus = true;
+        }, 3000);
     };
 
     /**
@@ -165,11 +169,6 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             });
     };
 
-    //Update Status Variable on input change
-    $scope.updateStatus = function() {
-        $scope.formStatus = "Saving";
-    };
-
     //Load Question List
     //TODO this doesnt need to be scope
     $scope.loadQuestions = function() {
@@ -181,10 +180,23 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
             });
     };
 
+    loadQuiz = function(quizId) {
+        getQuiz(quizId)
+            .then( function (response) {
+                $scope.curQuiz = response.data;
+            }, function(error) {
+                alert("Unable to load quiz " + error.message);
+            });
+    };
 
     /*
     * Service Layer
     */
+    //Get Quiz
+    getQuiz = function(quizId) {
+        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/'));
+    };
+
     // Question Post
     postQuestion = function(question) {
         return ( $http.post('/dynoquiz/api/quiz/'+question.quiz+'/question/', question) );
@@ -219,6 +231,7 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     updateQuestion = function(question) {
         return ( $http.put('/dynoquiz/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question) );
     };
+
     /*
     *End Service Layer
     */
@@ -278,22 +291,32 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
 
     //Set answer to existing question choice
     $scope.setAnswer = function(question, choiceId) {
+        statusSaving();
         question.answer = choiceId;
-        updateQuestion(question);
+        updateQuestion(question)
+            .then (function (response) {
+                statusSaved();
+            }, function(error) {
+                alert("Unable to save new answer " + error);
+            });
     };
 
+    $scope.updateQuestionText = function(question) {
+        alert("changed from " + $scope.curText);
+    };
     //Erase input fields when a question has been canceled
     $scope.cancelQuestion = function() {
         $scope.choiceList=[nullChoice()];
         $scope.questionText = "";
     };
 
+
     $scope.loadPage = function(curQuizId) {
         //save persistant variables
         $scope.quizId = curQuizId;
         $scope.loadQuestions();
         $scope.choiceList=[nullChoice()];
-
+        loadQuiz(curQuizId);
     };
 
     //Validates that the question form is complete
