@@ -19,6 +19,8 @@ urlpatterns = [
 
     #url(arg1 = just for visual url, ar2=method to use, arg3= alias to ref this )
     url(r'^quiz/$', views.index, name='index'),
+    #Available Quizzes
+    url(r'^quiz/available/$', views.availablequizzes, name='available_quizzes'),
     #Quiz View/take quiz
     url(r'^quiz/(?P<quiz_id>[0-9]+)/$', views.quizdetail, name='quiz_detail'),
     #Quiz Edit

@@ -9,6 +9,7 @@ from .models import Quiz, Question, Choice, QuizUser, QuizScore, QuestionAttempt
 #import pdb; pdb.set_trace()  FOR TESTING
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
+#TODO: Also maybe consider moving to multiple view files
 
 #Redirect logged in users from /siginin to their home
 def userloggedin(user):
@@ -86,6 +87,10 @@ def index(request):
     quiz_list = Quiz.objects.all()
     context = {'quiz_list': quiz_list}
     return render(request, 'dynoquiz/index.html', context)
+
+@login_required
+def availablequizzes(request):
+    return render(request, 'dynoquiz/availablequizzes.html', context=None)
 
 @login_required
 def quizdetail(request, quiz_id):

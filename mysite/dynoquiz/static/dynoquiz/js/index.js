@@ -14,11 +14,13 @@ index.config(['$httpProvider', function($httpProvider) {
 
 
 index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
-	
+
+	//Load All user quizzes
 	$scope.loadItems = function() {
-		$http.get('/dynoquiz/api/quiz/').then(function(response){
-			$scope.quizes = response.data.reverse();
-		});
+		getQuizzes()
+		    .then(function(response){
+			    $scope.quizes = response.data;
+		    });
 	}; // End loadItems 
 
 	$scope.addQuiz = function(){
@@ -31,80 +33,22 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 		};
 		$scope.quizName=null;
 		$scope.quizDetails=null;
-		$http.post('/dynoquiz/api/quiz/', quiz).then(function(){
-			$scope.loadItems();
-		});
+		postQuiz(quiz)
+		    .then(function(response){
+			    $scope.loadItems();
+		    });
 	};
 
-	$scope.updateQuiz = function(){
-
-	    quiz = {
-	      'id':focusedQuiz.id,
-          'quiz_name': $scope.quizName,
-          'quiz_details':$scope.quizDetails,
-          'date_created':focusedQuiz.date_created,
-          'users':focusedQuiz.users
-	    };
-        //focusedQuiz.quiz_name = $scope.quizName;
-        //focusedQuiz.quizDetails = $scope.quizDetails;
-        $http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz).then(function(){
-            $scope.loadItems();
-        }, function(response) {
-            alert("error: " + response.data);
-        });
+	$scope.removeQuiz = function(id) {
+		deleteQuiz(id)
+		    .then(function(){
+			    $scope.loadItems();
+		    });
 	};
-
-	$scope.deleteQuiz = function(id) {
-		$http.delete('/dynoquiz/api/quiz/' + id).then(function(){
-			$scope.loadItems();
-		});
-	};
-
-	$scope.toggleCreateQuiz = function() {
-		$scope.createQuizFields = !$scope.createQuizFields;
-	};
-
-	$scope.formsetEditQuiz = function(quiz) {
-	    $scope.updateQuizBtn = true;
-	    $scope.editBtnClass = "active";
-	    $scope.createBtnClass = "";
-	    $scope.createQuizBtn = false;
-	    setFocusedQuiz(quiz);
-	    loadQuizFields(focusedQuiz);
-	};
-
-	$scope.formsetCreateQuiz = function() {
-	    $scope.updateQuizBtn = false;
-	    $scope.editBtnClass="disabled";
-	    $scope.createBtnClass="active";
-	    $scope.createQuizBtn = true;
-	    setFocusedQuiz("");
-	    loadQuizFields(focusedQuiz)
-	}
-
-	loadQuizFields = function(quiz) {
-	    $scope.quizName = quiz.quiz_name;
-	    $scope.quizDetails = quiz.quiz_details;
-	};
-
-    //Set Focused Quiz when Edit is selected
-    setFocusedQuiz = function(quiz) {
-        focusedQuiz = {
-          'id':quiz.id,
-          'quiz_name': quiz.quiz_name,
-          'quiz_details':quiz.quiz_details,
-          'date_created':quiz.date_created
-        };
-    };
-
-    //ToDO: Remove
-    quizToString = function(quiz) {
-        return ('id:' + quiz.id + ' quiz_name:' + quiz.quiz_name + ' quiz_details:' + quiz.quiz_details + ' date_created:' + quiz.date_created)
-    };
 
     $scope.shareQuiz = function(quiz) {
         $scope.curQuiz=quiz;
-        $http.get('/dynoquiz/api/quiz/'+quiz.id+'/nonuser')
+        getNonUsers(quiz.id)
             .then(function (response) {
                 $scope.nonUsers=response.data;
             }, function(error) {
@@ -130,32 +74,20 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     //On page load
     $scope.loadPage = function(userId) {
         $scope.loadItems();
-        $scope.myView = 'ownedQuizzes';
-        var focusedQuiz = "";
-        $scope.formsetCreateQuiz();
         $scope.curUserId=userId;
-
-        //TODO clean this up so it only loads on click
-        getUserQuizzes();
+        $scope.usersQuizBtnClass = "active";
     };
 
-    getUserQuizzes = function(){
-        availableQuizzes($scope.curUserId)
-            .then(function (response) {
-                $scope.availableQuizzes = response.data;
-            }, function(error){
-                alert("Unable to get user's quizzes " + error.message);
-            });
-    };
 
 //TODO: Create Service Layer
     updateQuizUser = function(quiz){
         return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
     };
 
-    //Get available quizzes for the user
-    availableQuizzes = function(userId){
-        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));
+    //TODO: This shouldn't be done with a non user list
+    //Get users not yet shared with
+    getNonUsers = function(quizId){
+        return($http.get('/dynoquiz/api/quiz/'+quizId+'/nonuser'));
     };
 
     //Post new quiz, user relation
@@ -163,31 +95,21 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
         return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };
 
-    //TODO: Delete this was for testing
-    getUser = function(userId){
-        return ($http.get('/dynoquiz/api/user/'+userId+'/'));
-    };
-    //TODO: Delete this was for testing
-    updateUser = function(user){
-        return ($http.put('/dynoquiz/api/user/'+user.id+'/', user));
+    //Get Quizzes
+    getQuizzes = function(){
+        return ( $http.get('/dynoquiz/api/quiz/') );
     };
 
-    $scope.test = function(){
-        alert($scope.testObj);
+    //Add Quiz
+    postQuiz = function(quiz){
+        return ($http.post('/dynoquiz/api/quiz/', quiz) );
     };
-    //TODO: DELETE was for testing
-    $scope.getUserById = function(userId){
-        getUser(userId)
-            .then(function (response) {
-                user=response.data;
-                user.quizzes.push('3');
-                updateUser(user)
-                    .then(function (response){
-                        test = response.data;
-                    }, function(error){
-                        alert("unable to update User " + error.message);
-                    });
-            });
+
+
+    //Delete Quiz
+    deleteQuiz = function(quizId) {
+        return ($http.delete('/dynoquiz/api/quiz/' + quizId));
     };
+
 
 }); //End Index controller 

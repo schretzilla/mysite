@@ -1,0 +1,63 @@
+{% extends "dynoquiz/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    <script src="{% static 'dynoquiz/js/availablequizzes.js' %}"></script>
+    <div ng-app="availableQuizzes" ng-controller="AvailableQuizCtrl" ng-init="loadPage('{{ request.user.id }}')">
+
+        <ul class="nav nav-tabs nav-justified">
+              <li ng-class="usersQuizBtnClass" role="presentation"><a href="..">{{ request.user.username }}'s Quizzes</a></li>
+              <li ng-class="availableQuizBtnClass" role="presentation"><a href=".">Available Quizzes</a></li>
+        </ul>
+
+        <!-- Available Quizzes -->
+        <div class="row">
+            <div ng-show="availableQuizzes != null" class="col-lg-12">
+                <div class="col-lg-6">
+                    <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">Quizzes Available!</h3>
+                      </div>
+                      <div class="panel-body">
+                        It looks like some quizzes have been shared with you. On this page you
+                          will see the list of quizzes that you can choose from.
+                          Select any of the quizzes to submit your answers.
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div ng-repeat="quiz in availableQuizzes"  class="row">
+                        <div class="list-group">
+                            <a href="../{[{quiz.id}]}" class="list-group-item">
+                                <h3 class="list-group-item-heading"> {[{quiz.quiz_name}]}</h3>
+                                <p class="list-group-item-text">{[{quiz.quiz_details}]}</p>
+                            </a>
+                        </div> <!-- End list-group -->
+                    </div> <!-- End row -->
+                </div>
+            </div>
+
+            <!-- Handle no shared quizzes -->
+             <div ng-show="availableQuizzes == null" class="col-lg-12">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="panel panel-warning">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">Oh no!</h3>
+                      </div>
+                      <div class="panel-body">
+                        It seems no one has shared any quizzes with you yet, when someone does they
+                          will appear on this page.
+                      </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div> <!-- end index and angular controller div -->
+
+{% endblock %}
