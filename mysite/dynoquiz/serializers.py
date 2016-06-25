@@ -1,4 +1,4 @@
-from .models import Quiz, Question, Choice, QuizUser
+from .models import Quiz, Question, Choice, QuizUser, QuizScore, QuestionAttempt
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -48,9 +48,29 @@ class QuestionSerializer(serializers.ModelSerializer):
             'choices',
             'answer'
         )
+class QuestionAttemptSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionAttempt
+        fields = (
+            'id',
+            'quiz_score',
+            'question',
+            'choice'
+        )
+
+class QuizScoreSerializer(serializers.ModelSerializer):
+    question_attempts = QuestionAttemptSerializer(many=True, read_only=True)
+    class Meta:
+        model = QuizScore
+        fields = (
+            'id',
+            'question_attempts',
+            'correct',
+            'incorrect'
+        )
 
 class QuizUserSerializer(serializers.ModelSerializer):
-
+    #quiz_score = QuizScoreSerializer(many=True, read_only=True)
     class Meta:
         model = QuizUser
         fields = (

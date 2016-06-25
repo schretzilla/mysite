@@ -1,6 +1,11 @@
 {% extends "dynoquiz/base.html" %}
+{% load staticfiles %}
 
 {% block content %}
+<script src="{% static 'dynoquiz/js/quizresults.js' %}"></script>
+<link href="{% static 'dynoquiz/css/quizresults.css' %}" rel="stylesheet">
+
+<div ng-app="quizResults" ng-controller="QuizResultsCtrl" ng-init="loadPage('{{ request.user.id }}', '{{ quiz.id }}')">
 <div class="row">
     <div class="col-lg-12">
         <h1>{{quiz.quiz_name}}</h1>
@@ -22,24 +27,23 @@
         {% endfor %}
         </ol>
 
-
         <h3>Quiz Answers</h3>
         <ol>
-            {% for question in quiz.question_set.all %}
-                <li>{{question.question_text}}</li>
+            <li ng-repeat="question in questionList">
+               {[{ question.question_text }]}
                 <ol>
-                    {% for choice in question.choices.all %}
-                        <li>
-                            <span style="{% if question.answer == choice %}background:#4dff88{% endif %}">
-                                {{choice.choice_text}} -- {{choice.votes}} Votes
-                            </span>
-                        </li>
-
-                    {% endfor %}
+                    <li ng-repeat="choice in question.choices">
+                        <span ng-class="{'correct': question.answer == choice.id}" >
+                            {[{ choice.choice_text }]}
+                        </span>
+                    </li>
                 </ol>
-            {% endfor %}
+            </li>
         </ol>
+
     </div>
 </div>
+
+</div> <!-- end angular ctrl -->
 
 {% endblock %}

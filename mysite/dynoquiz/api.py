@@ -1,5 +1,5 @@
-from .models import Quiz, Question, Choice
-from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer, UserSerializer, QuizUserSerializer
+from .models import Quiz, Question, Choice, QuizUser
+from .serializers import QuizSerializer, QuestionSerializer, ChoiceSerializer, UserSerializer, QuizUserSerializer, QuizScoreSerializer
 from django.http import Http404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -194,6 +194,14 @@ class QuizUserDetailList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, quiz_id, user_id, format=None):
+        quiz_user = QuizUser.objects.get(user__id=user_id, quiz__id=quiz_id)
+        quiz_score = quiz_user.scores
+       # import pdb; pdb.set_trace()
+        serialized_quiz_score = QuizScoreSerializer(quiz_score, many=True)
+        return Response(serialized_quiz_score.data)
+
 
 
 #TODO: Should updates be handled in serializer?
