@@ -5,7 +5,8 @@ from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from .models import Quiz, Question, Choice, QuizUser, QuizScore
+from .models import Quiz, Question, Choice, QuizUser, QuizScore, QuestionAttempt
+#import pdb; pdb.set_trace()  FOR TESTING
 
 #TODO: Lots of deletes need to happen here now that the API has replaced files
 
@@ -96,6 +97,9 @@ def quizdetail(request, quiz_id):
 @login_required
 def submitquiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
+    quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
+    #Create quizscore reference
+    quiz_score = QuizScore.objects.create(quiz_user=quiz_user)
     correct = 0
     incorrect = 0
     for question in quiz.question_set.all():
@@ -112,10 +116,13 @@ def submitquiz(request, quiz_id):
                 correct += 1
             else:
                 incorrect += 1
-    #Save Quiz attempt score
-    quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
-    quizscore = QuizScore(quiz_user=quiz_user, correct=correct, incorrect=incorrect)
-    quizscore.save()
+            #Save user attempt
+            QuestionAttempt.objects.create(quiz_score=quiz_score, question=question, choice=selected_choice)
+
+    #Update Quiz attempt score
+    quiz_score.correct = correct
+    quiz_score.incorrect = incorrect
+    quiz_score.save()
 
     return HttpResponseRedirect(reverse('dynoquiz:quiz_results', args=(quiz.id,)))
 

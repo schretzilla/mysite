@@ -42,3 +42,8 @@ class QuizScore(models.Model):
     quiz_user = models.ForeignKey(QuizUser, related_name='scores', null=True)
     correct = models.IntegerField(default=0)
     incorrect = models.IntegerField(default=0)
+
+class QuestionAttempt(models.Model):
+    quiz_score = models.ForeignKey(QuizScore, related_name='question_attempts')
+    question = models.ForeignKey(Question, related_name='attempts')
+    choice = models.ForeignKey(Choice, related_name='guessed')

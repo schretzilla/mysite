@@ -15,6 +15,14 @@
         </ol>
         {% endfor %}
 
+        <h3>Your Answers</h3>
+        {% for score in scores %}
+            <p>Score 1</p>
+            {% for attempt in score.question_attempts.all %}
+                {{ attempt.choice.choice_text }}
+            {% endfor %}
+        {% endfor %}
+
         <h3>Quiz Answers</h3>
         <ol>
             {% for question in quiz.question_set.all %}
