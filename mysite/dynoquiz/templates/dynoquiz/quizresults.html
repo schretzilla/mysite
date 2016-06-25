@@ -6,21 +6,22 @@
         <h1>{{quiz.quiz_name}}</h1>
         <p>{{quiz.quiz_detail}}</p>
 
+        <h3>Attempts</h3>
         {% for score in scores %}
-        <li>
-            <ol>
-                Correct {{ score.correct }}, Incorrect {{ score.incorrect }}
-            </ol>
-        </li>
         <ol>
-
+            <li>
+                {{ score.correct }}/{{ score.correct|add:score.incorrect }}
+            </li>
         </ol>
+        {% endfor %}
+
+        <h3>Quiz Answers</h3>
         <ol>
             {% for question in quiz.question_set.all %}
                 <li>{{question.question_text}}</li>
                 <ol>
-                    {% for choice in question.choice_set.all %}
-                        <li>{{choice.choice_text}} -- {{choice.votes}} Votes</li>
+                    {% for choice in question.choices.all %}
+                        <li><span style="{% if question.answer == choice %}background:#4dff88{% endif %}">{{choice.choice_text}} -- {{choice.votes}} Votes</span></li>
                     {% endfor %}
                 </ol>
             {% endfor %}

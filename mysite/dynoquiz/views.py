@@ -106,18 +106,26 @@ def submitquiz(request, quiz_id):
             return render(request, 'dynoquiz/takequiz.html')
         else:
             selected_choice.votes += 1
-            #selected_choice.save()
+            selected_choice.save()
             #Give credit for correct choice
             if question.answer == selected_choice:
                 correct += 1
             else:
                 incorrect += 1
-    import pdb; pdb.set_trace()
+    #Save Quiz attempt score
     quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
     quizscore = QuizScore(quiz_user=quiz_user, correct=correct, incorrect=incorrect)
-    #quizscore.save()
+    quizscore.save()
 
-    return HttpResponseRedirect(reverse('dynoquiz:index'))
+    return HttpResponseRedirect(reverse('dynoquiz:quiz_results', args=(quiz.id,)))
+
+@login_required
+def quizresults(request, quiz_id):
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
+    scores = quiz_user.scores.all()
+    context = {'scores': scores, 'quiz':quiz}
+    return render(request, 'dynoquiz/quizresults.html', context)
 
 @login_required
 @user_owns_quiz
