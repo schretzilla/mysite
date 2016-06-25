@@ -186,7 +186,7 @@ class NonUserList(APIView):
         serialized_nonUsers = UserSerializer(nonUsers, many=True)
         return Response(serialized_nonUsers.data)
 
-#Handle Quiz User Relationships
+#Handle Quiz User Relationships and Scores
 class QuizUserDetailList(APIView):
     def post(self, request, quiz_id, user_id, format=None):
         serializer = QuizUserSerializer(data=request.data)

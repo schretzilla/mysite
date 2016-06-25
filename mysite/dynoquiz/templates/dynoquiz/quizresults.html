@@ -27,15 +27,31 @@
         {% endfor %}
         </ol>
 
+        <h3>Angular attempts</h3>
+        <ol>
+            <li ng-repeat="score in scores">
+                Attempt ID: {[{score.Id}]}, Correct {[{ score.correct}]}, Incorrect {[{ score.incorrect }]}
+                <ol>
+                    <li ng-repeat="attempt in score.question_attempts" >
+                        <ol>Guess - {[{ attempt.choice }]} </ol>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <p>cur guesses {[{ curQuizGuesses }]}</p>
         <h3>Quiz Answers</h3>
         <ol>
-            <li ng-repeat="question in questionList">
+            <li ng-repeat="question in questionList" ng-switch="question.correct">
                {[{ question.question_text }]}
+                <span ng-switch-when="true">Correct</span>
+                <span ng-switch-when="false">Incorrect</span>
                 <ol>
                     <li ng-repeat="choice in question.choices">
                         <span ng-class="{'correct': question.answer == choice.id}" >
                             {[{ choice.choice_text }]}
                         </span>
+                        <span ng-if="question.guessed=choice.id">Chosen</span>
                     </li>
                 </ol>
             </li>
