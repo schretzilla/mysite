@@ -6,59 +6,50 @@
 <link href="{% static 'dynoquiz/css/quizresults.css' %}" rel="stylesheet">
 
 <div ng-app="quizResults" ng-controller="QuizResultsCtrl" ng-init="loadPage('{{ request.user.id }}', '{{ quiz.id }}')">
-<div class="row">
-    <div class="col-lg-12">
-        <h1>{{quiz.quiz_name}}</h1>
-        <p>{{quiz.quiz_detail}}</p>
 
-        <h3>Attempts</h3>
-        <ol>
-        {% for score in scores %}
-            <li>
-                {{ score.correct }}/{{ score.correct|add:score.incorrect }}
-                <ol>
-                    {% for attempt in score.question_attempts.all %}
-                    <li>
-                        {{ attempt.choice.choice_text }}
-                    </li>
-                     {% endfor %}
-                </ol>
-            </li>
-        {% endfor %}
-        </ol>
+    <div class="row">
+        <div class="col-lg-3">
+            <h3>Attempts:</h3>
+            <div class="list-group">
+              <a ng-repeat="score in scores" ng-click="setCurResults(score)" ng-class="{'active':score == curResults}" class="list-group-item">
+                  Attempt {[{$index + 1}]}:
+                  <span class="badge">{[{ score.correct}]}/{[{ score.incorrect + score.correct }]}</span>
+              </a>
+            </div>
 
-        <h3>Angular attempts</h3>
-        <ol>
-            <li ng-repeat="score in scores">
-                Attempt ID: {[{score.Id}]}, Correct {[{ score.correct}]}, Incorrect {[{ score.incorrect }]}
-                <ol>
-                    <li ng-repeat="attempt in score.question_attempts" >
-                        <ol>Guess - {[{ attempt.choice }]} </ol>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+        </div>
+        <div class="col-lg-9">
 
-        <p>cur guesses {[{ curQuizGuesses }]}</p>
-        <h3>Quiz Answers</h3>
-        <ol>
-            <li ng-repeat="question in questionList" ng-switch="question.correct">
-               {[{ question.question_text }]}
-                <span ng-switch-when="true">Correct</span>
-                <span ng-switch-when="false">Incorrect</span>
-                <ol>
-                    <li ng-repeat="choice in question.choices">
-                        <span ng-class="{'correct': question.answer == choice.id}" >
-                            {[{ choice.choice_text }]}
-                        </span>
-                        <span ng-if="question.guessed=choice.id">Chosen</span>
-                    </li>
-                </ol>
-            </li>
-        </ol>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h1>{{quiz.quiz_name}} <small>Score: {[{scoreString}]}</small></h1>
+                            <p>Details: {{quiz.quiz_details}}</p>
+                        <hr>
+                        <h3>Results</h3>
+                        <div ng-repeat="question in questionList"  ng-switch="correctAnswer=isCorrect(question)" class="col-lg-12" >
+                            <div ng-class="{'alert alert-success': correctAnswer == true, 'alert alert-danger':correctAnswer == false}">
+                                <p >
+                                    {[{$index+1}]} {[{ question.question_text }]}
 
+                                </p>
+
+                                <ul>
+                                    <li ng-repeat="choice in question.choices" ng-switch="guess=questionChosen(question, choice)">
+                                        {[{ choice.choice_text }]}
+                                        <span ng-class="{'glyphicon glyphicon-ok': question.answer == choice.id}"></span>
+                                        <span ng-class="{'glyphicon glyphicon-remove':question.answer != choice.id  && guess == true}"></span> <!-- chosen -->
+                                        <!--<span ng-switch-when="true" class="glyphicon glyphicon-ok"></span>-->
+                                        <!--<span ng-switch-when="false" class="glyphicon glyphicon-remove" aria-hidden="true"></span> -->
+                                        <!--<span ng-class="{'glyphicon glyphicon-ok': question.answer == choice.id}" ></span> -->
+                                    </li>
+                                </ul>
+
+                            </div> <!-- End style question -->
+                        </div> <!-- End question itter -->
+                    </div> <!-- End panel body -->
+                </div> <!-- panel panel-default -->
+        </div> <!-- End Div col Right -->
     </div>
-</div>
 
 </div> <!-- end angular ctrl -->
 
