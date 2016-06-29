@@ -6,11 +6,15 @@
     <title>DynoQuiz Creator</title>
 
     <!-- Twitter Bootstrap3 Style Sheet -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">-->
+    <link href="{% static 'blog/css/bootstrap.min.css' %}" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{% static 'dynoquiz/css/login.css' %}" />
 
     <!-- AngularJS Import -->
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+    <script src="{% static 'dynoquiz/js/angular.min.js' %}"></script>
+
 
     <!-- Load JQuery JS page -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -23,8 +27,8 @@
 
 </head>
 
-        <div ng-app="login" class="container">
-                <div ng-controller="LoginCtrl" class="row">
+        <div ng-app="login" class="container" ng-controller="LoginCtrl">
+                <div  class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <h1>Quizilla Login</h1>
                         <div class="panel panel-login">
@@ -80,15 +84,18 @@
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label ng-show="!registerUsernameValid() && registerForm.registerUsername.$touched" class="control-label" for="register-username">Username Required</label>
-                                                <input ng-model="registerUsername" type="text" name="registerUsername" id="register-username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                                                <label ng-show="usernameTaken" class="control-label" for="register-username">Username not available</label>
+                                                <input ng-model="registerUsername" ng-change="checkUsername()" ng-model-options="{ debounce: 200 }" type="text" name="registerUsername" id="register-username" tabindex="1" class="form-control" placeholder="Username" value="" required>
                                             </div>
                                             <div class="form-group">
                                                 <label ng-show="!registerEmailValid() && registerForm.registerEmail.$touched" class="control-label" for="register-email">Email Not Valid</label>
                                                 <input ng-model="registerEmail" type="email" name="registerEmail" id="register-email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
                                             </div>
                                             <div class="form-group">
+                                                <div ng-show="registerForm.registerPassword.$dirty" class="alert alert-warning" role="alert"><strong>Heads up!</strong> This is just a demo, please don't use important passwords</div>
                                                 <input ng-model="registerPassword" type="password" name="registerPassword" id="register-password" tabindex="2" class="form-control" placeholder="Password" required>
                                             </div>
+
                                             <div class="form-group">
                                                 <label ng-show="!registerPasswordValid() && registerForm.registerPassword.$touched && registerForm.registerConfirmPassword.$touched" name="registerPasswordError" class="control-label" for="register-password">Password does not match</label>
                                                 <input ng-model="registerConfirmPassword" type="password" name="registerConfirmPassword" id="register-confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>

@@ -1,25 +1,94 @@
-{% extends "dynoquiz/base.html" %}
-
-{% block content %}
-
 {% load staticfiles %}
-<script src="{% static 'dynoquiz/js/demo.js' %}"></script>
 
-<div ng-app="quizDetail" ng-controller="QuizDetailCtrl">
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>DynoQuiz Creator</title>
+
+    <!-- Twitter Bootstrap3 Style Sheet -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">-->
+    <link href="{% static 'blog/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'dynoquiz/css/login.css' %}" />
+
+    <!-- AngularJS Import -->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>-->
+    <script src="{% static 'dynoquiz/js/angular.min.js' %}"></script>
 
 
-    <div  ng-init="loadPage('1')">
+    <!-- Load JQuery JS page -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!-- Angular Choice list -->
-                            <ol>
-                                <p>{[{ choiceList.length }]} </p>
-                                <li ng-repeat="choice in choiceList">
-                                    <input ng-model="choice.text" ng-change="dynamicList(choiceList, 'text')" name="choice{[{choice.id}]}"  type="text" class="form-control" placeholder="New Choice">
-                                </li>
-                            </ol>
+    <!-- Custom login JS page -->
+    <script src="{% static 'dynoquiz/js/login.js' %}"></script>
+
+    <!-- Custom login Angular page -->
+    <script src="{% static 'dynoquiz/js/demo.js' %}"></script>
+
+</head>
+
+        <div  class="container" >
+                <div  class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <h1>Quizilla Login</h1>
+                        <div class="panel panel-login">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <a href="#" class="active" id="login-form-link">Login</a>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <a href="#" id="register-form-link">Register</a>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <form ng-app="login" ng-controller="LoginCtrl" id="register-form" name="registerForm" action="{% url 'dynoquiz:register_user' %}" method="post" role="form" style="display: none;" novalidate>
+                                            {% csrf_token %}
+                                            <div ng-init="alert()" class="form-group">
+                                                <label ng-show="!registerUsernameValid() && registerForm.registerUsername.$touched" class="control-label" for="register-username">Username Required</label>
+                                                <label ng-show="usernameTaken()" class="control-label" for="register-username">Username not available</label>
+                                                <input ng-model="registerUsername" ng-change="checkUsername()" ng-options="{ debounce: 1000 }" type="text" name="registerUsername" id="register-username" tabindex="1" class="form-control" placeholder="Username" value="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label ng-show="!registerEmailValid() && registerForm.registerEmail.$touched" class="control-label" for="register-email">Email Not Valid</label>
+                                                <input ng-change="message()" ng-model="registerEmail" type="email" name="registerEmail" id="register-email" tabindex="1" class="form-control" placeholder="Email Address" value="" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input ng-model="registerPassword" type="password" name="registerPassword" id="register-password" tabindex="2" class="form-control" placeholder="Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label ng-show="!registerPasswordValid() && registerForm.registerPassword.$touched && registerForm.registerConfirmPassword.$touched" name="registerPasswordError" class="control-label" for="register-password">Password does not match</label>
+                                                <input ng-model="registerConfirmPassword" type="password" name="registerConfirmPassword" id="register-confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <input ng-disabled="!registerFormValid()" type="submit" name="registerSubmit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Register Now">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Container -->
+
+      <footer class="footer">
+        <p></p>
+        </footer>
+
+    </div> <!-- End Container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+</body>
 
 
-    </div>
-</div>
-{% endblock %}
-
+</html>

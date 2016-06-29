@@ -9,27 +9,45 @@ login.config(function($interpolateProvider){
 
 login.controller('LoginCtrl', function LoginCtrl($scope, $log, $http){
 
-$scope.login = function() {
+    $scope.registerFormValid = function() {
+       return(this.registerEmailValid() && this.registerUsernameValid() && this.registerPasswordValid() && $scope.usernameTaken == false)
+    };
 
-};
+    $scope.registerEmailValid = function(){
+        return($scope.registerForm.registerEmail.$valid);
+    };
 
-$scope.registerFormValid = function() {
-    var t = this.registerEmailValid()
-    var s = this.registerPasswordValid()
-    var v = this.registerPasswordValid()
-   return(this.registerEmailValid() && this.registerUsernameValid() && this.registerPasswordValid())
-};
+    $scope.registerUsernameValid = function(){
+      return($scope.registerForm.registerUsername.$valid );
+    };
 
-$scope.registerEmailValid = function(){
-    return($scope.registerForm.registerEmail.$valid);
-};
+    $scope.registerPasswordValid = function(){
+        return($scope.registerForm.registerPassword.$valid && $scope.registerPassword == $scope.registerConfirmPassword);
+    };
 
-$scope.registerUsernameValid = function(){
-  return($scope.registerForm.registerUsername.$valid );
-};
+    $scope.checkUsername = function(){
+        getUser($scope.registerUsername)
+            .then( function(response){
+                $scope.user = response.data;
+                if($scope.user.username === ""){
+                    $scope.usernameTaken = false;
+                }
+                else{
+                    $scope.usernameTaken = true;
+                }
+            }, function(error){
+                alert("unable to get user " + error.message);
+            });
+    };
 
-$scope.registerPasswordValid = function(){
-    return($scope.registerForm.registerPassword.$valid && $scope.registerPassword == $scope.registerConfirmPassword);
-};
+    $scope.test = function(){
+        return($scope.registerPassword.$touched);
+    };
 
+    /*
+    Service layer
+    */
+    getUser = function(username){
+        return($http.get('/dynoquiz/api/user/'+username));
+    };
 }); //End controller

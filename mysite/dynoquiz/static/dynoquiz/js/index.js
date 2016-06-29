@@ -48,12 +48,22 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 
     $scope.shareQuiz = function(quiz) {
         $scope.curQuiz=quiz;
-        getNonUsers(quiz.id)
+        getUsers(quiz.id)
             .then(function (response) {
-                $scope.nonUsers=response.data;
+                $scope.users=response.data;
             }, function(error) {
                 alert("Unable to load users " + error.message);
             });
+    };
+
+    //Check if user has been shared with cur Quiz
+    $scope.quizAvailable = function(user){
+        for (var i=0; i<user.quizzes.length; i++){
+            if($scope.curQuiz.id == user.quizzes[i]){
+                return true;
+            }
+        };
+        return false;
     };
 
     $scope.shareWithUser = function(user) {
@@ -82,6 +92,11 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 //TODO: Create Service Layer
     updateQuizUser = function(quiz){
         return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
+    };
+
+    //Get Users
+    getUsers = function(){
+        return($http.get('/dynoquiz/api/user/'));
     };
 
     //TODO: This shouldn't be done with a non user list
