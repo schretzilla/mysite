@@ -48,36 +48,71 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 
     $scope.shareQuiz = function(quiz) {
         $scope.curQuiz=quiz;
-        getUsers(quiz.id)
-            .then(function (response) {
-                $scope.users=response.data;
+        userQuizAvailable=[];
+        getQuizUsers(quiz.id)
+            .then(function(response) {
+                    $scope.quizUsers = response.data;
+                    getUsers()
+                        .then(function (response){
+                            $scope.users=response.data;
+                        });
             }, function(error) {
-                alert("Unable to load users " + error.message);
+                    alert("Could not get quizUser relation " + error.message);
             });
+
     };
 
-    //Check if user has been shared with cur Quiz
+    //Check if quizUsers contains particular user
     $scope.quizAvailable = function(user){
-        for (var i=0; i<user.quizzes.length; i++){
-            if($scope.curQuiz.id == user.quizzes[i]){
+        for (var i=0; i<$scope.quizUsers.length; i++){
+            var curQuizUser = $scope.quizUsers[i]
+            if(curQuizUser.user == user.id && curQuizUser.available==true ){
+                userQuizAvailable.push(true);
                 return true;
             }
         };
+        userQuizAvailable.push(false);
         return false;
     };
 
-    $scope.shareWithUser = function(user) {
-        //$scope.curQuiz.users.push(user.id);
+    //Creates and/or updates quiz user relations
+    $scope.shareWithUser = function(user, index) {
         quizUser = {
             'user':user.id,
-            'quiz':$scope.curQuiz.id
+            'quiz':$scope.curQuiz.id,
         };
-        postQuizUser(quizUser)
+
+        //Determine if user is being shared with or unsared with
+        if (userQuizAvailable[index]==false){
+            //Share quiz
+            quizUser.available=true;
+            updateQuizUser(quizUser)
+                .then(function(response){
+                    userQuizAvailable[index] = true;
+                    //TODO: add fade to saved
+                    user.saved=true;
+                }, function(error){
+                    alert("Unable to post quiz user relation " + error.message);
+                });
+        } else{
+            quizUser.available=false;
+            //unshare quiz
+            updateQuizUser(quizUser)
+                .then(function(response){
+                    userQuizAvailable[index] = false;
+                    user.saved=true;
+            }, function(error){
+                alert("Unable to update quiz user relation " + error.message);
+            });
+        }
+
+
+        /*postQuizUser(quizUser)
             .then(function (response) {
                 user.saved=true;
             }, function(error) {
                 alert("Unable to load users " + error.message);
-            });
+            });*/
     };
 
 
@@ -90,8 +125,13 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 
 
 //TODO: Create Service Layer
-    updateQuizUser = function(quiz){
-        return ($http.put('/dynoquiz/api/quiz/'+quiz.id + '/', quiz) );
+    //Get all quiz_user relations for a quiz
+    getQuizUsers = function(quizId){
+        return($http.get('/dynoquiz/api/quiz/'+quizId+'/quizuser/'));
+    };
+    //Update quiz user relation
+    updateQuizUser = function(quizUser){
+        return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };
 
     //Get Users
@@ -106,6 +146,7 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
     };
 
     //Post new quiz, user relation
+    //TODO this is replaced with updateQuizUser
     postQuizUser = function(quizUser){
         return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };

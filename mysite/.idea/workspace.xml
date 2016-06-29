@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f88a3f5-3368-4a55-a21c-be6d0ef3d432" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/angular.html" afterPath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/angular.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/api.py" afterPath="$PROJECT_DIR$/dynoquiz/api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/base.html" afterPath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/demo.js" afterPath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/demo.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html" afterPath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/index.js" afterPath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/loginangular.js" afterPath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/loginangular.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/signin.html" afterPath="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/signin.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/models.py" afterPath="$PROJECT_DIR$/dynoquiz/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js" afterPath="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/serializers.py" afterPath="$PROJECT_DIR$/dynoquiz/serializers.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dynoquiz/urls.py" afterPath="$PROJECT_DIR$/dynoquiz/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mysite.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,24 +31,24 @@
     <favorites_list name="mysite" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.621831">
+    <splitter split-orientation="horizontal" split-proportion="0.53450704">
       <split-first>
         <leaf>
           <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dynoquiz/urls.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1305">
-                  <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="516" max-vertical-offset="1380">
+                  <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.40944883" vertical-offset="1015" max-vertical-offset="1665">
-                  <caret line="85" column="44" selection-start-line="85" selection-start-column="44" selection-end-line="85" selection-end-column="74" />
+                <state vertical-scroll-proportion="-5.098039" vertical-offset="1015" max-vertical-offset="1665">
+                  <caret line="85" column="80" selection-start-line="85" selection-start-column="80" selection-end-line="85" selection-end-column="80" />
                   <folding />
                 </state>
               </provider>
@@ -67,11 +64,23 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/dynoquiz/api.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="1684" max-vertical-offset="3870">
-                  <caret line="144" column="45" selection-start-line="144" selection-start-column="45" selection-end-line="144" selection-end-column="45" />
+                <state vertical-scroll-proportion="0.5947955" vertical-offset="3075" max-vertical-offset="4455">
+                  <caret line="237" column="24" selection-start-line="237" selection-start-column="24" selection-end-line="237" selection-end-column="24" />
+                  <folding>
+                    <element signature="e#0#52#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="quizresults.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-16.0" vertical-offset="1428" max-vertical-offset="2235">
+                  <caret line="124" column="79" selection-start-line="124" selection-start-column="79" selection-end-line="124" selection-end-column="79" />
                   <folding />
                 </state>
               </provider>
@@ -84,9 +93,21 @@
           <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/index.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5553936" vertical-offset="594" max-vertical-offset="2025">
-                  <caret line="65" column="20" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
+                <state vertical-scroll-proportion="0.38909543" vertical-offset="1051" max-vertical-offset="2640">
+                  <caret line="91" column="45" selection-start-line="91" selection-start-column="45" selection-end-line="91" selection-end-column="45" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/dynoquiz/models.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
+                  <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+                  <folding>
+                    <element signature="e#0#28#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -94,8 +115,8 @@
           <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dynoquiz/serializers.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1245">
-                  <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1290">
+                  <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -143,18 +164,18 @@
         <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/editquiz.html" />
         <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizdetail.js" />
         <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/css/quizresults.css" />
-        <option value="$PROJECT_DIR$/dynoquiz/serializers.py" />
-        <option value="$PROJECT_DIR$/dynoquiz/models.py" />
-        <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js" />
         <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/quizresults.html" />
         <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/demo.js" />
         <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/angular.html" />
         <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/loginangular.js" />
         <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/signin.html" />
         <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/base.html" />
+        <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html" />
+        <option value="$PROJECT_DIR$/dynoquiz/models.py" />
+        <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js" />
+        <option value="$PROJECT_DIR$/dynoquiz/serializers.py" />
         <option value="$PROJECT_DIR$/dynoquiz/urls.py" />
         <option value="$PROJECT_DIR$/dynoquiz/api.py" />
-        <option value="$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html" />
         <option value="$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/index.js" />
       </list>
     </option>
@@ -163,7 +184,7 @@
     <option name="x" value="-296" />
     <option name="y" value="-1057" />
     <option name="width" value="1703" />
-    <option name="height" value="804" />
+    <option name="height" value="952" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -460,7 +481,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-296" y="-1057" width="1703" height="804" extended-state="0" />
+    <frame x="-296" y="-1057" width="1703" height="952" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -468,11 +489,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24938475" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15576695" sideWeight="0.8277311" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15576695" sideWeight="0.8271462" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15576695" sideWeight="0.17226891" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15576695" sideWeight="0.17285383" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32884616" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -745,31 +766,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44534412" vertical-offset="1195" max-vertical-offset="2235">
-          <caret line="87" column="37" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5302245" vertical-offset="128" max-vertical-offset="780">
-          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mysite/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="308">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/templates/dynoquiz/quizresults.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="915">
-          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -830,23 +830,15 @@
         <state vertical-scroll-proportion="0.14330709" vertical-offset="1214" max-vertical-offset="2025">
           <caret line="87" column="142" selection-start-line="87" selection-start-column="142" selection-end-line="87" selection-end-column="142" />
           <folding>
-            <element signature="n#style#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#form#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/urls.py">
+    <entry file="file://$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1305">
-          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1684" max-vertical-offset="3870">
-          <caret line="144" column="45" selection-start-line="144" selection-start-column="45" selection-end-line="144" selection-end-column="45" />
+        <state vertical-scroll-proportion="-5.098039" vertical-offset="1015" max-vertical-offset="1665">
+          <caret line="85" column="80" selection-start-line="85" selection-start-column="80" selection-end-line="85" selection-end-column="80" />
           <folding />
         </state>
       </provider>
@@ -859,26 +851,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/serializers.py">
+    <entry file="file://$PROJECT_DIR$/dynoquiz/templates/dynoquiz/quizresults.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1245">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.1037037" vertical-offset="81" max-vertical-offset="915">
+          <caret line="11" column="25" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dynoquiz/templates/dynoquiz/index.html">
+    <entry file="file://$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/quizresults.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40944883" vertical-offset="1015" max-vertical-offset="1665">
-          <caret line="85" column="44" selection-start-line="85" selection-start-column="44" selection-end-line="85" selection-end-column="74" />
+        <state vertical-scroll-proportion="-16.0" vertical-offset="1428" max-vertical-offset="2235">
+          <caret line="124" column="79" selection-start-line="124" selection-start-column="79" selection-end-line="124" selection-end-column="79" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynoquiz/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
+          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynoquiz/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1290">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynoquiz/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="516" max-vertical-offset="1380">
+          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynoquiz/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5947955" vertical-offset="3075" max-vertical-offset="4455">
+          <caret line="237" column="24" selection-start-line="237" selection-start-column="24" selection-end-line="237" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#52#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dynoquiz/static/dynoquiz/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5553936" vertical-offset="594" max-vertical-offset="2025">
-          <caret line="65" column="20" selection-start-line="65" selection-start-column="20" selection-end-line="65" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.38909543" vertical-offset="1051" max-vertical-offset="2640">
+          <caret line="91" column="45" selection-start-line="91" selection-start-column="45" selection-end-line="91" selection-end-column="45" />
           <folding />
         </state>
       </provider>

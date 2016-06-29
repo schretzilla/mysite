@@ -68,6 +68,11 @@ urlpatterns = [
 
     #Get, Post QuizUser Relations
     url(r'^api/quiz/(?P<quiz_id>[0-9]+)/user/(?P<user_id>[0-9]+)/$', api.QuizUserDetailList.as_view()),
+    #Get all quiz_user relations for a particular quiz
+    url(r'^api/quiz/(?P<quiz_id>[0-9]+)/quizuser/$', api.QuizUserUserDetailList.as_view()),
+
+    #Get List and Post user scores
+    url(r'^api/quiz/(?P<quiz_id>[0-9]+)/user/(?P<user_id>[0-9]+)/score/$', api.QuizScoreDetailList.as_view()),
 
     #Get User
     url(r'^api/user/(?P<user_id>[0-9]+)/$', api.UserDetail.as_view()),

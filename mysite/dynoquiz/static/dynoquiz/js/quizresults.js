@@ -122,7 +122,7 @@ quizResults.controller('QuizResultsCtrl', function QuizResultsCtrl($scope, $log,
     };
 
     getScores = function(quizId, userId){
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/user/'+userId+'/'))
+        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/user/'+userId+'/score/'))
     };
 
     getQuiz = function(quizId) {

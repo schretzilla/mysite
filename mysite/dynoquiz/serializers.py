@@ -1,14 +1,25 @@
 from .models import Quiz, Question, Choice, QuizUser, QuizScore, QuestionAttempt
 from django.contrib.auth.models import User
 from rest_framework import serializers
+class QuizUserSerializer(serializers.ModelSerializer):
+    #quiz_score = QuizScoreSerializer(many=True, read_only=True)
+    class Meta:
+        model = QuizUser
+        fields = (
+            'id',
+            'quiz',
+            'user',
+            'available'
+        )
 
 class UserSerializer(serializers.ModelSerializer):
+   # quiz_users = QuizUserSerializer(many=True, read_only=True)
     class Meta:
         model = User
         fields = (
             'id',
             'username',
-            'quizzes'
+            'quizzes',
         )
 
 #TODO: Fix Ordering issues
@@ -69,12 +80,3 @@ class QuizScoreSerializer(serializers.ModelSerializer):
             'incorrect'
         )
 
-class QuizUserSerializer(serializers.ModelSerializer):
-    #quiz_score = QuizScoreSerializer(many=True, read_only=True)
-    class Meta:
-        model = QuizUser
-        fields = (
-            'id',
-            'quiz',
-            'user'
-        )
