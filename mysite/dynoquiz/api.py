@@ -141,6 +141,7 @@ class ChoiceDetail(APIView):
 class UserList(APIView):
     def get(self, request, format=None):
         users = User.objects.all()
+        #import pdb; pdb.set_trace()             #FOR TESTING
         serialized_users = UserSerializer(users, many=True)
         return Response(serialized_users.data)
 
@@ -203,21 +204,52 @@ class NonUserList(APIView):
 
 #Handle Quiz User Relationships and Scores
 class QuizUserDetailList(APIView):
+    #TODO this is ugly messign with put in a post, might need to be two calls
+    #Posts quiz user relation if it doesn't exist, else it updates the relationship
     def post(self, request, quiz_id, user_id, format=None):
-        serializer = QuizUserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            #import pdb; pdb.set_trace()             #FOR TESTING
 
+            #if user already exists, update it
+            quiz_user = QuizUser.objects.get(user__id=user_id, quiz__id=quiz_id)
+            serializer = QuizUserSerializer(quiz_user, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except QuizUser.DoesNotExist:
+            #if quiz does not exist, post it
+            serializer = QuizUserSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+    def get(self, request, quiz_id, user_id, format=None):
+        quiz_user = QuizUser.objects.get(user__id=user_id, quiz__id=quiz_id)
+       # import pdb; pdb.set_trace()
+        serialized_quiz_user = QuizUserSerializer(quiz_user, many=True)
+        return Response(serialized_quiz_user.data)
+
+#TODO: This should be included in view above QuizUserDetailList with just different get parameters
+class QuizUserUserDetailList(APIView):
+    #Get all quiz_users relations for a particular quiz
+    def get(self, request, quiz_id, format=None):
+        quiz_user = QuizUser.objects.filter(quiz_id=quiz_id)
+        serializer = QuizUserSerializer(quiz_user, many=True)
+        return Response(serializer.data)
+
+
+class QuizScoreDetailList(APIView):
     def get(self, request, quiz_id, user_id, format=None):
         quiz_user = QuizUser.objects.get(user__id=user_id, quiz__id=quiz_id)
         quiz_score = quiz_user.scores
        # import pdb; pdb.set_trace()
         serialized_quiz_score = QuizScoreSerializer(quiz_score, many=True)
         return Response(serialized_quiz_score.data)
-
-
 
 #TODO: Should updates be handled in serializer?
 #add user to quiz
