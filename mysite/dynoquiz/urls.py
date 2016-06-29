@@ -70,7 +70,11 @@ urlpatterns = [
     url(r'^api/quiz/(?P<quiz_id>[0-9]+)/user/(?P<user_id>[0-9]+)/$', api.QuizUserDetailList.as_view()),
 
     #Get User
-    url(r'^api/user/(?P<user_id>[0-9]+)/$', api.UserDetail.as_view())
+    url(r'^api/user/(?P<user_id>[0-9]+)/$', api.UserDetail.as_view()),
+    url(r'^api/user/$', api.UserList.as_view()),
+
+    #Get User by username
+    url(r'^api/user/(?P<username>\w+)$', api.UserDetail.as_view()),
 
     #Get QuizUser Overall Score (QuizUserSerializer)
     #url(r'^api/quiz/(?P<quiz_id>[0-9]+)/user/(?P<user_id>[0-9]+)/results/$', api.QuizUserResultsList.as_view())
