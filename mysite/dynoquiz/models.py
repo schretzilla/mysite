@@ -34,9 +34,11 @@ class Choice(models.Model):
     def __str__(self):
         return self.choice_text
 
+#through model to store quiz, user relation
 class QuizUser(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    available = models.BooleanField(default=True)
 
 class QuizScore(models.Model):
     quiz_user = models.ForeignKey(QuizUser, related_name='scores', null=True)
