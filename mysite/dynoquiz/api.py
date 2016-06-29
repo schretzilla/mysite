@@ -20,7 +20,6 @@ class QuizList(APIView):
     #create new quiz for logged in user
     def post(self, request, format=None):
         serializer = QuizSerializer(data=request.data)
-        import pdb; pdb.set_trace()             #FOR TESTING
         #userS = UserSerializer(request.user)
         if serializer.is_valid():
             newQuiz = serializer.save()
@@ -139,6 +138,11 @@ class ChoiceDetail(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class UserList(APIView):
+    def get(self, request, format=None):
+        users = User.objects.all()
+        serialized_users = UserSerializer(users, many=True)
+        return Response(serialized_users.data)
 
 class UserDetail(APIView):
     def get_user(self, user_id):
@@ -152,6 +156,17 @@ class UserDetail(APIView):
         user = self.get_user(user_id)
         serialized_user = UserSerializer(user)
         return Response(serialized_user.data)
+
+        #returns none if username doesnt exist
+    def get(self, request, username, format=None):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            user = None
+
+        serialized_user = UserSerializer(user)
+        return Response(serialized_user.data)
+
 
     def put(self, request, user_id, format=None):
         user = self.get_user(user_id)
