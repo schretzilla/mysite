@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'portfolio.apps.PortfolioConfig',
     'dynoquiz',
     'rest_framework',
 ]
