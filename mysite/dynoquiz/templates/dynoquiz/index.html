@@ -6,7 +6,7 @@
     <div ng-app="index" ng-controller="QuizCtrl" ng-init="loadPage('{{ request.user.id }}')">
 
                 <ul class="nav nav-tabs nav-justified">
-                    <li ng-class="usersQuizBtnClass" role="presentation"><a href=".">{{ request.user.username }}'s Quizzes</a></li>
+                    <li ng-class="usersQuizBtnClass" class="text-capitalize" role="presentation"><a href=".">{{ request.user.username }}'s Quizzes</a></li>
                     <li ng-class="availableQuizBtnClass" role="presentation"><a href="available">Available Quizzes</a></li>
                 </ul>
 
