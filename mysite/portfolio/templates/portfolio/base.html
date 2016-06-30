@@ -1,0 +1,43 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Home </title>
+
+    <!-- Twitter Bootstrap3 Style Sheet -->
+    <link href="{% static 'portfolio/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- AngularJS Import -->
+    <script src="{% static 'portfolio/js/angular.min.js' %}"></script>
+
+</head>
+
+<body>
+        <nav class="navbar navbar-light bg-faded">
+            <a class="navbar-brand" href="{% url 'portfolio:home' %}">S.B.S</a>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="{% url 'portfolio:home' %}">Home</a></li>
+            </ul>
+        </nav>
+
+    <div class="container">
+
+        {% block content %}
+
+        {% endblock %}
+
+<footer class="footer">
+    <div class="pull-right">
+        <p class="text-muted">Updated: 6/2016</p>
+    </div>
+</footer>
+
+    </div> <!-- End Container -->
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+</body>
+</html>
