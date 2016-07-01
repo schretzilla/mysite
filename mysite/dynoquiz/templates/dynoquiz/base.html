@@ -26,10 +26,10 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation"><a href="{% url 'dynoquiz:index' %}">Home</a></li>
-            <li role="presentation"><a href="#">Admin</a></li>
             <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="{% url 'dynoquiz:logout_user' %}">Sign Out</a></li>
-
+            {% if request.user != None %}
+              <li role="presentation"><a href="{% url 'dynoquiz:logout_user' %}">Sign Out</a></li>
+              {% endif %}
           </ul>
         </nav>
         <h3 class="text-muted">DynoQuiz</h3>

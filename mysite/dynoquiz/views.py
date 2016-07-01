@@ -43,7 +43,7 @@ def registeruser(request):
     password = request.POST['registerPassword']
     email = request.POST['registerEmail']
 
-    #TODO: do this client side
+    #TODO: do this client side Pretty sure that's done
     #check if user exists
     if User.objects.filter(username=username).exists() is True:
         return HttpResponseRedirect(reverse('dynoquiz:signin'))
@@ -63,24 +63,16 @@ def authenticateUser(request, username, password):
             #TODO: handle inactive user accounts
             return HttpResponseRedirect(reverse('dynoquiz:signin'))
     else:
-        return HttpResponseRedirect(reverse('dynoquiz:signin'))
+        #Handle username or password not correct
+        return render(request, 'dynoquiz/signin.html', {
+            'user': user,
+            'error_message': "Username or password was not correct."
+        })
+
 
 def logoutuser(request):
     logout(request)
     return HttpResponseRedirect(reverse('dynoquiz:signin'))
-
-#authenticate user on login and register Redirect as needed
-def authenticateUser(request, username, password):
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return HttpResponseRedirect(reverse('dynoquiz:index'))
-        else:
-            #TODO: handle inactive user accounts
-            return HttpResponseRedirect(reverse('dynoquiz:signin'))
-    else:
-        return HttpResponseRedirect(reverse('dynoquiz:signin'))
 
 @login_required
 def index(request):

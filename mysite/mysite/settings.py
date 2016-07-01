@@ -26,7 +26,7 @@ SECRET_KEY = 'v-tscik2n+4rb7h6dm41t(&n#7-omg1*_c$#fzcxga7tso_byu'
 DEBUG = True
 
 #Only allow confimred host on Debug set to False for production
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
