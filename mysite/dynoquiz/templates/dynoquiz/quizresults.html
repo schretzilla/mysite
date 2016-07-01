@@ -17,12 +17,12 @@
               </a>
             </div>
 
+
         </div>
         <div class="col-lg-9">
-
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <h1>{{quiz.quiz_name}} <small>Score: {[{scoreString}]}</small></h1>
+                        <h1> <a href="{% url 'dynoquiz:quiz_detail' quiz_id=quiz.id %}"> {{quiz.quiz_name}} </a> <small>Score: {[{scoreString}]}</small></h1>
                             <p>Details: {{quiz.quiz_details}}</p>
                         <hr>
                         <h3>Results</h3>
