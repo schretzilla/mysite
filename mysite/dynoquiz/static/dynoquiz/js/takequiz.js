@@ -1,37 +1,37 @@
-var quizDetail = angular.module('quizDetail',[]);
+var takeQuiz = angular.module('takeQuiz',[]);
 
-quizDetail.config(function($interpolateProvider){
+takeQuiz.config(function($interpolateProvider){
     //allow django templates and angular to co-exist
 	$interpolateProvider.startSymbol('{[{');
 	$interpolateProvider.endSymbol('}]}');
 });
 
 //Set CSRF token
-quizDetail.config(['$httpProvider', function($httpProvider) {
+takeQuiz.config(['$httpProvider', function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }]);
 
 
-quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $http){
+takeQuiz.controller('TakeQuizCtrl', function TakeQuizCtrl($scope, $log, $http){
 
     //Load Question List
     //TODO this doesnt need to be scope
-    $scope.loadQuestions = function() {
+    /*$scope.loadQuestions = function() {
         getQuestions($scope.quizId)
             .then(function (response) {
                 $scope.questions=response.data;
             }, function(error) {
                 alert("Unable to load questions " + error.message);
             });
-    };
+    };*
 
 
     /*
     * Service Layer
     */
     // Get Questions List
-    getQuestions = function(quizId) {
+    /*getQuestions = function(quizId) {
         return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/question') );
     };
     /*
@@ -39,10 +39,15 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $log, $h
     */
 
 
-    $scope.loadPage = function(curQuizId) {
+    $scope.formInvalid = function(numQuestions){
+
+        //return true;
+    };
+
+    /*$scope.loadPage = function(curQuizId) {
         //save persistant variables
         $scope.loadQuestions();
-    };
+    };*/
 
 
 });

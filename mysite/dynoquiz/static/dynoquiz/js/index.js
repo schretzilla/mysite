@@ -106,13 +106,6 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
             });
         }
 
-
-        /*postQuizUser(quizUser)
-            .then(function (response) {
-                user.saved=true;
-            }, function(error) {
-                alert("Unable to load users " + error.message);
-            });*/
     };
 
 

@@ -103,6 +103,20 @@ def quizdetail(request, quiz_id):
 def submitquiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
     quiz_user = get_object_or_404(QuizUser, quiz=quiz, user=request.user)
+
+    #TODO: handle validation with Angular
+    #Validate all questions have been answered
+    try:
+        for question in quiz.question_set.all():
+            if question.choices.all():
+                request.POST['question'+ str(question.id)]
+    except(KeyError, Choice.DoesNotExist):
+        #redisplay the quiz if a question hasn't been answered
+        return render(request, 'dynoquiz/takequiz.html', {
+            'quiz': quiz,
+            'error_message': "You didn't answer all questions."
+        })
+
     #Create quizscore reference
     quiz_score = QuizScore.objects.create(quiz_user=quiz_user)
     correct = 0
@@ -130,6 +144,9 @@ def submitquiz(request, quiz_id):
     quiz_score.save()
 
     return HttpResponseRedirect(reverse('dynoquiz:quiz_results', args=(quiz.id,)))
+
+    #confirm that all questions have been answered
+
 
 @login_required
 def quizresults(request, quiz_id):

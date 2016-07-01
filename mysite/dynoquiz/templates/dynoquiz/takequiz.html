@@ -3,15 +3,15 @@
 {% block content %}
 
 {% load staticfiles %}
-<script src="{% static 'dynoquiz/js/quizdetail.js' %}"></script>
+<script src="{% static 'dynoquiz/js/takequiz.js' %}"></script>
 
-<div ng-app="quizDetail">
-    <div ng-controller="QuizDetailCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
+<div ng-app="takeQuiz">
+    <div ng-controller="TakeQuizCtrl" class="row" ng-init="loadPage('{{ quiz.id }}')">
         <div class="col-lg-6">
             <h1>{{quiz.quiz_name}}</h1>
-            <h4>Quiz Number: {{quiz.id}} <em>{[{ formStatus }]}</em> </h4>
+            <h4>Quiz Owner: {{quiz.owner.username}}</h4>
 
-            <form action="{% url 'dynoquiz:submit_quiz' quiz.id %}" method="post">
+            <form action="{% url 'dynoquiz:submit_quiz' quiz.id %}" name="quizForm" method="post">
                 {% csrf_token %}
                 {% for question in questions %}
 
@@ -21,7 +21,7 @@
                     {% for choice in question.choices.all %}
                     <div class="radio">
                         <label>
-                            <input type="radio" name="question{{question.id}}" id="choice{{choice.id}}" value="{{choice.id}}">
+                            <input type="radio" name="question{{question.id}}" id="choice{{choice.id}}" value="{{choice.id}}" required>
                             {{choice.choice_text}}
                         </label>
                     </div>
@@ -31,7 +31,7 @@
                 {% endfor %}
 
                 <div class="form-group">
-                    <input type="submit" value="submit" class="btn btn-primary"/>
+                    <input ng-disabled="formInvalid()" type="submit" value="submit" class="btn btn-primary"/>
                 </div>
 
             </form>

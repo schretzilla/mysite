@@ -44,6 +44,7 @@ login.controller('LoginCtrl', function LoginCtrl($scope, $log, $http){
         return($scope.registerPassword.$touched);
     };
 
+
     /*
     Service layer
     */
