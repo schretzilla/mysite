@@ -27,6 +27,9 @@ class QuizList(APIView):
             #add user to quiz
             newQuiz.owner = request.user
             newQuiz.save()
+
+            #Create Quiz User relation with owner (so owner can take own quizzes)
+            QuizUser.objects.create(user=request.user, quiz=newQuiz, available=True)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
