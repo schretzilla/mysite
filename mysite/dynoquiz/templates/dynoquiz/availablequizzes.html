@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <div ng-repeat="quiz in availableQuizzes"  class="row">
+                    <div ng-repeat="quiz in availableQuizzes | filter:{ owner: '!'+curUserId}"  class="row">
                         <div class="list-group">
                             <a href="../{[{quiz.id}]}" class="list-group-item">
                                 <h3 class="list-group-item-heading"> {[{quiz.quiz_name}]}</h3>

@@ -9,8 +9,8 @@
 <div ng-app="quizDetail" ng-controller="QuizDetailCtrl">
     <div class="row" ng-init="loadPage('{{ quiz.id }}')">
         <div class="col-lg-6">
-            <h1>{[{curQuiz.quiz_name}]}</h1>
-            <h4>Quiz Number: {[{curQuiz.id}]} </h4>
+            <h1>{{curQuiz.quiz_name}}</h1>
+            <h4>Quiz Owner: {{quiz.owner.username}} </h4>
             <p>Description: {[{curQuiz.quiz_details}]}</p>
 
             <form>

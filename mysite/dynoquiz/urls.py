@@ -17,6 +17,8 @@ urlpatterns = [
 
     url(r'^signout/$', views.logoutuser, name='logout_user'),
 
+    #url to about page
+    url(r'^about/$', views.about, name='about'),
     #url(arg1 = just for visual url, ar2=method to use, arg3= alias to ref this )
     url(r'^quiz/$', views.index, name='index'),
     #Available Quizzes

@@ -182,6 +182,7 @@ class UserDetail(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#Return quizzes that have been shared with the user
 class AvailableQuizzes(APIView):
     #TODO: Consolidate this with other get user id
     #TODO: Find way to consolidate this entire function with the class UserDetail
@@ -193,7 +194,7 @@ class AvailableQuizzes(APIView):
 
     def get(self, request, user_id, format=None):
         user = self.get_user(user_id)
-        quizzes = user.quizzes.all()
+        quizzes = user.quizzes.all().exclude(owner=user.id)
         serialized_quizzes = QuizSerializer(quizzes, many=True)
         return Response(serialized_quizzes.data)
 

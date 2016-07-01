@@ -1,0 +1,43 @@
+{% extends "dynoquiz/base.html" %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>About DynoQuiz<h1>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                In 2013 I was asked to develop a website for a clinical research lab. They wanted a way that they
+                could ask questions to their patients and record their responses locally to avoid any issues with HIPAA.
+                With little to no understand on how websites were built I went about building them a very static PHP site
+                with a MySql DB. The app did the job but it didn't allow test administrators to edit the questions or choices
+                of their tests without knowing how to edit and deploy code. It still bothers me that that website was so poor
+                so since then, my first capstone project in learning a new framework is to use that framework to build a
+                quiz distribution app that doesn't require the administrator to know anything about web development to distribute
+                quizzes. The app has little practical meaning, but it is a good starting point for learning CRUD
+                operations required in mastering any web framework.
+            </p>
+        </div>
+        <div class="col-md-6">
+            DynoQuiz Tools:
+            <ul>
+                <li>Python/Django</li>
+                <li>AngularJS</li>
+                <li>Twitter Bootstrap CSS</li>
+                <li>Django Rest Framework</li>
+            </ul>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

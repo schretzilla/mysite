@@ -69,10 +69,12 @@ def authenticateUser(request, username, password):
             'error_message': "Username or password was not correct."
         })
 
-
 def logoutuser(request):
     logout(request)
     return HttpResponseRedirect(reverse('dynoquiz:signin'))
+
+def about(request):
+    return render(request, 'dynoquiz/about.html')
 
 @login_required
 def index(request):
