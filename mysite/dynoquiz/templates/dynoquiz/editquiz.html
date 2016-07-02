@@ -7,11 +7,12 @@
 <link href="{% static 'dynoquiz/css/editquiz.css' %}" rel="stylesheet">
 
 <div ng-app="quizDetail" ng-controller="QuizDetailCtrl">
+
     <div class="row" ng-init="loadPage('{{ quiz.id }}')">
         <div class="col-lg-6">
-            <h1>{{curQuiz.quiz_name}}</h1>
-            <h4>Quiz Owner: {{quiz.owner.username}} </h4>
-            <p>Description: {[{curQuiz.quiz_details}]}</p>
+            <h1><a href="{% url 'dynoquiz:quiz_detail' quiz_id=quiz.id %}">{[{curQuiz.quiz_name}]}</a> <small>edit mode</small></h1>
+            <h4>Creator: {{quiz.owner.username}} </h4>
+            <p class="lead">Description: {[{curQuiz.quiz_details}]}</p>
 
             <form>
 
@@ -68,7 +69,6 @@
             <div id="create-new-question" class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-12">
-                        <h1>Edit Mode</h1>
                         <h2>Add Question</h2>
                         <label for="question">Question:</label>
                         <input ng-model="questionText" type="text" class="form-control input-lg" id="question" placeholder="Question">

@@ -21,6 +21,7 @@ availableQuizzes.controller('AvailableQuizCtrl', function AvailableQuizCtrl($sco
         getUserQuizzes();
     };
 
+
     getUserQuizzes = function(){
         availableQuizzes($scope.curUserId)
             .then(function (response) {
@@ -36,6 +37,9 @@ availableQuizzes.controller('AvailableQuizCtrl', function AvailableQuizCtrl($sco
         return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));
     };
 
-
+    //Get Users
+    getUsers = function(){
+        return($http.get('/dynoquiz/api/user/'));
+    };
 
 }); //End Index controller

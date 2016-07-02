@@ -55,10 +55,13 @@ quizResults.controller('QuizResultsCtrl', function QuizResultsCtrl($scope, $log,
     * Set scores of attempt user is currently looking at
     */
     $scope.setCurResults = function(results){
-        $scope.curResults = results; //TODO MAKE THIS A DICTIONARY
-        //listToDictionary(results, 'choice');
-        $scope.scoreString = results.correct + '/'+(results.correct+results.incorrect);
-        $scope.curQuizGuesses = $scope.curResults.question_attempts;
+        if(results != null){
+            $scope.curResults = results; //TODO MAKE THIS A DICTIONARY
+            //listToDictionary(results, 'choice');
+            $scope.scoreString = results.correct + '/'+(results.correct+results.incorrect);
+            $scope.curQuizGuesses = $scope.curResults.question_attempts;            
+        }
+
     };
 
     /*listToDictionary = function(list, key){
@@ -116,6 +119,7 @@ quizResults.controller('QuizResultsCtrl', function QuizResultsCtrl($scope, $log,
     };
 
 //TODO: Create Service Layer
+    //TODO: not needed
     //Get available quizzes for the user
     availableQuizzes = function(userId){
         return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));

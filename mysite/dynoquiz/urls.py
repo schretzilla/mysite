@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^quiz/(?P<quiz_id>[0-9]+)/submit/$', views.submitquiz, name='submit_quiz'),
     #Quiz Results
     url(r'^quiz/(?P<quiz_id>[0-9]+)/results/$', views.quizresults, name='quiz_results'),
-    #Results of Quiz
+    #Results of Quiz TODO DELETE with result page
     url(r'^quiz/(?P<quiz_id>[0-9]+)/results/$', views.results, name='results'),
     #New Quiz Form
     url(r'^quiz/newquiz/$', views.newquiz, name='new_quiz'),
