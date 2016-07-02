@@ -120,44 +120,44 @@ index.controller('QuizCtrl', function QuizCtrl($scope, $log, $http){
 //TODO: Create Service Layer
     //Get all quiz_user relations for a quiz
     getQuizUsers = function(quizId){
-        return($http.get('/dynoquiz/api/quiz/'+quizId+'/quizuser/'));
+        return($http.get('/quiztro/api/quiz/'+quizId+'/quizuser/'));
     };
     //Update quiz user relation
     updateQuizUser = function(quizUser){
-        return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
+        return ($http.post('/quiztro/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };
 
     //Get Users
     getUsers = function(){
-        return($http.get('/dynoquiz/api/user/'));
+        return($http.get('/quiztro/api/user/'));
     };
 
     //TODO: This shouldn't be done with a non user list
     //Get users not yet shared with
     getNonUsers = function(quizId){
-        return($http.get('/dynoquiz/api/quiz/'+quizId+'/nonuser'));
+        return($http.get('/quiztro/api/quiz/'+quizId+'/nonuser'));
     };
 
     //Post new quiz, user relation
     //TODO this is replaced with updateQuizUser
     postQuizUser = function(quizUser){
-        return ($http.post('/dynoquiz/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
+        return ($http.post('/quiztro/api/quiz/'+quizUser.quiz+'/user/'+quizUser.user+'/', quizUser) );
     };
 
     //Get Quizzes
     getQuizzes = function(){
-        return ( $http.get('/dynoquiz/api/quiz/') );
+        return ( $http.get('/quiztro/api/quiz/') );
     };
 
     //Add Quiz
     postQuiz = function(quiz){
-        return ($http.post('/dynoquiz/api/quiz/', quiz) );
+        return ($http.post('/quiztro/api/quiz/', quiz) );
     };
 
 
     //Delete Quiz
     deleteQuiz = function(quizId) {
-        return ($http.delete('/dynoquiz/api/quiz/' + quizId));
+        return ($http.delete('/quiztro/api/quiz/' + quizId));
     };
 
 

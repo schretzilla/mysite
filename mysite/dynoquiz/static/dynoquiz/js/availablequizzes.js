@@ -34,12 +34,12 @@ availableQuizzes.controller('AvailableQuizCtrl', function AvailableQuizCtrl($sco
 //TODO: Create Service Layer
     //Get available quizzes for the user
     availableQuizzes = function(userId){
-        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));
+        return ($http.get('/quiztro/api/user/'+userId+'/availablequiz/'));
     };
 
     //Get Users
     getUsers = function(){
-        return($http.get('/dynoquiz/api/user/'));
+        return($http.get('/quiztro/api/user/'));
     };
 
 }); //End Index controller

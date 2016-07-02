@@ -123,25 +123,25 @@ quizResults.controller('QuizResultsCtrl', function QuizResultsCtrl($scope, $log,
     //TODO: not needed
     //Get available quizzes for the user
     availableQuizzes = function(userId){
-        return ($http.get('/dynoquiz/api/user/'+userId+'/availablequiz/'));
+        return ($http.get('/quiztro/api/user/'+userId+'/availablequiz/'));
     };
 
     getScores = function(quizId, userId){
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/user/'+userId+'/score/'))
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/user/'+userId+'/score/'))
     };
 
     getQuiz = function(quizId) {
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/'));
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/'));
     };
 
     //Get Quiz
     getQuiz = function(quizId) {
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/'));
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/'));
     };
 
     // Get Questions List
     getQuestions = function(quizId) {
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/question') );
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/question') );
     };
 
 
