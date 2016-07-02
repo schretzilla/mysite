@@ -19,12 +19,14 @@
 
 
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-6">
                 <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1 class="panel-heading text center"> <a href="{% url 'dynoquiz:quiz_detail' quiz_id=quiz.id %}"> {{quiz.quiz_name}} </a> <small>Score: {[{scoreString}]}</small></h1>
+                        <h4 class="text-center">Details: {{quiz.quiz_details}}</p>
+                    </div>
                     <div class="panel-body">
-                        <h1> <a href="{% url 'dynoquiz:quiz_detail' quiz_id=quiz.id %}"> {{quiz.quiz_name}} </a> <small>Score: {[{scoreString}]}</small></h1>
-                            <p>Details: {{quiz.quiz_details}}</p>
-                        <hr>
+                        
                         <h3>Results</h3>
                         <div ng-repeat="question in questionList"  ng-switch="correctAnswer=isCorrect(question)" class="col-lg-12" >
                             <div ng-class="{'alert alert-success': correctAnswer == true, 'alert alert-danger':correctAnswer == false}">

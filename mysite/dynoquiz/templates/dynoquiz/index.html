@@ -12,14 +12,22 @@
                 </br>
         <div class="row" >
             <div class="col-lg-12">
-                <div ng-show="quizes == null" class="col-lg-6">
+                <div ng-show="quizes.length == 0" class="col-lg-6">
                     <div class="panel panel-primary">
                       <div class="panel-heading">
                         <h3 class="panel-title">Quizzes Available!</h3>
                       </div>
                       <div class="panel-body">
-                        It looks like you haven't created any quizzes yet. Use the form on this page
-                        to start creating quizzes. You can click on the quizzes to add questions to them.
+                        <p>It looks like you haven't created any quizzes yet! Use the form on this page
+                        to start creating quizzes.</p> 
+
+                        <label>Once a quiz is created they will appear here and you can:</label>
+                        <ol>
+                            <li>Add mulitiple choice questions with answers.</li>
+                            <li>Share the quiz with other users.</li>
+                            <li>Take the quiz yourself.</li>
+                        </ol> 
+
                       </div>
                     </div>
                 </div>

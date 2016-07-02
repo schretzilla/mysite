@@ -16,6 +16,7 @@ quizResults.config(['$httpProvider', function($httpProvider) {
 quizResults.controller('QuizResultsCtrl', function QuizResultsCtrl($scope, $log, $http){
     //On page load
     $scope.loadPage = function(userId, quizId) {
+        $scope.scoreString = "N/A";
         $scope.curUserId=userId;
         //$scope.availableQuizBtnClass = "active";
         getCurQuiz(quizId);
