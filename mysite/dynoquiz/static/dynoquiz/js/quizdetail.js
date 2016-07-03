@@ -194,42 +194,42 @@ quizDetail.controller('QuizDetailCtrl', function QuizDetailCtrl($scope, $timeout
     */
     //Get Quiz
     getQuiz = function(quizId) {
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/'));
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/'));
     };
 
     // Question Post
     postQuestion = function(question) {
-        return ( $http.post('/dynoquiz/api/quiz/'+question.quiz+'/question/', question) );
+        return ( $http.post('/quiztro/api/quiz/'+question.quiz+'/question/', question) );
     };
 
     // Choice Post
     postChoice = function(choice) {
-        return ( $http.post('/dynoquiz/api/question/'+choice.question+'/choice/', choice) );
+        return ( $http.post('/quiztro/api/question/'+choice.question+'/choice/', choice) );
     };
 
     // Update Choice
     updateChoice = function(choice) {
-        return ( $http.put('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id+'/', choice) );
+        return ( $http.put('/quiztro/api/question/'+choice.question+'/choice/'+choice.id+'/', choice) );
     };
 
     // Delete Choice
     deleteChoice = function(choice) {
-        return ( $http.delete('/dynoquiz/api/question/'+choice.question+'/choice/'+choice.id + '/') );
+        return ( $http.delete('/quiztro/api/question/'+choice.question+'/choice/'+choice.id + '/') );
     };
 
     // Get Questions List
     getQuestions = function(quizId) {
-        return ( $http.get('/dynoquiz/api/quiz/'+quizId+'/question') );
+        return ( $http.get('/quiztro/api/quiz/'+quizId+'/question') );
     };
 
     // Delete Question
     deleteQuestion = function(questionId) {
-        return ( $http.delete('/dynoquiz/api/quiz/'+$scope.quizId+'/question/'+questionId + '/') );
+        return ( $http.delete('/quiztro/api/quiz/'+$scope.quizId+'/question/'+questionId + '/') );
     };
 
     // Update Question
     updateQuestion = function(question) {
-        return ( $http.put('/dynoquiz/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question) );
+        return ( $http.put('/quiztro/api/quiz/'+ question.quiz +'/question/'+question.id+'/', question) );
     };
 
     /*

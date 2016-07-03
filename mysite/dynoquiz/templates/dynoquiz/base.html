@@ -18,6 +18,7 @@
     <!-- Added to allow modals -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -39,11 +40,15 @@
 
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_authenticated %}
                 <li role="presentation"><a href="{% url 'dynoquiz:index' %}">Home</a></li>
+            {% endif %}
                 <li role="presentation"><a href="{% url 'dynoquiz:about' %}">About</a></li>
-                {% if request.user != None %}
+                {% if request.user.is_authenticated %}
                   <li role="presentation"><a href="{% url 'dynoquiz:logout_user' %}">Sign Out</a></li>
-                  {% endif %}
+                {% else %}
+                  <li role="presentation"><a href="{% url 'dynoquiz:signin' %}">Sign In</a></li>
+                {% endif %}
               </ul>
           </div>
     </div>

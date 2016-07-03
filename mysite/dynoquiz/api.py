@@ -6,11 +6,24 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth.models import User
 from rest_framework import generics
+from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
+from permissions import IsOwnerOrReadOnly
 #import pdb; pdb.set_trace()             #FOR TESTING
 
 
+# class IsOwner(BasePermission):
+#     def has_permission(self, request, view):
+#         return False
+
+#     def has_object_permission(self, request, view, obj):
+#         # if request.methods in SAFE_METHODS:
+#         #     return True
+
+#         return False
+
 
 class QuizList(APIView):
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     #return loggedin user's list of quizses
     def get(self, request, fromat=None):
         quizzes = Quiz.objects.filter(owner=request.user)
@@ -34,6 +47,11 @@ class QuizList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class QuizDetail(APIView):
+    # permission_classes = [
+        # IsAuthenticated,
+        # IsOwner,
+    # ]
+    
     def get_quiz(self, pk):
         try:
             return Quiz.objects.get(pk=pk)

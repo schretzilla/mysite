@@ -28,7 +28,20 @@ DEBUG = True
 #Only allow confimred host on Debug set to False for production
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+# REST_FRAMEWORK = {
+#     # Use Django's standard `django.contrib.auth` permissions,
+#     # or allow read-only access for unauthenticated users.
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ]
+# }
 
+#Disable browsable api
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
 # Application definition
 
 INSTALLED_APPS = [
