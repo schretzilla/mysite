@@ -5,3 +5,6 @@ def home(request):
 
 def self_help(request):
     return render(request, 'portfolio/self-help.html', context=None)
+
+def percent(request):
+    return render(request, 'portfolio/percent.html', context=None)

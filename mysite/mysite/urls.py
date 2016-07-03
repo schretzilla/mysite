@@ -23,10 +23,11 @@ urlpatterns = [
 
     #redirect to blog app
     url(r'^', include('portfolio.urls', namespace="portfolio")),
+    url(r'^portfolio/', include('portfolio.urls', namespace="portfolio")),
+
     url(r'^quiztro/', include('dynoquiz.urls', namespace="dynoquiz")),
     #redirect to admin site
     #url(r'^admin/', admin.site.urls),
-
     #login required redirect
     url(r'^accounts/login/$', views.signin),
 ]

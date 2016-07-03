@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.contrib.auth import authenticate, login, logout
@@ -21,8 +21,8 @@ def user_owns_quiz(func):
         quizId = kwargs["quiz_id"]
         quiz = Quiz.objects.get(pk=quizId)
         if not (quiz.owner == request.user):
-            #TODO: Make forbidden page
-            return HttpResponseRedirect(reverse('dynoquiz:index'))
+            #Redirect user to frobidden page
+            return HttpResponseForbidden()
         return func(request, *args, **kwargs)
     return check_ownership
 

@@ -104,7 +104,7 @@
                         <p>Select users to share with: </p>
                           <div ng-repeat="user in users | filter:{ id: '!'+curUserId}" class="checkbox">
                               <label><input ng-click="shareWithUser(user, $index)" ng-checked="quizAvailable(user)" type="checkbox" value="">{[{ user.username }]}</label>
-                              <label ng-show="user.saved==true">shared!</label>
+                              <label ng-show="user.saved==true">saved!</label>
                               <!--<button ng-click="shareWithUser(user)" type="button" class="btn btn-link">{[{user.username}]}</button>
                           </div>
 
