@@ -42,7 +42,7 @@ def put_object(serializedObject, quiz, user):
     if(check_ownership(quiz, user)):
         if serializedObject.is_valid():
             serializedObject.save()
-            return(serializedObject.data())
+            return Response(serializedObject.data)
         else:
             return Response(serializedObject.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
@@ -98,12 +98,7 @@ class QuizDetail(APIView):
         quiz = get_quiz(pk)
         serializer = QuizSerializer(quiz, data=request.data)
         status = put_obj(serializer, quiz, request.user)
-        return status
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data)
-        # else:
-        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return status 
 
 
 class QuestionList(APIView):
@@ -148,13 +143,6 @@ class QuestionDetail(APIView):
         serializer = QuestionSerializer(question, data=request.data)
         status = put_object(serializer, quiz, request.user)
         return status
-        # if serializer.is_valid():
-        #     serializer.save()
-        #     return Response(serializer.data)
-        # else:
-        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 
 class ChoiceList(APIView):
     def get(self, request, question_id, format=None):
@@ -190,14 +178,12 @@ class ChoiceDetail(APIView):
         return status
 
     def put(self, request, question_id, choice_id, format=None):
-
         choice = self.get_choice(choice_id)
+        quiz = choice.question.quiz
         serializer = ChoiceSerializer(choice, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        status = put_object(serializer, quiz, request.user)
+        return status
+
 class UserList(APIView):
     def get(self, request, format=None):
         users = User.objects.all()
@@ -227,16 +213,15 @@ class UserDetail(APIView):
         serialized_user = UserSerializer(user)
         return Response(serialized_user.data)
 
-
-    def put(self, request, user_id, format=None):
-        user = self.get_user(user_id)
-        serializer = UserSerializer(user, data=request.data)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #TODO: Determin what methods acces to this and secure it
+    # def put(self, request, user_id, format=None):
+    #     user = self.get_user(user_id)
+    #     serializer = UserSerializer(user, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #Return quizzes that have been shared with the user
 class AvailableQuizzes(APIView):
