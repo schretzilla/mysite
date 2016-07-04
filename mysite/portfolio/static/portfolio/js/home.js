@@ -12,7 +12,7 @@ percentDirective.directive('percent', function() {
             template: '\
             <div class="progress">\
                 <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{object}}%">\
-                {{object}}%\
+                {{object/10}}/10\
                 </div>\
             </div> '
         }
