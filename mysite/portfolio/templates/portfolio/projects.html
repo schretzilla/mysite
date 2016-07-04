@@ -1,0 +1,93 @@
+{% extends "portfolio/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="continer">
+
+    <div class="row">
+        <div class="page-header">
+            <h1>Projects</h1>
+        </div>
+
+        <div class="col-sm-4 col-md-4">
+            <div class="thumbnail">
+                <img href="{% url 'dynoquiz:signin' %}" src="{% static 'portfolio/img/quiz-rectangle.png' %}" alt="quiztro image">
+                <div class="caption">
+                    <h3><a href="{% url 'dynoquiz:signin' %}">Quiztro</a></h3>
+                    <p>    
+                        <h5><small>June/2016</small></h5>                                       
+                        Quiztro is a Python/Django + Angular web app that allows users to login,
+                        create, take and share quizzes with other users.
+                        </br>
+                        </br>
+                        <h5>Tools:</h5>
+                        <ul class="list-inline">
+                            <li><a href="https://www.djangoproject.com/" target="_blank">Django 1.9</a> </li>
+                            <li>Python 2.7</li>
+                            <li><a href="https://angularjs.org/" target="_blank">AngularJS 1</a></li>
+                            <li><a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap 3</a></li>
+                            <li><a href="http://www.django-rest-framework.org/" target="_blank">Django Rest Framework v3</a></li>
+                            <li><a href="http://www.https.postgresql.org/" target="_blank">PostgreSQL 9.2</a></li>
+                            <li><a href="https://www.openshift.com/" target="_blank">Hosted using OpenShift (small gear)</a></li>
+                        </ul>
+                    </p>
+                    <p><a href="{% url 'dynoquiz:signin' %}" class="btn btn-primary" role="button">Take a look!</a> </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4">
+            <div class="thumbnail">
+            <img src="{% static 'portfolio/img/self-help.png' %}" alt="self-help image">
+                <div class="caption">
+                    <h3>
+                        <a href="{% url 'portfolio:self-help' %}">ServiceBaseV</a> 
+                    </h3>
+                    <p>
+                        <h5><small>January/2015</small></h5>
+                            ServiceBaseV is a .Net web application that was used by UPMC's service desk to store/manage knowledge
+                            as well as track known company issues. The backend as well as much of the frontend were used to power UPMC's
+                            Self Help site.
+                        <h5>Tools:</h5>
+                        <ul class="list-inline">
+                            <li>C#</li>
+                            <li>.Net Web Application</li>
+                            <li>Microsoft SQL Database</li>
+                            <li>JavaScript/jQuery</li>
+                            <li><a href="http://getbootstrap.com/2.3.2/" target="_blank">Twitter Bootstrap 2</a></li>
+                            <li>ADO .Net Entity Framework</li>
+                        </ul>
+                    </p>
+                    <p><a href="{% url 'portfolio:self-help' %}" class="btn btn-primary" role="button">More Info</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4">
+            <div class="thumbnail">
+            <img src="{% static 'portfolio/img/asset-dashboard-smaller.png' %}" alt="splunk-dashboard image">
+                <div class="caption">
+                    <h3>
+                        <a href="{% url 'portfolio:sacm' %}">Asset Data Warehouse</a>
+                    </h3>
+                    <p>
+                        <h5><small>November/2015</small></h5>
+                            The Service Asset and configuration project I was put on during my time on the Enterprise Systems
+                            Management team. I used SSMS jobs to collect data from multipe applicaitons throught the company's applicaiton
+                            portfolio. In order to better visualize the data I built fully interactive dashboards using Splunk. 
+                        <h5>Tools:</h5>
+                        <ul class="list-inline">
+                            <li>Microsoft SQL Database</li>
+                            <li><a href="https://en.wikipedia.org/wiki/SQL_Server_Management_Studio" target="_blank">SSMS</a></li>
+                            <li><a href="http://www.splunk.com/" target="_blank">Splunk</a></li>
+                        </ul>
+                    </p>
+                    <p><a href="{% url 'portfolio:sacm' %}" class="btn btn-primary" role="button">More Info</a></p>
+                </div>
+            </div>
+        </div>
+    </div><!-- end row -->
+</div> <!-- end container -->
+
+{% endblock %}

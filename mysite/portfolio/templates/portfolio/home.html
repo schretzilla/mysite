@@ -26,7 +26,7 @@
             <p class="lead">A two-year leadership development rotational program designed for its candidates to
                 develop both technical and operational insight</p>
 
-            <p><strong>UNIX Services</strong> <small>(January/16 – Present)</small></p>
+            <p><strong>UNIX Services</strong> <small>(January/2016 – Present)</small></p>
             <ul>
                 <li>Served as Systems Engineer managing IBM’s
                     AIX 6 and RHEL 6 operating systems</li>
@@ -34,19 +34,19 @@
                 <li>Scripted Bash and KornShell processes to automate manual tasks  </li>
             </ul>
 
-            <p><strong>Enterprise Systems Management</strong> <small>(July/15 – January/16)</small></p>
+            <p><strong>Enterprise Systems Management</strong> <small>(July/2015 – January/2016)</small></p>
             <ul>
                 <li>Drove the creation of the central IT data Warehouse project as the technical lead </li>
                 <li>Lead demos and presentations on data warehouse’s structure and data</li>
                 <li>Configured and created interactive Splunk management reports and dashboards</li>
             </ul>
-            <p><strong>Enterprise Architecture</strong> <small>(January/15 – July/15)</small></p>
+            <p><strong>Enterprise Architecture</strong> <small>(January/2015 – July/2015)</small></p>
             <ul>
                 <li>Created a new standardized application selection process using Microsoft CRM </li>
                 <li>Migrated application statistics and data using C# scripts</li>
                 <li>Assisted in a POC for the application archiving process</li>
             </ul>
-            <p><strong>Corporate Service Desk</strong> <small>(July/14 – January/15)</small></p>
+            <p><strong>Corporate Service Desk</strong> <small>(July/2014 – January/2015)</small></p>
             <ul>
                 <li>Developed the full stack for the department’s web based knowledge management tool</li>
                 <li>Designed and implemented the SQL database for UPMC’s Self Help tool </li>
@@ -74,30 +74,36 @@
         </div>
 
         <div class="col-md-4 col-md-pull-8">
-            <h2 class="text-center">Side Projects</h2>
+            <h2 class="text-center"><a href="{% url 'portfolio:projects' %}"> Projects</h2>  
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="{% url 'dynoquiz:signin' %}">
+                    <img class="media-object" src="{% static 'portfolio/img/quiz-icon.png' %}" alt="quiztro webiste image">
+                    </a>
+                </div>
 
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                  <a href="{% url 'dynoquiz:signin' %}">Quiztro</a>
-                  <span class="pull-right">June/16</span>
-              </div>
-              <div class="panel-body">
-                <a href="{% url 'dynoquiz:signin' %}">Quiztro</a> is a Python/Django + Angular web app that allows users to login,
-                  create, take and share quizzes with other users.
-              </div>
+                <div class="media-body">
+                    <h3 class="media-heading"><a href="{% url 'dynoquiz:signin' %}">Quiztro</a></h3>
+                    <a href="{% url 'dynoquiz:signin' %}">Quiztro</a> is a Python/Django + Angular web app that allows users to login,
+                    create, take and share quizzes with other users.
+                </div>
+               
             </div>
 
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                  <a href="/self-help">ServiceBaseV</a>
-                  <span class="pull-right">January/15</span>
-              </div>
-              <div class="panel-body">
-                A .Net web application that was used by UPMC's service desk to store/manage knowledge
-                  as well as track known company issues. The backend was used as the backbone to UPMC's
-                  Self Help site along with most of the front end design.
-              </div>
-            </div>
+            <div class="media">
+                <div class="media-left media-middle">
+                    <a href="{% url 'portfolio:self-help' %}">
+                    <img class="media-object" src="{% static 'portfolio/img/self-help-icon.png' %}" alt="Self-Help webiste image">
+                    </a>
+                </div>
+
+                <div class="media-body">
+                    <h3 class="media-heading"><a href="{% url 'portfolio:self-help' %}">ServiceBaseV</a></h3>
+                    <a href="{% url 'portfolio:self-help' %}">ServiceBaseV</a> is a .Net web application that was used by UPMC's service desk to store/manage knowledge
+                        as well as track known company issues. The backend as well as much of the frontend were used to power UPMC's
+                        Self Help site.
+                </div> 
+            </div>            
 
         </div>
     </div>
@@ -109,19 +115,19 @@
             <ul class="list-unstyled">
                 <li>
                     Python
-                    <percent object="80"></percent>
-                </li>
-                <li>
-                    SQL
                     <percent object="70"></percent>
                 </li>
                 <li>
-                    JavaScript/jQuery
+                    SQL
                     <percent object="60"></percent>
                 </li>
                 <li>
+                    JavaScript/jQuery
+                    <percent object="50"></percent>
+                </li>
+                <li>
                     Java
-                    <percent object="60"></percent>
+                    <percent object="50"></percent>
                 </li>
             </ul>
 
@@ -144,13 +150,13 @@
             <strong>Frameworks:</strong>
             <ul class="list-unstyled">
                 <li>Django</li>
-                    <percent object="70"></percent>
+                    <percent object="60"></percent>
                 <li>AngularJS</li>
-                    <percent object="65"></percent>
+                    <percent object="60"></percent>
                 <li>Bootstrap</li>
-                    <percent object="85"></percent>
+                    <percent object="75"></percent>
                 <li>Django Rest Framework</li>
-                    <percent object="70"></percent>
+                    <percent object="60"></percent>
             </ul>
 
             <p><strong>Others Frameworks:</strong></p>
@@ -167,12 +173,12 @@
             <strong>Operating Systems:</strong>
             <ul class="list-unstyled">
                 <li>Mac OS X</li>
-                    <percent object="90"></percent>
+                    <percent object="75"></percent>
                 <li>UNIX</li>
-                    <percent object="70"></percent>
+                    <percent object="65"></percent>
 
                 <li>Windows</li>
-                    <percent object="85"></object>
+                    <percent object="75"></object>
 
             </ul>
 

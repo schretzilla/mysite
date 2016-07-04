@@ -1,0 +1,39 @@
+{% extends "portfolio/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="row">
+    <div class="col-sm-12 col-lg-5">
+        <div class="page-header">
+            <h1>Asset Data Warehouse</h1>
+            <h4><small>November/2015</small></h4>
+        </div>
+
+        <p class="lead">
+            The Service Asset and configuration project I was put on during my time on the Enterprise Systems
+            Management team. I used SSMS jobs to collect data from multipe applicaitons throught the company's applicaiton
+            portfolio. In order to better visualize the data I built a fully interactive dashboards using Splunk.
+            Using the dashboards I built directors and managers were able to easily visualize how our assets were distributed
+            throughout the company and determin if specific PC support groups were overburdened. 
+        </p>
+        <p class="lead">
+            I lead many presentations and demos to ISD leadership in order to show them what these dashboards 
+            could do for them. 
+            <h4>Tools:</h4>
+            <ul class="list-inline">
+                <li>Microsoft SQL Database</li>
+                <li><a href="https://en.wikipedia.org/wiki/SQL_Server_Management_Studio" target="_blank">SSMS</a></li>
+                <li><a href="http://www.splunk.com/" target="_blank">Splunk</a></li>
+            </ul>
+        </p>
+    </div>
+
+    <div class="col-small-12 col-lg-7">
+        
+        <img src="{% static 'portfolio/img/asset-dashboard-big.png' %}" class="img-responsive" alt="Splunk Dashboard">
+        </br>
+        <img src="{% static 'portfolio/img/location-dashboard.png' %}" class="img-responsive" alt="Splunk Dashboard">
+    </div>
+</div> <!-- end row -->
+
+{% endblock %}

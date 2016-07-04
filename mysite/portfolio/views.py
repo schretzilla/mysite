@@ -8,3 +8,9 @@ def self_help(request):
 
 def percent(request):
     return render(request, 'portfolio/percent.html', context=None)
+
+def projects(request):
+    return render(request, 'portfolio/projects.html', context=None)
+
+def sacm(request):
+    return render(request, 'portfolio/sacm.html', context=None)
