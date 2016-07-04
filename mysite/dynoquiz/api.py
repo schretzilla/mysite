@@ -22,6 +22,39 @@ from permissions import IsOwnerOrReadOnly
 #         return False
 
 
+# Helper functions
+def get_quiz(quiz_id):
+    try:
+        return Quiz.objects.get(pk=quiz_id) 
+    except Quiz.DoesNotExist:
+        raise Http404
+
+#Check quiz ownership of object before deleting it
+#Retuns status code of delet
+def delete_check(modelObject, quiz, user):
+    if(quiz.owner == user):
+        modelObject.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+def put_object(serializedObject, quiz, user):
+    if(check_ownership(quiz, user)):
+        if serializedObject.is_valid():
+            serializedObject.save()
+            return(serializedObject.data())
+        else:
+            return Response(serializedObject.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+def check_ownership(quiz, user):
+    if(quiz.owner == user):
+        return True
+    else:
+        return False
+
 class QuizList(APIView):
     # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly,)
     #return loggedin user's list of quizses
@@ -51,44 +84,45 @@ class QuizDetail(APIView):
         # IsAuthenticated,
         # IsOwner,
     # ]
-    
-    def get_quiz(self, pk):
-        try:
-            return Quiz.objects.get(pk=pk)
-        except Quiz.DoesNotExist:
-            raise Http404
-
     def get(self, request, pk, format=None):
-        quiz = self.get_quiz(pk)
+        quiz = get_quiz(pk)
         serialized_quiz = QuizSerializer(quiz)
         return Response(serialized_quiz.data)
-
+    
     def delete(self, request, pk, format=None):
-        quiz = self.get_quiz(pk)
-        quiz.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        quiz = get_quiz(pk)
+        status = delete_check(quiz, quiz, request.user)
+        return status
 
     def put(self, request, pk, format=None):
-        quiz = self.get_quiz(pk)
+        quiz = get_quiz(pk)
         serializer = QuizSerializer(quiz, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        status = put_obj(serializer, quiz, request.user)
+        return status
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class QuestionList(APIView):
     def get(self, request, pk, format=None):
-        questions = Quiz.objects.get(pk=pk).question_set.all()
+        quiz = get_quiz(pk)
+        questions = quiz.question_set.all()
         serialized_questions = QuestionSerializer(questions, many=True)
         return Response(serialized_questions.data)
 
     def post(self, request, pk, format=None):
         serializer = QuestionSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        quiz = get_quiz(pk)
+        if (quiz.owner == request.user):
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 class QuestionDetail(APIView):
     def get_question(self, question_id):
@@ -104,18 +138,21 @@ class QuestionDetail(APIView):
 
     def delete(self, request, pk, question_id, format=None):
         question = self.get_question(question_id)
-        question.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        quiz = question.quiz
+        status = delete_check(question, quiz, request.user)
+        return status
 
     def put(self, request, pk, question_id, format=None):
         question = self.get_question(question_id)
+        quiz = question.quiz
         serializer = QuestionSerializer(question, data=request.data)
-        if serializer.is_valid():
-            #import pdb; pdb.set_trace()             #FOR TESTING
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        status = put_object(serializer, quiz, request.user)
+        return status
+        # if serializer.is_valid():
+        #     serializer.save()
+        #     return Response(serializer.data)
+        # else:
+        #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -147,8 +184,10 @@ class ChoiceDetail(APIView):
 
     def delete(self, request, question_id, choice_id, format=None):
         choice = self.get_choice(choice_id)
-        choice.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        quiz = choice.question.quiz
+        status = delete_check(choice, quiz, request.user)
+        # choice.delete()
+        return status
 
     def put(self, request, question_id, choice_id, format=None):
 
@@ -174,12 +213,11 @@ class UserDetail(APIView):
             raise Http404
 
     def get(self, request, user_id, format=None):
-        #import pdb; pdb.set_trace()             #FOR TESTING
         user = self.get_user(user_id)
         serialized_user = UserSerializer(user)
         return Response(serialized_user.data)
 
-        #returns none if username doesnt exist
+    #checks for user name, returns none if username doesnt exist
     def get(self, request, username, format=None):
         try:
             user = User.objects.get(username=username)
@@ -230,8 +268,6 @@ class QuizUserDetailList(APIView):
     #Posts quiz user relation if it doesn't exist, else it updates the relationship
     def post(self, request, quiz_id, user_id, format=None):
         try:
-            #import pdb; pdb.set_trace()             #FOR TESTING
-
             #if user already exists, update it
             quiz_user = QuizUser.objects.get(user__id=user_id, quiz__id=quiz_id)
             serializer = QuizUserSerializer(quiz_user, data=request.data)

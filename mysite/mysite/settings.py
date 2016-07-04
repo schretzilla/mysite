@@ -37,11 +37,11 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 # }
 
 #Disable browsable api
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': (
+#         'rest_framework.renderers.JSONRenderer',
+#     )
+# }
 # Application definition
 
 INSTALLED_APPS = [

@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^portfolio/', include('portfolio.urls', namespace="portfolio")),
 
     url(r'^quiztro/', include('dynoquiz.urls', namespace="dynoquiz")),
+    url(r'^blog/', include('blog.urls', namespace="blog")),
+
     #redirect to admin site
     #url(r'^admin/', admin.site.urls),
     #login required redirect
