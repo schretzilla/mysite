@@ -49,6 +49,6 @@ login.controller('LoginCtrl', function LoginCtrl($scope, $log, $http){
     Service layer
     */
     getUser = function(username){
-        return($http.get('/dynoquiz/api/user/'+username));
+        return($http.get('/quiztro/api/user/'+username));
     };
 }); //End controller
