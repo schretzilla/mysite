@@ -7,7 +7,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="hidden-sm col-md-4"  style="background-image:url(); padding-top:55px;">
+        <div class="hidden-xs hidden-sm col-md-4"  style="background-image:url(); padding-top:55px;">
             <img src="{% static 'portfolio/img/IMG_2218_1024.jpg' %}" class="img-responsive" alt="Responsive image">
         </div>
         <div class="col-md-8">
@@ -77,14 +77,14 @@
             <h2 class="text-center"><a href="{% url 'portfolio:projects' %}"> Projects</h2>  
             <div class="media">
                 <div class="media-left media-middle">
-                    <a href="{% url 'dynoquiz:signin' %}">
+                    <a href="{% url 'dynoquiz:signin' %}" target="_blank">
                     <img class="media-object" src="{% static 'portfolio/img/quiz-icon.png' %}" alt="quiztro webiste image">
                     </a>
                 </div>
 
                 <div class="media-body">
-                    <h3 class="media-heading"><a href="{% url 'dynoquiz:signin' %}">Quiztro</a></h3>
-                    <a href="{% url 'dynoquiz:signin' %}">Quiztro</a> is a Python/Django + Angular web app that allows users to login,
+                    <h3 class="media-heading"><a href="{% url 'dynoquiz:signin' %}" target="_blank">Quiztro</a></h3>
+                    <a href="{% url 'dynoquiz:signin' %}" target="_blank">Quiztro</a> is a Python/Django + Angular web app that allows users to login,
                     create, take and share quizzes with other users.
                 </div>
                
@@ -109,13 +109,19 @@
     </div>
     <div ng-app="home" ng-controller="HomeController" class="row">
         <h2 class="text-center">Technical Skills</h2>
+        <ul class="list-inline text-center">
+            <li>1  = "Hello World!"</li>
+            <li>5 = Can hack together a legible project</li>
+            <li>10 = Could write a book on it</li>
+        </ul>
+
         <div class="col-md-4">
             <!-- Skills -->
             <strong>Languages:</strong>
             <ul class="list-unstyled">
                 <li>
                     Python
-                    <percent object="70"></percent>
+                    <percent object="65"></percent>
                 </li>
                 <li>
                     SQL
@@ -154,7 +160,7 @@
                 <li>AngularJS</li>
                     <percent object="60"></percent>
                 <li>Bootstrap</li>
-                    <percent object="75"></percent>
+                    <percent object="70"></percent>
                 <li>Django Rest Framework</li>
                     <percent object="60"></percent>
             </ul>
@@ -178,7 +184,7 @@
                     <percent object="65"></percent>
 
                 <li>Windows</li>
-                    <percent object="75"></object>
+                    <percent object="70"></object>
 
             </ul>
 
