@@ -13,7 +13,7 @@
         <!-- Available Quizzes -->
         </br>
         <div class="row">
-            <div ng-show="availableQuizzes != null" class="col-lg-12">
+            <div ng-show="availableQuizzes.length != 0" class="col-lg-12">
                 <div class="col-lg-6">
                     <div class="panel panel-primary">
                       <div class="panel-heading">
@@ -40,7 +40,7 @@
             </div>
 
             <!-- Handle no shared quizzes -->
-             <div ng-show="availableQuizzes == null" class="col-lg-12">
+             <div ng-show="availableQuizzes.length == 0" class="col-lg-12">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="panel panel-warning">
                       <div class="panel-heading">
